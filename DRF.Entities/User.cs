@@ -18,7 +18,6 @@ namespace DRF.Entities
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-        public string Phone { get; set; }
         public bool IsEmailVerified { get; set; }
         public Guid ActivationCode { get; set; }
         public string ResetPasswordCode { get; set; }

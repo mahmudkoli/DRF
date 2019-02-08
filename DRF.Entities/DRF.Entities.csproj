@@ -42,10 +42,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Appointment.cs" />
+    <Compile Include="Area.cs" />
     <Compile Include="Base\Entity.cs" />
+    <Compile Include="BloodGroup.cs" />
+    <Compile Include="Chamber.cs" />
+    <Compile Include="City.cs" />
+    <Compile Include="ConsultationFees.cs" />
+    <Compile Include="Degree.cs" />
+    <Compile Include="Doctor.cs" />
+    <Compile Include="DoctorChamberRelation.cs" />
+    <Compile Include="DoctorDegreeRelation.cs" />
+    <Compile Include="DoctorSpecialtyRelation.cs" />
+    <Compile Include="Gender.cs" />
+    <Compile Include="Map.cs" />
+    <Compile Include="Patient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Schedule.cs" />
+    <Compile Include="Specialty.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserRole.cs" />
+    <Compile Include="Vacation.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

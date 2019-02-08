@@ -51,11 +51,19 @@
     <Compile Include="Base\IRepository.cs" />
     <Compile Include="Base\Repository.cs" />
     <Compile Include="Context\DRFDbContext.cs" />
+    <Compile Include="DoctorRepository.cs" />
+    <Compile Include="DoctorUnitOfWork.cs" />
     <Compile Include="Migrations\201901301634197_InitialMigration.cs" />
     <Compile Include="Migrations\201901301634197_InitialMigration.Designer.cs">
       <DependentUpon>201901301634197_InitialMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902081907420_AddedDoctorEntity.cs" />
+    <Compile Include="Migrations\201902081907420_AddedDoctorEntity.Designer.cs">
+      <DependentUpon>201902081907420_AddedDoctorEntity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="PatientRepository.cs" />
+    <Compile Include="PatientUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserRepository.cs" />
     <Compile Include="UserUnitOfWork.cs" />
@@ -73,6 +81,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201901301634197_InitialMigration.resx">
       <DependentUpon>201901301634197_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902081907420_AddedDoctorEntity.resx">
+      <DependentUpon>201902081907420_AddedDoctorEntity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -26,6 +26,23 @@ namespace DRF.Repository.Migrations
                 new UserRole() { Id = 3, Role = "Patient" }
                 );
 
+            context.Genders.AddOrUpdate(x => x.Id, 
+                new Gender() { Id = 1, Name = "Male" },
+                new Gender() { Id = 2, Name = "Female" },
+                new Gender() { Id = 3, Name = "Others" }
+                );
+
+            context.BloodGroups.AddOrUpdate(x => x.Id, 
+                new BloodGroup(){ Id = 1, Name = "A+" },
+                new BloodGroup(){ Id = 2, Name = "B+" },
+                new BloodGroup(){ Id = 3, Name = "O+" },
+                new BloodGroup(){ Id = 4, Name = "A-" },
+                new BloodGroup(){ Id = 5, Name = "B-" },
+                new BloodGroup(){ Id = 6, Name = "O-" },
+                new BloodGroup(){ Id = 7, Name = "AB+" },
+                new BloodGroup(){ Id = 8, Name = "AB-" }
+                );
+
             context.Users.AddOrUpdate(x => x.Id,
                 new User()
                 {

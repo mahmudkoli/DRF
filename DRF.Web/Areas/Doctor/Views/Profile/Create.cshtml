@@ -1,0 +1,146 @@
+﻿@model DRF.Web.Areas.Doctor.Models.DoctorModel
+
+@{
+    ViewBag.Title = "Profile";
+}
+
+<section class="content-header">
+    <h1>
+        Profile
+        <small>Add Information</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li><a href="#"><i class="fa fa-dashboard"></i>Profile</a></li>
+        <li class="active">Add Information</li>
+    </ol>
+</section>
+
+@using (Html.BeginForm("Create", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <section class="content">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title"> Doctor</h3>
+            </div>
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="box-body">
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.FathersName, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(c => c.FathersName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.FathersName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.MothersName, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(c => c.MothersName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MothersName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.Phone, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(c => c.Phone, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.PresentAddress, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(c => c.PresentAddress, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.PresentAddress, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.DateOfBirth, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(c => c.DateOfBirth, "{0:MM/dd/yyyy}", new { @class = "form-control datemask-mm", @placeholder = "mm/dd/yyyy" })
+                            @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.GenderId, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-6">
+                            @Html.DropDownListFor(c => c.GenderId, new SelectList(Model.GenderCollection, "Id", "Name"), "---Select---", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.GenderId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.BloodGroupId, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-6">
+                            @Html.DropDownListFor(c => c.BloodGroupId, new SelectList(Model.BloodGroupCollection, "Id", "Name"), "---Select---", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.BloodGroupId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.SpecialtySelectedIds, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-6">
+                            @Html.ListBoxFor(c => c.SpecialtySelectedIds, new MultiSelectList(Model.SpecialtyCollection, "Id", "Name", @Model.SpecialtySelectedIds), new { @class = "form-control select2" })
+                            @Html.ValidationMessageFor(model => model.SpecialtySelectedIds, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.ChamberSelectedIds, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-6">
+                            @Html.ListBoxFor(c => c.ChamberSelectedIds, new MultiSelectList(Model.ChamberCollection, "Id", "Name", @Model.ChamberSelectedIds), new { @class = "form-control select2" })
+                            @Html.ValidationMessageFor(model => model.ChamberSelectedIds, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.DegreeSelectedIds, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-6">
+                            @Html.ListBoxFor(c => c.DegreeSelectedIds, new MultiSelectList(Model.DegreeCollection, "Id", "Name", @Model.DegreeSelectedIds), new { @class = "form-control select2" })
+                            @Html.ValidationMessageFor(model => model.DegreeSelectedIds, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.Designation, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(c => c.Designation, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Designation, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.Awards, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(c => c.Awards, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Awards, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.Description, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-6">
+                            @Html.TextAreaFor(c => c.Description, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.Experience, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(c => c.Experience, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Experience, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ImageFileBase" class="col-sm-2 control-label">Image </label>
+                        <div class="col-sm-6">
+                            <input type="file" id="ImageFileBase" name="ImageFileBase">
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button type="button" class="btn btn-default" onclick="window.location.reload(true)">Cancel</button>
+                    <button type="submit" class="btn btn-info pull-right">Save</button>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,23 +1,23 @@
-﻿using DRF.Repository.Context;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DRF.Repository.Context;
 
 namespace DRF.Repository
 {
-    public class UserUnitOfWork : IDisposable
+    public class PatientUnitOfWork : IDisposable
     {
         private DRFDbContext _context;
-        private UserRepository _userRepository;
-        public UserUnitOfWork(DRFDbContext context)
+        private PatientRepository _patientRepository;
+        public PatientUnitOfWork(DRFDbContext context)
         {
             _context = context;
-            _userRepository = new UserRepository(_context);
+            _patientRepository = new PatientRepository(_context);
         }
 
-        public UserRepository UserRepository => _userRepository; 
+        public PatientRepository PatientRepository => _patientRepository;
 
         public bool Save()
         {
