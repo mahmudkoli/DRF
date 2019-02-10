@@ -61,6 +61,10 @@
     <Compile Include="Migrations\201902081907420_AddedDoctorEntity.Designer.cs">
       <DependentUpon>201902081907420_AddedDoctorEntity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902091511031_AddRequiredField.cs" />
+    <Compile Include="Migrations\201902091511031_AddRequiredField.Designer.cs">
+      <DependentUpon>201902091511031_AddRequiredField.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PatientRepository.cs" />
     <Compile Include="PatientUnitOfWork.cs" />
@@ -84,6 +88,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902081907420_AddedDoctorEntity.resx">
       <DependentUpon>201902081907420_AddedDoctorEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902091511031_AddRequiredField.resx">
+      <DependentUpon>201902091511031_AddRequiredField.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

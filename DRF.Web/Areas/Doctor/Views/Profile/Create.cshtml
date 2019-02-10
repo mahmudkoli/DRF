@@ -10,8 +10,8 @@
         <small>Add Information</small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
-        <li><a href="#"><i class="fa fa-dashboard"></i>Profile</a></li>
+        <li><a href="@Url.Action("Index","Home")"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li><a href="@Url.Action("Index","Profile")"><i class="fa fa-dashboard"></i>Profile</a></li>
         <li class="active">Add Information</li>
     </ol>
 </section>
@@ -23,6 +23,11 @@
         <div class="box box-default">
             <div class="box-header with-border">
                 <h3 class="box-title"> Doctor</h3>
+                <div class="box-tools pull-right">
+                    <a href="@Request.UrlReferrer" class="btn btn-box-tool">
+                        <i class="fa fa-arrow-circle-left"></i> Back
+                    </a>
+                </div>
             </div>
             <div class="form-horizontal">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -53,6 +58,13 @@
                         <div class="col-sm-6">
                             @Html.TextBoxFor(c => c.PresentAddress, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.PresentAddress, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.PermanentAddress, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(c => c.PermanentAddress, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.PermanentAddress, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -126,9 +138,15 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="ImageFileBase" class="col-sm-2 control-label">Image </label>
+                        <label for="imageFile" class="col-sm-2 control-label">Image </label>
                         <div class="col-sm-6">
-                            <input type="file" id="ImageFileBase" name="ImageFileBase">
+                            <input type="file" id="imageFile" name="ImageFileBase" >
+                            <div class="img-container" id="imgContainer">
+                                <img src="" alt="Image Loaded" id="imagePreview" />
+                                <div class="img-text-block">
+                                    <a onclick="imageRemoved()"><i class="fa fa-times"></i></a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -143,4 +161,5 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/Projects/image.js"></script>
 }
