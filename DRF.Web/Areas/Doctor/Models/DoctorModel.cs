@@ -31,11 +31,20 @@ namespace DRF.Web.Areas.Doctor.Models
         {
             _doctorService = new DoctorService();
 
-            SpecialtyCollection = new List<Specialty>(){new Specialty(){Id = 1, Name = "ADS"}};
-            DegreeCollection = new List<Degree>() { new Degree() { Id = 1, Name = "ADS" } };
-            ChamberCollection = new List<Chamber>() { new Chamber() { Id = 1, Name = "ADS" } };
-            GenderCollection = new List<Gender>() { new Gender() { Id = 1, Name = "Male" } };
-            BloodGroupCollection = new List<BloodGroup>() { new BloodGroup() { Id = 1, Name = "A+" } };
+            SpecialtyCollection = new List<Specialty>(){ new Specialty(){Id = 1, Name = "Dental"},
+                new Specialty() { Id = 2, Name = "Ear" } , new Specialty() { Id = 3, Name = "Eye" }};
+
+            DegreeCollection = new List<Degree>(){ new Degree() { Id = 1, Name = "MBS" },
+                new Degree() { Id = 2, Name = "SSA" }, new Degree() { Id = 3, Name = "ECS" }};
+
+            ChamberCollection = new List<Chamber>() { new Chamber() { Id = 1, Name = "SQR" },
+                new Chamber() { Id = 2, Name = "SHM" }, new Chamber() { Id = 3, Name = "DEN" } };
+
+            GenderCollection = new List<Gender>() { new Gender() { Id = 1, Name = "Male" },
+                new Gender() { Id = 2, Name = "Female" }, new Gender() { Id = 3, Name = "Others" } };
+
+            BloodGroupCollection = new List<BloodGroup>() { new BloodGroup() { Id = 1, Name = "A+" },
+                new BloodGroup() { Id = 2, Name = "A-" }, new BloodGroup() { Id = 3, Name = "AB+" } };
         }
 
         public DoctorModel(int id) : this()
@@ -76,13 +85,22 @@ namespace DRF.Web.Areas.Doctor.Models
 
         public bool Add()
         {
-            this.UserId = AuthenticatedDoctorUserModel.GetUserFromIdentity().Id;
-            this.DoctorChamberRelations = this.ChamberSelectedIdsToDoctorChamberRelations().ToList();
-            this.DoctorSpecialtyRelations = this.SpecialtySelectedIdsToDoctorSpecialtyRelations().ToList();
-            this.DoctorDegreeRelations = this.DegreeSelectedIdsToDoctorDegreeRelations().ToList();
-            this.ImageUrl = CustomFile.SaveImageFile(this.ImageFileBase,
-                AuthenticatedDoctorUserModel.GetUserFromIdentity().Name,
-                AuthenticatedDoctorUserModel.GetUserFromIdentity().Id, "Doctor");
+            try
+            { 
+                this.UserId = AuthenticatedDoctorUserModel.GetUserFromIdentity().Id;
+                this.DoctorChamberRelations = this.ChamberSelectedIdsToDoctorChamberRelations().ToList();
+                this.DoctorSpecialtyRelations = this.SpecialtySelectedIdsToDoctorSpecialtyRelations().ToList();
+                this.DoctorDegreeRelations = this.DegreeSelectedIdsToDoctorDegreeRelations().ToList();
+                this.ImageUrl = CustomFile.SaveImageFile(this.ImageFileBase,
+                    AuthenticatedDoctorUserModel.GetUserFromIdentity().Name,
+                    AuthenticatedDoctorUserModel.GetUserFromIdentity().Id, "Doctor");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+
             return _doctorService.Add(this);
         }
 
@@ -119,6 +137,26 @@ namespace DRF.Web.Areas.Doctor.Models
                 this.DegreeSelectedIds.Select(x => new DoctorDegreeRelation() { DegreeId = x }) : null;
 
             return listEntities;
+        }
+
+        public bool Update()
+        {
+            try
+            { 
+                this.DoctorChamberRelations = this.ChamberSelectedIdsToDoctorChamberRelations().ToList();
+                this.DoctorSpecialtyRelations = this.SpecialtySelectedIdsToDoctorSpecialtyRelations().ToList();
+                this.DoctorDegreeRelations = this.DegreeSelectedIdsToDoctorDegreeRelations().ToList();
+                this.ImageUrl = CustomFile.SaveImageFile(this.ImageFileBase,
+                    AuthenticatedDoctorUserModel.GetUserFromIdentity().Name,
+                    AuthenticatedDoctorUserModel.GetUserFromIdentity().Id, "Doctor");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+
+            return _doctorService.Update(this);
         }
     }
 }

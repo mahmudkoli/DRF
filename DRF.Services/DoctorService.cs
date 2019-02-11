@@ -61,5 +61,45 @@ namespace DRF.Services
         {
             return _doctorUnitOfWork.DoctorRepository.GetById(id);
         }
+
+        public bool Update(Doctor entity)
+        {
+            try
+            {
+                var existingDoctor = _doctorUnitOfWork.DoctorRepository.GetById(entity.Id);
+
+                existingDoctor.User.Name = entity.User.Name;
+                existingDoctor.FathersName = entity.FathersName;
+                existingDoctor.MothersName = entity.MothersName;
+                existingDoctor.GenderId = entity.GenderId;
+                existingDoctor.BloodGroupId = entity.BloodGroupId;
+                existingDoctor.Designation = entity.Designation;
+                existingDoctor.Description = entity.Description;
+                existingDoctor.Phone = entity.Phone;
+                existingDoctor.PresentAddress = entity.PresentAddress;
+                existingDoctor.PermanentAddress = entity.PermanentAddress;
+                existingDoctor.Awards = entity.Awards;
+                existingDoctor.DateOfBirth = entity.DateOfBirth;
+                existingDoctor.Experience = entity.Experience;
+                existingDoctor.ImageUrl = String.IsNullOrEmpty(entity.ImageUrl) ? existingDoctor.ImageUrl : entity.ImageUrl;
+
+                // ...............remove previous relational data.............
+                _doctorUnitOfWork.DoctorRepository.DoctorChamberRelationsDeleteRange(existingDoctor.DoctorChamberRelations);
+                _doctorUnitOfWork.DoctorRepository.DoctorDegreeRelationsDeleteRange(existingDoctor.DoctorDegreeRelations);
+                _doctorUnitOfWork.DoctorRepository.DoctorSpecialtyRelationsDeleteRange(existingDoctor.DoctorSpecialtyRelations);
+
+                existingDoctor.DoctorChamberRelations = entity.DoctorChamberRelations;
+                existingDoctor.DoctorDegreeRelations = entity.DoctorDegreeRelations;
+                existingDoctor.DoctorSpecialtyRelations = entity.DoctorSpecialtyRelations;
+
+                _doctorUnitOfWork.DoctorRepository.Update(existingDoctor);
+                return _doctorUnitOfWork.Save();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
     }
 }

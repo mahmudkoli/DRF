@@ -213,6 +213,9 @@
                 <li class="@(currentAction == "Index" && currentController == "Appointment" ? "active" : "")">
                     <a href="@Url.Action("Index", "Appointment")"><i class="fa fa-link"></i> <span>Appointment</span></a>
                 </li>
+                <li class="@(currentAction == "Index" && currentController == "Schedule" ? "active" : "")">
+                    <a href="@Url.Action("Index", "Schedule")"><i class="fa fa-link"></i> <span>Schedule</span></a>
+                </li>
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-link"></i> <span>Multilevel</span>

@@ -141,8 +141,10 @@
     <Compile Include="Areas\Doctor\Controllers\ProfileController.cs" />
     <Compile Include="Areas\Doctor\Controllers\ScheduleController.cs" />
     <Compile Include="Areas\Doctor\DoctorAreaRegistration.cs" />
+    <Compile Include="Areas\Doctor\Models\AppointmentModel.cs" />
     <Compile Include="Areas\Doctor\Models\AuthenticatedDoctorUserModel.cs" />
     <Compile Include="Areas\Doctor\Models\DoctorModel.cs" />
+    <Compile Include="Areas\Doctor\Models\ScheduleModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -179,6 +181,7 @@
     <Content Include="Areas\Doctor\Views\Profile\Index.cshtml" />
     <Content Include="Areas\Doctor\Views\Appointment\Index.cshtml" />
     <Content Include="Areas\Doctor\Views\Schedule\Index.cshtml" />
+    <Content Include="Areas\Doctor\Views\Profile\Edit.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

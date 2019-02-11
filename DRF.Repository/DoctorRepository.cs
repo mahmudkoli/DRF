@@ -21,5 +21,18 @@ namespace DRF.Repository
         {
             return base.Get(x => x.UserId == userId).FirstOrDefault();
         }
+
+        public void DoctorChamberRelationsDeleteRange(IEnumerable<DoctorChamberRelation> entities)
+        {
+            _context.DoctorChamberRelations.RemoveRange(entities);
+        }
+        public void DoctorDegreeRelationsDeleteRange(IEnumerable<DoctorDegreeRelation> entities)
+        {
+            _context.DoctorDegreeRelations.RemoveRange(entities);
+        }
+        public void DoctorSpecialtyRelationsDeleteRange(IEnumerable<DoctorSpecialtyRelation> entities)
+        {
+            _context.DoctorSpecialtyRelations.RemoveRange(entities);
+        }
     }
 }

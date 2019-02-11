@@ -10,8 +10,8 @@ namespace DRF.Entities
     public class DoctorDegreeRelation : Entity
     {
         public int DoctorId { get; set; }
-        public Doctor Doctor { get; set; }
+        public virtual Doctor Doctor { get; set; }
         public int DegreeId { get; set; }
-        public Degree Degree { get; set; }
+        public virtual Degree Degree { get; set; }
     }
 }

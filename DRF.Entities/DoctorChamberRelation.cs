@@ -10,7 +10,7 @@ namespace DRF.Entities
     public class DoctorChamberRelation : Entity
     {
         public int DoctorId { get; set; }
-        public Doctor Doctor { get; set; }
+        public virtual Doctor Doctor { get; set; }
         public int ChamberId { get; set; }
         public virtual Chamber Chamber { get; set; }    
     }

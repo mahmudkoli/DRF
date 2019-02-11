@@ -56,18 +56,39 @@ namespace DRF.Web.Areas.Doctor.Controllers
                     TempData[CustomMessage.Success] = "Profile successfully created";
                     return RedirectToAction("Index");
                 }
-                else
-                {
-                    TempData[CustomMessage.Failure] = "Profile create failed";
-                }
             }
+
+            TempData[CustomMessage.Failure] = "Profile create failed";
             return View(model);
         }
 
         [HttpGet]
         public ActionResult Edit()
         {
-            return View();
+            _doctorModel = new DoctorModel(0);
+            return View(_doctorModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Exclude = "User.Email,User.Password,User.UserRoleId")] DoctorModel model)
+        {
+            ModelState.Remove("User.Email");
+            ModelState.Remove("User.Password");
+            ModelState.Remove("User.UserRoleId");
+
+            if (ModelState.IsValid)
+            {
+                var isUpdated = model.Update();
+                if (isUpdated)
+                {
+                    TempData[CustomMessage.Success] = "Profile successfully updated";
+                    return RedirectToAction("Index");
+                }
+            }
+
+            TempData[CustomMessage.Failure] = "Profile update failed";
+            return View(model);
         }
     }
 }

@@ -48,9 +48,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppointmentRepository.cs" />
+    <Compile Include="AppointmentUnitOfWork.cs" />
     <Compile Include="Base\IRepository.cs" />
     <Compile Include="Base\Repository.cs" />
+    <Compile Include="ChamberRepository.cs" />
+    <Compile Include="ChamberUnitOfWork.cs" />
     <Compile Include="Context\DRFDbContext.cs" />
+    <Compile Include="DegreeRepository.cs" />
+    <Compile Include="DegreeUnitOfWork.cs" />
     <Compile Include="DoctorRepository.cs" />
     <Compile Include="DoctorUnitOfWork.cs" />
     <Compile Include="Migrations\201901301634197_InitialMigration.cs" />
@@ -69,6 +75,10 @@
     <Compile Include="PatientRepository.cs" />
     <Compile Include="PatientUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScheduleRepository.cs" />
+    <Compile Include="ScheduleUnitOfWork.cs" />
+    <Compile Include="SpecialtyRepository.cs" />
+    <Compile Include="SpecialtyUnitOfWork.cs" />
     <Compile Include="UserRepository.cs" />
     <Compile Include="UserUnitOfWork.cs" />
   </ItemGroup>
