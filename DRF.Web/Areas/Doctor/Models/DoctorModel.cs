@@ -27,18 +27,19 @@ namespace DRF.Web.Areas.Doctor.Models
         public HttpPostedFileBase ImageFileBase { get; set; }
 
         private DoctorService _doctorService;
+        private ChamberService _chamberService;
+        private SpecialtyService _specialtyService;
+        private DegreeService _degreeService;
         public DoctorModel()
         {
             _doctorService = new DoctorService();
+            _chamberService = new ChamberService();
+            _degreeService = new DegreeService();
+            _specialtyService = new SpecialtyService();
 
-            SpecialtyCollection = new List<Specialty>(){ new Specialty(){Id = 1, Name = "Dental"},
-                new Specialty() { Id = 2, Name = "Ear" } , new Specialty() { Id = 3, Name = "Eye" }};
-
-            DegreeCollection = new List<Degree>(){ new Degree() { Id = 1, Name = "MBS" },
-                new Degree() { Id = 2, Name = "SSA" }, new Degree() { Id = 3, Name = "ECS" }};
-
-            ChamberCollection = new List<Chamber>() { new Chamber() { Id = 1, Name = "SQR" },
-                new Chamber() { Id = 2, Name = "SHM" }, new Chamber() { Id = 3, Name = "DEN" } };
+            SpecialtyCollection = _specialtyService.GetAll();
+            DegreeCollection = _degreeService.GetAll();
+            ChamberCollection = _chamberService.GetAll();
 
             GenderCollection = new List<Gender>() { new Gender() { Id = 1, Name = "Male" },
                 new Gender() { Id = 2, Name = "Female" }, new Gender() { Id = 3, Name = "Others" } };

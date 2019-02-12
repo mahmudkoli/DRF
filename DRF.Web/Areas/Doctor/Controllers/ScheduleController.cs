@@ -24,7 +24,7 @@ namespace DRF.Web.Areas.Doctor.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            return View(_scheduleModel);
         }
 
         [HttpPost]

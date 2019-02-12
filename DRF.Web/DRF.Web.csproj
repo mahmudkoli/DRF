@@ -182,6 +182,7 @@
     <Content Include="Areas\Doctor\Views\Appointment\Index.cshtml" />
     <Content Include="Areas\Doctor\Views\Schedule\Index.cshtml" />
     <Content Include="Areas\Doctor\Views\Profile\Edit.cshtml" />
+    <Content Include="Areas\Doctor\Views\Schedule\Create.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -194,6 +195,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\Projects\image.js" />
+    <Content Include="Scripts\Projects\schedule.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
