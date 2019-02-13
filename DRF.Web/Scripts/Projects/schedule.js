@@ -6,7 +6,8 @@ $(document).ready(function () {
         var row = $(this).closest('tr').clone();
         row.find('td:last').html('<a href="#" class="text-danger removeScheduleRow"><i class="fa fa-lg fa-remove"></i></a>');
         $('#scheduleTable').append(row);
-        
+
+        $('.timepicker').timepicker();
         nameSerialization('#scheduleTable');
     });
 

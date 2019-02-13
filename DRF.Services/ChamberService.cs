@@ -22,5 +22,10 @@ namespace DRF.Services
         {
             return _chamberUnitOfWork.ChamberRepository.GetAll();
         }
+
+        public IEnumerable<Chamber> GetAllByDoctorId(int doctorId)
+        {
+            return _chamberUnitOfWork.ChamberRepository.GetAllByDoctorId(doctorId);
+        }
     }
 }

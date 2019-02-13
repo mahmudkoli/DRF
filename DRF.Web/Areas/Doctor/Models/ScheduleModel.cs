@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using DRF.Entities;
 using DRF.Services;
+using WebGrease.Css.Extensions;
 
 namespace DRF.Web.Areas.Doctor.Models
 {
@@ -24,7 +25,23 @@ namespace DRF.Web.Areas.Doctor.Models
             _scheduleService = new ScheduleService();
             _chamberService = new ChamberService();
 
-            ChamberCollection = _chamberService.GetAll();
+            ChamberCollection = _chamberService.GetAllByDoctorId(AuthenticatedDoctorUserModel.GetDoctorUserFromIdentity().Id);
+        }
+
+        public IEnumerable<Schedule> GetAllSchedules()
+        {
+            return _scheduleService.GetAllByDoctorId(AuthenticatedDoctorUserModel.GetDoctorUserFromIdentity().Id);
+        }
+
+        public bool Add()
+        {
+            this.ScheduleCollection.ForEach(x =>
+            {
+                x.ChamberId = this.ChamberId;
+                x.DoctorId = AuthenticatedDoctorUserModel.GetDoctorUserFromIdentity().Id;
+            });
+
+            return _scheduleService.AddRange(this.ScheduleCollection);
         }
     }
 }

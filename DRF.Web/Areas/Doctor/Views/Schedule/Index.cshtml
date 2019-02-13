@@ -1,7 +1,73 @@
-﻿
+﻿@using DRF.Common
+@model DRF.Web.Areas.Doctor.Models.ScheduleModel
+
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Schedule";
 }
 
-<h2>Index</h2>
+<section class="content-header">
+    <h1>
+        Schedule
+        <small> Information</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index","Home")"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li><a href="@Url.Action("Index","Schedule")"><i class="fa fa-dashboard"></i>Schedule</a></li>
+        <li class="active"> Information</li>
+    </ol>
+</section>
 
+    <section class="content">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title"> Schedule</h3>
+                <div class="box-tools pull-right">
+                    <a href="@Request.UrlReferrer" class="btn btn-box-tool">
+                        <i class="fa fa-arrow-circle-left"></i> Back
+                    </a>
+                    <div class="btn-group">
+                        <a class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="@Url.Action("Create","Schedule")">Add Schedule</a></li>
+                            <li><a href="@Url.Action("Edit","Schedule")">Edit Schedule</a></li>
+                            <li><a href="@Url.Action("Index","Profile")">Profile</a></li>
+                            <li><a href="@Url.Action("Index","Appointment")">Appointment</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="box-body">
+
+                    <div class="table-responsive no-padding">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Chamber</th>
+                                <th>Available Day</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Duration (Min)</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.ScheduleCollection)
+                                {
+                                    <tr>
+                                        <td class="col-md-3">@item.Chamber.Name</td>
+                                        <td class="col-md-2">@((CustomEnum.Day)item.Day)</td>
+                                        <td class="col-md-2">@item.StartTime.ToString("t")</td>
+                                        <td class="col-md-2">@item.EndTime.ToString("t")</td>
+                                        <td class="col-md-1 text-center">@item.DurationTime</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>

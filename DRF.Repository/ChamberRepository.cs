@@ -16,5 +16,10 @@ namespace DRF.Repository
         {
             _context = context;
         }
+
+        public IEnumerable<Chamber> GetAllByDoctorId(int doctorId)
+        {
+            return _context.DoctorChamberRelations.Where(x => x.DoctorId == doctorId).Select(y => y.Chamber);
+        }
     }
 }
