@@ -1,58 +1,70 @@
-﻿@model DRF.Web.Models.LoginUserModel
+﻿@using DRF.Common
+@model DRF.Web.Models.LoginUserModel
 
 @{
     ViewBag.Title = "Login";
 }
 
-<h2>Login</h2>
+<div class="bg_color_2">
+    <div class="container margin_60_35">
+        <div id="login">
+            <h1>Login to @CustomName.ProjectName!</h1>
+            <div class="box_form">
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    <div class="form-group">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Your email address" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.RememberMe, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.RememberMe)
-                    @Html.ValidationMessageFor(model => model.RememberMe, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
+                    <div class="form-group">
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Your password" } })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Login" class="btn btn-default" />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="checkbox-holder text-left">
+                                <div class="checkbox_2">
+                                    <input type="checkbox" id="rememberMe" name="RememberMe" value="false">
+                                    <label for="rememberMe"><span>Remember Me</span></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 text-right">
+                            <a href="@Url.Action("ForgotPassword")"><small>Forgot password?</small></a>
+                        </div>
+                    </div>
+
+                    <div id="pass-info" class="clearfix"></div>
+                    <div class="form-group text-center add_top_20">
+                        <input class="btn_1 medium" type="submit" value="Login">
+                    </div>
+                }
             </div>
-            <div class="col-md-offset-2 col-md-10">
-                @Html.ActionLink("Registration Now", "Registration", "User")
-                @Html.ActionLink("Forgot Password?", "ForgotPassword", "User")
-            </div>
+            <p class="text-center link_bright">Do not have an account yet? <a href="@Url.Action("Registration")"><strong>Register now!</strong></a></p>
         </div>
     </div>
-}
-
+</div>
 
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function() {
+            $('input[type="checkbox"]').change(function() {
+                if ($(this).is(':checked')) {
+                    $(this).val('true');
+                } else {
+                    $(this).val('false');
+                }
+            });
+        });
+    </script>
 }

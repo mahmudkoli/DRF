@@ -1,0 +1,44 @@
+﻿@{
+    Layout = null;
+}
+
+<style>
+    #custom-search-input .search-query {
+        width: 25%;
+        box-shadow: 0 0;
+     }
+
+        #custom-search-input .search-query:nth-child(1) {
+            border-bottom-right-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+        #custom-search-input .search-query:nth-child(2) {
+            border-radius: 0;
+        }
+
+        #custom-search-input .search-query:nth-child(3) {
+            width: 50%;
+            border-bottom-left-radius: 0;
+            border-top-left-radius: 0;
+        }
+</style>
+
+<div class="hero_home version_1">
+    <div class="content">
+        <h3>Find a Doctor!</h3>
+        <p>
+            Search Doctor
+        </p>
+        <form method="post" action="list.html">
+            <div id="custom-search-input">
+                <div class="input-group">
+                    <input type="text" class="search-query" placeholder="Area...">
+                    <input type="text" class="search-query" placeholder="Specialization...">
+                    <input type="text" class="search-query" placeholder="Name...">
+                    <input type="submit" class="btn_search" value="Search">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -55,6 +55,8 @@
     var routeValues = ViewContext.RouteData.Values;
     var currentAction = routeValues["Action"].ToString();
     var currentController = routeValues["Controller"].ToString();
+    var imageUrl = authDoctorUser == null ? "~/Images/dr-avatar.png" : 
+        (authDoctorUser.ImageUrl == "" ? "~/Images/dr-avatar.png" : authDoctorUser.ImageUrl);
 }
 
 <div class="wrapper">
@@ -81,7 +83,7 @@
                                     <li>
                                         <a href="#">
                                             <div class="pull-left">
-                                                <img src="~/Images/dr-avatar.png" class="img-circle" alt="User Image">
+                                                <img src="@Url.Content(imageUrl)" class="img-circle" alt="Image">
                                             </div>
                                             <h4>
                                                 Support Team
@@ -146,12 +148,12 @@
                     </li>
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="~/Images/dr-avatar.png" class="user-image" alt="User Image">
+                            <img src="@Url.Content(imageUrl)" class="user-image" alt="Image">
                             <span class="hidden-xs">@authUser.Name</span>
                         </a>
                         <ul class="dropdown-menu">
                             <li class="user-header">
-                                <img src="~/Images/dr-avatar.png" class="img-circle" alt="User Image">
+                                <img src="@Url.Content(imageUrl)" class="img-circle" alt="Image">
                                 <p>
                                     @authUser.Name
                                     <small>Member since @CustomConvert.ShortMonth(authUser.CreatedAt.Value.Month), @authUser.CreatedAt.Value.Year</small>
@@ -188,7 +190,7 @@
         <section class="sidebar">
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="~/Images/dr-avatar.png" class="img-circle" alt="User Image">
+                    <img src="@Url.Content(imageUrl)" class="img-circle" alt="Image">
                 </div>
                 <div class="pull-left info">
                     <p>@authUser.Name</p>

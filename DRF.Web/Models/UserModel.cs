@@ -19,6 +19,9 @@ namespace DRF.Web.Models
         [Compare("Password", ErrorMessage = "Confirm password and password do not match")]
         public string ConfirmPassword { get; set; }
 
+        [Display(Name = "Are You Doctor?")]
+        public bool AreYouDoctor { get; set; }
+
         public string executeMessage;
         private UserService _userService;
 

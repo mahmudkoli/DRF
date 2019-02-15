@@ -1,0 +1,52 @@
+﻿@using DRF.Common
+@{
+    Layout = null;
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3 col-6">
+            <div id="logo_home">
+                <h1><a href="@Url.Action("Index","Home")" title="@CustomName.ProjectName">@CustomName.ProjectShortName</a></h1>
+            </div>
+        </div>
+        <div class="col-lg-9 col-6">
+            <ul id="top_access">
+                <li><a href="@Url.Action("Login","User")"><i class="pe-7s-user"></i></a></li>
+                <li><a href="@Url.Action("Registration","User")"><i class="pe-7s-add-user"></i></a></li>
+            </ul>
+            <nav id="menu" class="main-menu">
+                <ul>
+                    <li>
+                        <span><a href="#">Home</a></span>
+                        <ul>
+                            <li><a href="#">Home Default</a></li>
+                            <li><a href="#">Home Version</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span><a href="#">Doctor</a></span>
+                        <ul>
+                            <li><a href="#">Doctor Default</a></li>
+                            <li><a href="#">Doctor Version</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span><a href="#">Patient</a></span>
+                        <ul>
+                            <li><a href="#">Patient Default</a></li>
+                            <li><a href="#">Patient Version</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span><a href="#">About</a></span>
+                    </li>
+                    <li>
+                        <span><a href="#">Contact</a></span>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
