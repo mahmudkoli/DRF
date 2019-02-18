@@ -50,6 +50,8 @@
   <ItemGroup>
     <Compile Include="AppointmentRepository.cs" />
     <Compile Include="AppointmentUnitOfWork.cs" />
+    <Compile Include="AreaRepository.cs" />
+    <Compile Include="AreaUnitOfWork.cs" />
     <Compile Include="Base\IRepository.cs" />
     <Compile Include="Base\Repository.cs" />
     <Compile Include="ChamberRepository.cs" />

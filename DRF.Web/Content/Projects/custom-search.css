@@ -1,0 +1,67 @@
+﻿body {
+}
+
+/*---------Home --- Search.................*/
+#custom-search-input .search-query {
+    width: 25%;
+    box-shadow: 0 0;
+}
+
+#custom-search-input .search-query:nth-child(1) {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+
+#custom-search-input .search-query:nth-child(2) {
+    border-radius: 0;
+}
+
+#custom-search-input .search-query:nth-child(3) {
+    width: 50%;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+/*------------------ Search --- Pagination----------------*/
+.strip_list ul li:first-child a {
+    border: 2px solid #e74e84;
+    color: #e74e84;
+    cursor: pointer;
+    padding: 5px 20px;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+    border-radius: 30px;
+}
+
+.strip_list ul li:first-child a:hover {
+    background-color: #e74e84;
+    color: white !important;
+}
+
+.strip_list ul li:first-child:after {
+    /*content: '|';
+        font-weight: 400;
+        margin-left: 8px;
+        color: #ccc;*/
+    color: #FFF;
+}
+
+.pagination > li > a:hover, .pagination > li > span:hover, .pagination > li > a:focus, .pagination > li > span:focus {
+    color: #ffffff;
+    background-color: #e74e84;
+    border-color: #e74e84;
+}
+
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, 
+.pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+    color: #ffffff;
+    cursor: default;
+    background-color: #3f4079;
+    border-color: #3f4079;
+}

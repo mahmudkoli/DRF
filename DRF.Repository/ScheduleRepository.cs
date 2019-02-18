@@ -16,5 +16,20 @@ namespace DRF.Repository
         {
             _context = context;
         }
+
+        public IEnumerable<Schedule> GetAllByDoctorId(int doctorId)
+        {
+            return base.Get(x => x.DoctorId == doctorId);
+        }
+
+        public IEnumerable<Schedule> GetDoctorAvailableDay(int doctorId, int chamberId)
+        {
+            return base.Get(x => x.DoctorId == doctorId && x.ChamberId == chamberId);
+        }
+
+        public IEnumerable<Schedule> GetDoctorAvailableTime(int doctorId, int chamberId, int day)
+        {
+            return base.Get(x => x.DoctorId == doctorId && x.ChamberId == chamberId && x.Day == day);
+        }
     }
 }

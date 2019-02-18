@@ -34,5 +34,25 @@ namespace DRF.Repository
         {
             _context.DoctorSpecialtyRelations.RemoveRange(entities);
         }
+
+        public IEnumerable<Doctor> GetAllDoctors(string area, string specialty, string name)
+        {
+            var doctors = (IEnumerable<Doctor>)_context.Doctors;
+            doctors = string.IsNullOrEmpty(area)
+                ? doctors
+                : doctors.Where(x => x.DoctorChamberRelations.Any( y => 
+                                         y.Chamber.Area.Name.ToLower().Contains(area.ToLower())));
+
+            doctors = string.IsNullOrEmpty(specialty)
+                ? doctors
+                : doctors.Where(x => x.DoctorSpecialtyRelations.Any(y =>
+                                        y.Specialty.Name.ToLower().Contains(specialty.ToLower())));
+
+            doctors = string.IsNullOrEmpty(name)
+                ? doctors
+                : doctors.Where(x => x.User.Name.ToLower().Contains(name.ToLower()));
+
+            return doctors;
+        }
     }
 }

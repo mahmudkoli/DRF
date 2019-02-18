@@ -68,7 +68,17 @@ namespace DRF.Services
 
         public IEnumerable<Schedule> GetAllByDoctorId(int doctorId)
         {
-            return _scheduleUnitOfWork.ScheduleRepository.Get(x => x.DoctorId == doctorId);
+            return _scheduleUnitOfWork.ScheduleRepository.GetAllByDoctorId(doctorId);
+        }
+
+        public IEnumerable<Schedule> GetDoctorAvailableDay(int doctorId, int chamberId)
+        {
+            return _scheduleUnitOfWork.ScheduleRepository.GetDoctorAvailableDay(doctorId, chamberId);
+        }
+
+        public IEnumerable<Schedule> GetDoctorAvailableTime(int doctorId, int chamberId, int day)
+        {
+            return _scheduleUnitOfWork.ScheduleRepository.GetDoctorAvailableTime(doctorId, chamberId, day);
         }
     }
 }

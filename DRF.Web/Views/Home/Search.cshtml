@@ -1,0 +1,87 @@
+﻿@model DRF.Web.Models.DoctorSearchModel
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "Search";
+}
+
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+<link href="~/Content/Projects/custom-search.css" rel="stylesheet" />
+
+<div id="results">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4><strong>Showing @(((Model.DoctorCollection.PageNumber - 1) * Model.DoctorCollection.PageSize) + 1) to 
+                            @(((Model.DoctorCollection.PageNumber - 1) * Model.DoctorCollection.PageSize) + Model.DoctorCollection.Count)
+                            </strong> of @(Model.DoctorCollection.TotalItemCount) results</h4>
+                </div>
+                <div class="col-md-6">
+                    <div class="search_bar_list">
+                        
+                        @using (Html.BeginForm("Search", "Home", FormMethod.Post))
+                        {
+                            <div id="custom-search-input">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.AreaName, new { @class = "search-query", @id = "areaSearch", @placeholder = "Area..." })
+                                    @*<input type="text" class="search-query" id="areaSearch" name="AreaName" placeholder="Area...">*@
+                                    @Html.TextBoxFor(model => model.SpecialtyName, new { @class = "search-query", @id = "specialtySearch", @placeholder = "Specialization..." })
+                                    @*<input type="text" class="search-query" id="specialtySearch" name="SpecialtyName" placeholder="Specialization...">*@
+                                    @Html.TextBoxFor(model => model.DoctorName, new { @class = "search-query", @id = "doctorNameSearch", @placeholder = "Name..." })
+                                    @*<input type="text" class="search-query" id="doctorNameSearch" name="DoctorName" placeholder="Name...">*@
+                                    <input type="submit" class="btn_search" value="Search">
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container margin_60_35">
+        <div class="row">
+            <div class="col-lg-7">
+
+                @foreach (var doctor in Model.DoctorCollection)
+                {
+                    @Html.Partial("_DoctorInfo", doctor)
+                }
+
+                Page @(Model.DoctorCollection.PageCount < Model.DoctorCollection.PageNumber ? 0 : Model.DoctorCollection.PageNumber) of
+                @Model.DoctorCollection.PageCount
+
+
+                <nav>
+                    @Html.PagedListPager(Model.DoctorCollection, Page =>
+                        Url.Action("Search", "Home", new RouteValueDictionary()
+                        { { "Page", Page }, { "PageSize", Model.PageSize }, { "AreaName", Model.AreaName },
+                            { "SpecialtyName", Model.SpecialtyName }, { "DoctorName", Model.DoctorName } }))
+                </nav>
+
+            </div>
+
+            <aside class="col-lg-5" id="sidebar">
+                <div id="map_listing" class="normal_list">
+                </div>
+            </aside>
+
+        </div>
+    </div>
+
+
+
+@section scripts{
+    <script src="~/Scripts/Projects/autocomplete.js"></script>
+    <script src="~/Scripts/Projects/search.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('header').removeClass('header_sticky');
+            $('header').addClass('static');
+
+            $('main').addClass('theia-exception');
+        });
+    </script>
+}
