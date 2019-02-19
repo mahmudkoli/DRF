@@ -151,6 +151,7 @@
     <Compile Include="Areas\Doctor\Models\AuthenticatedDoctorUserModel.cs" />
     <Compile Include="Areas\Doctor\Models\DoctorModel.cs" />
     <Compile Include="Areas\Doctor\Models\ScheduleModel.cs" />
+    <Compile Include="Controllers\AppointmentController.cs" />
     <Compile Include="Controllers\AutoCompleteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JsonDataController.cs" />
@@ -158,6 +159,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AppointmentModel.cs" />
     <Compile Include="Models\LoginUserModel.cs" />
     <Compile Include="Models\ResetPasswordModel.cs" />
     <Compile Include="Models\SearchModel.cs" />
@@ -337,6 +339,7 @@
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Uploads\Images\Doctor\" />
     <Folder Include="Uploads\Images\Patient\" />
+    <Folder Include="Views\Appointment\" />
     <Folder Include="Views\JsonData\" />
   </ItemGroup>
   <ItemGroup>

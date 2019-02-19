@@ -12,4 +12,13 @@ namespace DRF.Web.Areas.Doctor.Models
         {
         }
     }
+
+    public class AppointmentDraft
+    {
+        public int DoctorId { get; set; }
+        public int ChamberId { get; set; }
+        public int PatientId { get; set; }
+        public DateTime NewAppointmentDate { get; set; }
+        public DateTime NewAppointmentTime { get; set; }
+    }
 }

@@ -3,7 +3,7 @@
 @{
     var imageUrl = string.IsNullOrEmpty(Model.ImageUrl) ? "~/Images/dr-avatar.png" : Model.ImageUrl;
 }
-@Html.HiddenFor(model => model.Id, new { @id = "doctorId" })
+
 @{
     ViewBag.Title = "Doctor Details";
 }
@@ -34,150 +34,73 @@
 
         <div class="col-xl-9 col-lg-8">
 
-        <div class="box_general_2 add_bottom_45">
+            @using (Html.BeginForm("GetAppoinment", "Appointment"))
+            {
+                @Html.AntiForgeryToken()
+                @Html.Hidden("DoctorId", Model.Id, new { @id = "doctorId" })
+                @Html.Hidden("NewAppointmentDate", "{0:mm/dd/yyyy}", new{ @id= "newAppointmentDate" })
+                <div class="box_general_2 add_bottom_45">
 
-            <div class="main_title_4">
-                <h3><i class="icon_circle-slelected"></i>Select doctor chamber</h3>
-            </div>
-
-            <div class="row add_bottom_45">
-                <div class="col-lg-12">
-                    <div class="form-group">
-                        @Html.DropDownList("ChamberId", 
-                             new SelectList(Model.DoctorChamberRelations.Select(x => x.Chamber), "Id", "Name"), 
-                             new { @class="form-control", @id="chamberId" })
+                    <div class="main_title_4">
+                        <h3><i class="icon_circle-slelected"></i>Select doctor chamber</h3>
                     </div>
-                </div>
-            </div>
-            <!-- /row -->
 
-            <div class="main_title_4">
-                <h3><i class="icon_circle-slelected"></i>Select your date and time</h3>
-            </div>
-
-            <div class="row add_bottom_45">
-                <div class="col-lg-7">
-                    <div class="form-group">
-                        <div id="calendar"></div>
-                        <input type="hidden" id="my_hidden_input">
-                        <ul class="legend">
-                            <li><strong></strong>Available</li>
-                            <li><strong></strong>Not available</li>
-                        </ul>
+                    <div class="row add_bottom_45">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                @Html.DropDownList("ChamberId",
+                                     new SelectList(Model.DoctorChamberRelations.Select(x => x.Chamber), "Id", "Name"),
+                                     new { @class="form-control", @id="chamberId" })
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-5">
-                    <ul class="time_select version_2 add_top_20">
+                    <!-- /row -->
+
+                    <div class="main_title_4">
+                        <h3><i class="icon_circle-slelected"></i>Select your date and time</h3>
+                    </div>
+
+                    <div class="row add_bottom_45">
+                        <div class="col-lg-7">
+                            <div class="form-group">
+                                <div id="calendar"></div>
+                                <input type="hidden" id="my_hidden_input">
+                                <ul class="legend">
+                                    <li><strong></strong>Available</li>
+                                    <li><strong></strong>Not available</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <ul class="time_select version_2 add_top_20" id="doctorAvailableTime"></ul>
+                        </div>
+                    </div>
+                    <!-- /row -->
+
+                    <div class="main_title_4">
+                        <h3><i class="icon_circle-slelected"></i>Select visit - treatment</h3>
+                    </div>
+                    <ul class="treatments clearfix">
                         <li>
-                            <input type="radio" id="radio1" name="radio_time" value="09.30am">
-                            <label for="radio1">09.30am</label>
+                            <div class="checkbox">
+                                <input type="checkbox" class="css-checkbox" id="visit7" name="visit7">
+                                <label for="visit7" class="css-label">Neck Pain visit <strong>$55</strong></label>
+                            </div>
                         </li>
                         <li>
-                            <input type="radio" id="radio2" name="radio_time" value="10.00am">
-                            <label for="radio2">10.00am</label>
-                        </li>
-                        <li>
-                            <input type="radio" id="radio3" name="radio_time" value="10.30am">
-                            <label for="radio3">10.30am</label>
-                        </li>
-                        <li>
-                            <input type="radio" id="radio4" name="radio_time" value="11.00am">
-                            <label for="radio4">11.00am</label>
-                        </li>
-                        <li>
-                            <input type="radio" id="radio5" name="radio_time" value="11.30am">
-                            <label for="radio5">11.30am</label>
-                        </li>
-                        <li>
-                            <input type="radio" id="radio6" name="radio_time" value="12.00am">
-                            <label for="radio6">12.00am</label>
-                        </li>
-                        <li>
-                            <input type="radio" id="radio7" name="radio_time" value="01.30pm">
-                            <label for="radio7">01.30pm</label>
-                        </li>
-                        <li>
-                            <input type="radio" id="radio8" name="radio_time" value="02.00pm">
-                            <label for="radio8">02.00pm</label>
-                        </li>
-                        <li>
-                            <input type="radio" id="radio9" name="radio_time" value="02.30pm">
-                            <label for="radio9">02.30pm</label>
-                        </li>
-                        <li>
-                            <input type="radio" id="radio10" name="radio_time" value="03.00pm">
-                            <label for="radio10">03.00pm</label>
-                        </li>
-                        <li>
-                            <input type="radio" id="radio11" name="radio_time" value="03.30pm">
-                            <label for="radio11">03.30pm</label>
-                        </li>
-                        <li>
-                            <input type="radio" id="radio12" name="radio_time" value="04.00pm">
-                            <label for="radio12">04.00pm</label>
+                            <div class="checkbox">
+                                <input type="checkbox" class="css-checkbox" id="visit8" name="visit8">
+                                <label for="visit8" class="css-label">Back Pain visit <strong>$55</strong></label>
+                            </div>
                         </li>
                     </ul>
+                    <hr>
+                    <div class="text-center"><button type="submit" class="btn_1 medium">Appointment Now</button></div>
                 </div>
-            </div>
-            <!-- /row -->
+                <!-- /box_general -->
 
-            <div class="main_title_4">
-                <h3><i class="icon_circle-slelected"></i>Select visit - treatment</h3>
-            </div>
-            <ul class="treatments clearfix">
-                <li>
-                    <div class="checkbox">
-                        <input type="checkbox" class="css-checkbox" id="visit1" name="visit1">
-                        <label for="visit1" class="css-label">Back Pain visit <strong>$55</strong></label>
-                    </div>
-                </li>
-                <li>
-                    <div class="checkbox">
-                        <input type="checkbox" class="css-checkbox" id="visit2" name="visit2">
-                        <label for="visit2" class="css-label">Cardiovascular screen <strong>$55</strong></label>
-                    </div>
-                </li>
-                <li>
-                    <div class="checkbox">
-                        <input type="checkbox" class="css-checkbox" id="visit3" name="visit3">
-                        <label for="visit3" class="css-label">Diabetes consultation <strong>$55</strong></label>
-                    </div>
-                </li>
-                <li>
-                    <div class="checkbox">
-                        <input type="checkbox" class="css-checkbox" id="visit4" name="visit4">
-                        <label for="visit4" class="css-label">Icontinence visit <strong>$55</strong></label>
-                    </div>
-                </li>
-                <li>
-                    <div class="checkbox">
-                        <input type="checkbox" class="css-checkbox" id="visit5" name="visit5">
-                        <label for="visit5" class="css-label">Foot Pain visit <strong>$55</strong></label>
-                    </div>
-                </li>
-                <li>
-                    <div class="checkbox">
-                        <input type="checkbox" class="css-checkbox" id="visit6" name="visit6">
-                        <label for="visit6" class="css-label">Food intollerance visit <strong>$55</strong></label>
-                    </div>
-                </li>
-                <li>
-                    <div class="checkbox">
-                        <input type="checkbox" class="css-checkbox" id="visit7" name="visit7">
-                        <label for="visit7" class="css-label">Neck Pain visit <strong>$55</strong></label>
-                    </div>
-                </li>
-                <li>
-                    <div class="checkbox">
-                        <input type="checkbox" class="css-checkbox" id="visit8" name="visit8">
-                        <label for="visit8" class="css-label">Back Pain visit <strong>$55</strong></label>
-                    </div>
-                </li>
-            </ul>
-            <hr>
-            <div class="text-center"><a href="booking-page.html" class="btn_1 medium">Appointment Now</a></div>
-        </div>
-            <!-- /box_general -->
+            }
+
 
             <div class="tabs_styled_2">
                 <ul class="nav nav-tabs" role="tablist">

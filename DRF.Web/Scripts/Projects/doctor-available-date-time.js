@@ -2,10 +2,15 @@
 
 $(document).ready(function () {
 
+    var startDate = new Date();
+    var endDate = new Date(new Date().setMonth(startDate.getMonth() + 1));
+
     $('#calendar').datepicker({
         todayHighlight: true,
         daysOfWeekDisabled: [5],
         weekStart: 6,
+        startDate: startDate,
+        endDate: endDate,
         format: "mm-dd-yyyy",
         datesDisabled: ["02/21/2019"]
     });
@@ -15,6 +20,7 @@ $(document).ready(function () {
     getDoctorAvailableDay(doctorId, chamberId);
 
     $('#chamberId').on('change', function () {
+        $('#doctorAvailableTime').empty();
         doctorId = $('#doctorId').val();
         chamberId = $('#chamberId').val();
         getDoctorAvailableDay(doctorId, chamberId);
@@ -28,8 +34,9 @@ $(document).ready(function () {
         doctorId = $('#doctorId').val();
         chamberId = $('#chamberId').val();
         var selectedDate = $("#calendar").datepicker('getDate');
-        var date = (selectedDate.getMonth() + 1) + '/' + selectedDate.getDate() + '/' + selectedDate.getFullYear();
-        getDoctorAvailableTime(doctorId, chamberId, date);
+        //var newDate = (selectedDate.getMonth() + 1) + '/' + selectedDate.getDate() + '/' + selectedDate.getFullYear();
+        $('#newAppointmentDate').val(selectedDate.toUTCString());
+        getDoctorAvailableTime(doctorId, chamberId, selectedDate.toUTCString());
 
     });
 
@@ -70,7 +77,23 @@ $(document).ready(function () {
             dataType: "json",
             data: data,
             success: function (data) {
-                alert(data.times.join(", "));
+                
+                $('#doctorAvailableTime').empty();
+
+                $.each(data.times, function (i, val) {
+
+                    var newDate = new Date(parseInt(val.substr(6)));
+                    var timeOptions = { hour: 'numeric', minute: 'numeric', hour12: true };
+                    var timeString = newDate.toLocaleString('en-US', timeOptions);
+                    
+                    var labelOption = '<li>' +
+                        '<input type="radio" id="radio_' + i + '" name="NewAppointmentTime" value="' + newDate.toUTCString() + '" >' +
+                            '<label for="radio_' + i + '">' + timeString + '</label>' +
+                            '</li >';
+
+                    $('#doctorAvailableTime').append(labelOption);
+                });
+                
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 alert(textStatus + "! please try again", '<i class="fa fa-exclamation-circle" aria-hidden="true"> Alert</i>');
