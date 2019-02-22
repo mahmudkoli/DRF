@@ -1,7 +1,15 @@
 ﻿@using DRF.Common
+@using DRF.Web.Models
 @{
     Layout = null;
 }
+
+@{
+    var routeValues = ViewContext.RouteData.Values;
+    var currentAction = routeValues["Action"].ToString();
+    var currentController = routeValues["Controller"].ToString();
+}
+
 
 
 <div class="container">
@@ -13,8 +21,18 @@
         </div>
         <div class="col-lg-9 col-6">
             <ul id="top_access">
-                <li><a href="@Url.Action("Login","User")"><i class="pe-7s-user"></i></a></li>
-                <li><a href="@Url.Action("Registration","User")"><i class="pe-7s-add-user"></i></a></li>
+                @if (!Request.IsAuthenticated)
+                {
+                    <li><a href="@Url.Action("Login", "User")" title="Login"><i class="pe-7s-user"></i></a></li>
+                    <li><a href="@Url.Action("Registration", "User")" title="Registration"><i class="pe-7s-add-user"></i></a></li>
+                }
+                else
+                {
+                    using (Html.BeginForm("Logout", "User", FormMethod.Post, new { id = "logoutForm" }))
+                    {
+                        <li><a href="javascript:document.getElementById('logoutForm').submit()" title="Logout"><i class="pe-7s-power"></i></a></li>
+                    }
+                } 
             </ul>
             <nav id="menu" class="main-menu">
                 <ul>
@@ -40,11 +58,27 @@
                         </ul>
                     </li>
                     <li>
+                        <span><a href="@Url.Action("Search","Home")">Search</a></span>
+                    </li>
+                    <li>
                         <span><a href="#">About</a></span>
                     </li>
                     <li>
                         <span><a href="#">Contact</a></span>
                     </li>
+                    @if (Request.IsAuthenticated && User.IsInRole("Patient"))
+                    {
+                        var authUser = AuthenticatedPatientUserModel.GetUserFromIdentity();
+                        <li>
+                            <span><a href="@Url.Action("Index", "Profile")">Hi, @authUser.Name</a></span>
+                        </li>
+                    }
+                    else if (Request.IsAuthenticated && User.IsInRole("Doctor"))
+                    {
+                        <li>
+                            <span><a href="@Url.Action("Index", "Home", new { area="Doctor" })">Doctor Dashboard</a></span>
+                        </li>
+                    }
                 </ul>
             </nav>
         </div>

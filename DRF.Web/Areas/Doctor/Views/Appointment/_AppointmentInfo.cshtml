@@ -1,0 +1,90 @@
+﻿@using DRF.Common
+@model DRF.Entities.Appointment
+
+<style>
+    .callout a {
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .callout .btn {
+        background-color: #d2d6de;
+        border-radius: 25px;
+        color: #333333;
+    }
+
+    .callout .btn-success {
+        border-color: #d2d6de;
+    }
+        .callout .btn-success:hover {
+            background-color: #28A745;
+        }
+
+    .callout .btn-danger {
+        border-color: #d2d6de;
+    }
+        .callout .btn-danger:hover {
+            background-color: #DC3545;
+        }
+
+     .callout.callout-info {
+         background-color: #F8F9FA !important;
+         border-color: #0097bc;
+         color: #000000 !important;
+     }
+        .callout.callout-info:hover {
+            background-color: #ECF0F5 !important;
+        }
+
+    .callout.callout-info img {
+        width: 100%;
+        max-width: 80px;
+        height: auto;
+        border: 2px solid #d2d6de;
+    }
+</style>
+
+@{
+    var imageUrl = "~/Images/avatar.png";
+    imageUrl = string.IsNullOrEmpty(Model.Patient.ImageUrl) ? imageUrl : Model.Patient.ImageUrl;
+}
+
+<div class="callout callout-info">
+    <div class="row">
+        <div class="col-md-2 text-center">
+            <img src="@Url.Content(imageUrl)" class="img-circle" alt="Image"/>
+        </div>
+        <div class="col-md-6">
+            <h4>@Model.Patient.User.Name &nbsp;&nbsp;&nbsp;<span class="badge badge-info">@((CustomEnum.AppointmentStatus)Model.AppointmentStatus)</span></h4>
+
+            <div class="row">
+                <div class="col-md-4"><p>Appointment Date</p></div>
+                <div class="col-md-8"><p>@Model.AppointmentDate.ToString("d")</p></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"><p>Appointment Time</p></div>
+                <div class="col-md-8"><p>@Model.AppointmentTime.ToString("t")</p></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"><p>Email</p></div>
+                <div class="col-md-8"><p>@Model.Patient.User.Email</p></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"><p>Phone</p></div>
+                <div class="col-md-8"><p>@Model.Patient.Phone</p></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"><p>Disease</p></div>
+                <div class="col-md-8"><p>@Model.Disease</p></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"><p>Booking Date</p></div>
+                <div class="col-md-8"><p>@Model.CreatedAt.Value.ToString("d") @Model.CreatedAt.Value.ToString("t")</p></div>
+            </div>
+        </div>
+        <div class="col-md-4 text-right">
+            <a href="@Url.Action("ApprovedAppointment","Appointment", new{id = @Model.Id})" class="btn btn-success"><i class="fa fa-fw fa-check-circle-o"></i>Approve</a>
+            <a href="@Url.Action("RejectedAppointment","Appointment", new{id = @Model.Id})" class="btn btn-danger"><i class="fa fa-fw fa-times-circle-o"></i>Reject</a>
+        </div>
+    </div>
+</div>

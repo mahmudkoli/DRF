@@ -177,7 +177,10 @@
                                     <a href="@Url.Action("Index","Profile")" class="btn btn-default btn-flat">Profile</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="@Url.Action("Logout","Profile")" class="btn btn-default btn-flat">Sign out</a>
+                                    @using (Html.BeginForm("Logout", "User", new { area="" }, FormMethod.Post, new { id = "logoutForm" }))
+                                    {
+                                        <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-default btn-flat">Sign out</a>
+                                    }
                                 </div>
                             </li>
                         </ul>
@@ -212,22 +215,23 @@
                 <li class="@(currentAction == "Index" && currentController == "Profile" ? "active" : "")">
                     <a href="@Url.Action("Index", "Profile")"><i class="fa fa-link"></i> <span>Profile</span></a>
                 </li>
-                <li class="@(currentAction == "Index" && currentController == "Appointment" ? "active" : "")">
-                    <a href="@Url.Action("Index", "Appointment")"><i class="fa fa-link"></i> <span>Appointment</span></a>
-                </li>
                 <li class="@(currentAction == "Index" && currentController == "Schedule" ? "active" : "")">
                     <a href="@Url.Action("Index", "Schedule")"><i class="fa fa-link"></i> <span>Schedule</span></a>
                 </li>
-                <li class="treeview">
+                <li class="treeview @(currentController == "Appointment" ? "active" : "")">
                     <a href="#">
-                        <i class="fa fa-link"></i> <span>Multilevel</span>
+                        <i class="fa fa-link"></i> <span>Appointment</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="#">Link in level 2</a></li>
-                        <li><a href="#">Link in level 2</a></li>
+                        <li><a href="@Url.Action("PendingAppointment", "Appointment")">
+                            <i class="fa fa-circle-o"></i> <span>Pending Appointment</span>
+                        </a></li>
+                        <li><a href="@Url.Action("AppointmentHistory", "Appointment")">
+                            <i class="fa fa-circle-o"></i> <span>Appointment History</span>
+                        </a></li>
                     </ul>
                 </li>
             </ul>

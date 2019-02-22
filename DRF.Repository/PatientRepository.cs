@@ -16,5 +16,10 @@ namespace DRF.Repository
         {
             _context = context;
         }
+
+        public Patient GetByUserId(int userId)
+        {
+            return base.Get(x => x.UserId == userId).FirstOrDefault();
+        }
     }
 }

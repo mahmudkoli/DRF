@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using DRF.Web.Areas.Doctor.Models;
+using DRF.Web.Models;
 
 namespace DRF.Web.Controllers
 {
+    [Authorize(Roles = "Patient")]
     public class AppointmentController : Controller
     {
         private AppointmentModel _appointmentModel;
@@ -22,12 +23,28 @@ namespace DRF.Web.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult GetAppointment(AppointmentModel model)
+        {
+            model.DoctorName = model.GetDoctorName(model.DoctorId);
+            model.ChamberName = model.GetChamberName(model.ChamberId);
+            return View(model);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult GetAppoinment(AppointmentDraft draft)
+        public ActionResult ConfirmAppointment(AppointmentModel model)
         {
-            var newDraft = draft;
-            return View();
+            if (ModelState.IsValid)
+            {
+                var isSaved = model.Add();
+                if (isSaved)
+                {
+                    return View();
+                }
+            }
+
+            return RedirectToAction("GetAppointment", model);
         }
     }
 }

@@ -34,9 +34,8 @@
 
         <div class="col-xl-9 col-lg-8">
 
-            @using (Html.BeginForm("GetAppoinment", "Appointment"))
+            @using (Html.BeginForm("GetAppointment", "Appointment", FormMethod.Get))
             {
-                @Html.AntiForgeryToken()
                 @Html.Hidden("DoctorId", Model.Id, new { @id = "doctorId" })
                 @Html.Hidden("NewAppointmentDate", "{0:mm/dd/yyyy}", new{ @id= "newAppointmentDate" })
                 <div class="box_general_2 add_bottom_45">

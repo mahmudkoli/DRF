@@ -62,6 +62,11 @@ namespace DRF.Services
             return _doctorUnitOfWork.DoctorRepository.GetById(id);
         }
 
+        public string GetDoctorNameById(int id)
+        {
+            return _doctorUnitOfWork.DoctorRepository.GetById(id).User.Name;
+        }
+
         public bool Update(Doctor entity)
         {
             try

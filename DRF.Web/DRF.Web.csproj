@@ -151,15 +151,18 @@
     <Compile Include="Areas\Doctor\Models\AuthenticatedDoctorUserModel.cs" />
     <Compile Include="Areas\Doctor\Models\DoctorModel.cs" />
     <Compile Include="Areas\Doctor\Models\ScheduleModel.cs" />
+    <Compile Include="Areas\Doctor\Models\SearchModel.cs" />
     <Compile Include="Controllers\AppointmentController.cs" />
     <Compile Include="Controllers\AutoCompleteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JsonDataController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AppointmentModel.cs" />
+    <Compile Include="Models\AuthenticatedPatientUserModel.cs" />
     <Compile Include="Models\LoginUserModel.cs" />
     <Compile Include="Models\ResetPasswordModel.cs" />
     <Compile Include="Models\SearchModel.cs" />
@@ -235,6 +238,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\avatar.png" />
     <Content Include="Images\dr-avatar.png" />
     <Content Include="ConnectionStrings.config" />
     <Content Include="Areas\Admin\Views\web.config" />
@@ -247,7 +251,7 @@
     <Content Include="Areas\Doctor\Views\Home\Index.cshtml" />
     <Content Include="Areas\Doctor\Views\Profile\Create.cshtml" />
     <Content Include="Areas\Doctor\Views\Profile\Index.cshtml" />
-    <Content Include="Areas\Doctor\Views\Appointment\Index.cshtml" />
+    <Content Include="Areas\Doctor\Views\Appointment\PendingAppointment.cshtml" />
     <Content Include="Areas\Doctor\Views\Schedule\Index.cshtml" />
     <Content Include="Areas\Doctor\Views\Profile\Edit.cshtml" />
     <Content Include="Areas\Doctor\Views\Schedule\Create.cshtml" />
@@ -273,6 +277,8 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Areas\Doctor\Views\Appointment\_AppointmentInfo.cshtml" />
+    <Content Include="Areas\Doctor\Views\Appointment\AppointmentHistory.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -333,14 +339,16 @@
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Home\_DoctorInfo.cshtml" />
     <Content Include="Views\Home\DoctorDetailsInfo.cshtml" />
+    <Content Include="Views\Appointment\ConfirmAppointment.cshtml" />
+    <Content Include="Views\Appointment\GetAppointment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Uploads\Images\Doctor\" />
     <Folder Include="Uploads\Images\Patient\" />
-    <Folder Include="Views\Appointment\" />
     <Folder Include="Views\JsonData\" />
+    <Folder Include="Views\Profile\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

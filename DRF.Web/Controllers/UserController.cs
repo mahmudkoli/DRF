@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using DRF.Authentication;
+using DRF.Common;
 
 namespace DRF.Web.Controllers
 {
@@ -80,18 +82,21 @@ namespace DRF.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var isAuthUser = _userModel.IsAuthenticateUser(model);
+                var isAuthUser = _userModel.IsAuthenticatedUser(model);
 
-                if (isAuthUser)
+                if (isAuthUser != null)
                 {
+                    if (isAuthUser.UserRoleId == (int)CustomEnum.UserType.Doctor)
+                    {
+                        return RedirectToAction("Index", "Home", new {area = "Doctor"});
+                    }
+
                     if (Url.IsLocalUrl(ReturnUrl))
                     {
                         return Redirect(ReturnUrl);
                     }
-                    else
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
+
+                    return RedirectToAction("Index", "Home");
                 }
             }
 

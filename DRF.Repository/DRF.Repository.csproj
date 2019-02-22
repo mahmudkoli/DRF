@@ -73,6 +73,10 @@
     <Compile Include="Migrations\201902091511031_AddRequiredField.Designer.cs">
       <DependentUpon>201902091511031_AddRequiredField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902201756411_Add Patient Info.cs" />
+    <Compile Include="Migrations\201902201756411_Add Patient Info.Designer.cs">
+      <DependentUpon>201902201756411_Add Patient Info.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PatientRepository.cs" />
     <Compile Include="PatientUnitOfWork.cs" />
@@ -103,6 +107,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902091511031_AddRequiredField.resx">
       <DependentUpon>201902091511031_AddRequiredField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902201756411_Add Patient Info.resx">
+      <DependentUpon>201902201756411_Add Patient Info.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
