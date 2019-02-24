@@ -23,14 +23,28 @@
             <div class="box box-default">
                 <div class="box-header with-border">
                     <i class="fa fa-bullhorn"></i>
-                    <h3 class="box-title">Pending Appointment</h3>
+                    <h3 class="box-title">Pending <span class="badge">@Model.AppointmentCollection.TotalItemCount</span></h3>
                     <div class="box-tools pull-right">
                         <a href="@Request.UrlReferrer" class="btn btn-box-tool">
                             <i class="fa fa-arrow-circle-left"></i> Back
                         </a>
                         <div class="btn-group">
+                            @using (Html.BeginForm("PendingAppointment", "Appointment", FormMethod.Get, new { @id = "pendingAppointmentForm" }))
+                            {
+                                @Html.DropDownListFor(model => model.LastDays, new List<SelectListItem>()
+                                {
+                                    new SelectListItem() {Value = null, Text = "All"},
+                                    new SelectListItem() {Value = (1).ToString(), Text = "Last Day"},
+                                    new SelectListItem() {Value = (7).ToString(), Text = "Last 7 Days"},
+                                    new SelectListItem() {Value = (30).ToString(), Text = "Last Months"},
+                                    new SelectListItem() {Value = (365).ToString(), Text = "Last Years"},
+                                }, new {@class = "form-control input-sm"})
+                            }
+                        </div>
+                        <div class="btn-group">
                             <a class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-wrench"></i></a>
+                                <i class="fa fa-wrench"></i>
+                            </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="@Url.Action("AppointmentHistory","Appointment")">Appointment History</a></li>
                                 <li><a href="@Url.Action("Index","Profile")">Profile</a></li>
@@ -49,7 +63,10 @@
 
                     @Html.PagedListPager(Model.AppointmentCollection, Page =>
                         Url.Action("PendingAppointment", "Appointment", new RouteValueDictionary()
-                        { { "Page", Page }, { "PageSize", Model.PageSize }, { "AppointmentStatus", Model.AppointmentStatus } }))
+                        {
+                            { "Page", Page }, { "PageSize", Model.PageSize }, { "AppointmentStatus", Model.AppointmentStatus },
+                            { "LastDays", Model.LastDays }
+                        }))
 
                 </div>
                 <!-- /.box-body -->
@@ -59,4 +76,15 @@
         <!-- /.col -->
     </div>
 </section>
+
+
+@section scripts{
+    <script>
+        $(document).ready(function() {
+            $('#LastDays').on('change', function() {
+                $('#pendingAppointmentForm').submit();
+            });
+        });
+    </script>
+}
 

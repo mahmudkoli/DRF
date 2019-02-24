@@ -150,6 +150,7 @@
     <Compile Include="Areas\Doctor\Models\AppointmentModel.cs" />
     <Compile Include="Areas\Doctor\Models\AuthenticatedDoctorUserModel.cs" />
     <Compile Include="Areas\Doctor\Models\DoctorModel.cs" />
+    <Compile Include="Areas\Doctor\Models\DoctorNotificationModel.cs" />
     <Compile Include="Areas\Doctor\Models\ScheduleModel.cs" />
     <Compile Include="Areas\Doctor\Models\SearchModel.cs" />
     <Compile Include="Controllers\AppointmentController.cs" />

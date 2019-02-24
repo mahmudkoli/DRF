@@ -16,9 +16,9 @@ namespace DRF.Web.Areas.Doctor.Models
             _appointmentService = new AppointmentService();
         }
 
-        public IEnumerable<Appointment> GetAllByDoctorId()
+        public IEnumerable<Appointment> GetAllByDoctorId(int? status, int? lastDays)
         {
-            return _appointmentService.GetAllByDoctorId(AuthenticatedDoctorUserModel.GetDoctorUserFromIdentity().Id);
+            return _appointmentService.GetAllByDoctorId(AuthenticatedDoctorUserModel.GetDoctorUserFromIdentity().Id, status, lastDays);
         }
 
         public bool ApprovedAppointmentById(int id)
@@ -31,10 +31,10 @@ namespace DRF.Web.Areas.Doctor.Models
             return _appointmentService.RejectedAppointmentById(id);
         }
 
-        public IEnumerable<Appointment> GetAllPendingAppointmentByDoctorId()
+        public IEnumerable<Appointment> GetAllPendingAppointmentByDoctorId(int? lastDays)
         {
-            return _appointmentService.GetAllByDoctorIdWithStatus(
-                AuthenticatedDoctorUserModel.GetDoctorUserFromIdentity().Id, (int)CustomEnum.AppointmentStatus.Requested);
+            return _appointmentService.GetAllByDoctorId(
+                AuthenticatedDoctorUserModel.GetDoctorUserFromIdentity().Id, (int)CustomEnum.AppointmentStatus.Requested, lastDays);
         }
     }
 }

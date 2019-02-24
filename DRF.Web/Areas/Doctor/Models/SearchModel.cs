@@ -9,7 +9,8 @@ namespace DRF.Web.Areas.Doctor.Models
 {
     public class AppointmentSearchModel
     {
-        public int AppointmentStatus { get; set; }
+        public int? AppointmentStatus { get; set; }
+        public int? LastDays { get; set; }
 
         public int Page { get; set; }
         public int PageSize { get; set; }

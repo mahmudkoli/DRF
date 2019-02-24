@@ -26,5 +26,10 @@ namespace DRF.Repository
         {
             return base.Get(x => x.DoctorId == id && x.AppointmentStatus == status);
         }
+
+        public Patient GetLastAppointmentRequestPatientByDoctorId(int doctorId)
+        {
+            return base.Get(x => x.DoctorId == doctorId).OrderByDescending(y => y.CreatedAt).Select(t => t.Patient).FirstOrDefault();
+        }
     }
 }

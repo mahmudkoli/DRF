@@ -55,8 +55,11 @@
     var routeValues = ViewContext.RouteData.Values;
     var currentAction = routeValues["Action"].ToString();
     var currentController = routeValues["Controller"].ToString();
-    var imageUrl = authDoctorUser == null ? "~/Images/dr-avatar.png" : 
+    var imageUrl = authDoctorUser == null ? "~/Images/dr-avatar.png" :
         (authDoctorUser.ImageUrl == "" ? "~/Images/dr-avatar.png" : authDoctorUser.ImageUrl);
+
+    var appointmentRequestPendingCount = new DoctorNotificationModel().GetAppointmentRequestPendingCount;
+    //var lastAppointmentRequestPatient = DoctorNotifications.GetLastAppointmentRequestPatientName;
 }
 
 <div class="wrapper">
@@ -100,20 +103,14 @@
                     <li class="dropdown notifications-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-bell-o"></i>
-                            <span class="label label-warning">10</span>
+                            @if (appointmentRequestPendingCount > 0)
+                            {
+                                <span class="label label-warning">@appointmentRequestPendingCount</span>
+                            }
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="header">You have 10 notifications</li>
-                            <li>
-                                <ul class="menu">
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="footer"><a href="#">View all</a></li>
+                            <li class="header">You have @appointmentRequestPendingCount pending appointment request</li>
+                            <li class="footer"><a href="@Url.Action("PendingAppointment","Appointment")">View all</a></li>
                         </ul>
                     </li>
                     <li class="dropdown tasks-menu">
@@ -159,7 +156,7 @@
                                     <small>Member since @CustomConvert.ShortMonth(authUser.CreatedAt.Value.Month), @authUser.CreatedAt.Value.Year</small>
                                 </p>
                             </li>
-                            <li class="user-body">
+                            @*<li class="user-body">
                                 <div class="row">
                                     <div class="col-xs-4 text-center">
                                         <a href="#">Followers</a>
@@ -171,7 +168,7 @@
                                         <a href="#">Friends</a>
                                     </div>
                                 </div>
-                            </li>
+                            </li>*@
                             <li class="user-footer">
                                 <div class="pull-left">
                                     <a href="@Url.Action("Index","Profile")" class="btn btn-default btn-flat">Profile</a>
@@ -227,10 +224,10 @@
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="@Url.Action("PendingAppointment", "Appointment")">
-                            <i class="fa fa-circle-o"></i> <span>Pending Appointment</span>
+                            <i class="fa fa-circle-o"></i> <span> Pending</span>
                         </a></li>
                         <li><a href="@Url.Action("AppointmentHistory", "Appointment")">
-                            <i class="fa fa-circle-o"></i> <span>Appointment History</span>
+                            <i class="fa fa-circle-o"></i> <span> History</span>
                         </a></li>
                     </ul>
                 </li>

@@ -46,9 +46,12 @@ namespace DRF.Services
             }
         }
 
-        public IEnumerable<Appointment> GetAllByDoctorId(int id)
+        public IEnumerable<Appointment> GetAllByDoctorId(int id, int? status, int? lastDays)
         {
-            return _appointmentUnitOfWork.AppointmentRepository.GetAllByDoctorId(id);
+            var data = _appointmentUnitOfWork.AppointmentRepository.GetAllByDoctorId(id);
+            data = status == null ? data : data.Where(x => x.AppointmentStatus == status);
+            data = lastDays == null ? data : data.Where(x => x.CreatedAt != null && x.CreatedAt.Value.AddDays(1) >= DateTime.Now.AddDays(-lastDays.Value));
+            return data;
         }
 
         public bool ApprovedAppointmentById(int id)
@@ -85,9 +88,9 @@ namespace DRF.Services
             }
         }
 
-        public IEnumerable<Appointment> GetAllByDoctorIdWithStatus(int id, int status)
+        public Patient GetLastAppointmentRequestPatientByDoctorId(int doctorId)
         {
-            return _appointmentUnitOfWork.AppointmentRepository.GetAllByDoctorIdWithStatus(id, status);
+            return _appointmentUnitOfWork.AppointmentRepository.GetLastAppointmentRequestPatientByDoctorId(doctorId);
         }
     }
 }

@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomColor.cs" />
     <Compile Include="CustomConvert.cs" />
     <Compile Include="CustomCrypto.cs" />
     <Compile Include="CustomEmail.cs" />

@@ -24,7 +24,7 @@ namespace DRF.Web.Areas.Doctor.Controllers
         public ActionResult AppointmentHistory(AppointmentSearchModel model)
         {
             model = model ?? new AppointmentSearchModel();
-            var appoinments = _appointmentModel.GetAllByDoctorId().ToList();
+            var appoinments = _appointmentModel.GetAllByDoctorId(model.AppointmentStatus, model.LastDays).ToList();
             model.AppointmentCollection = appoinments.ToPagedList(model.Page, model.PageSize);
             return View(model);
         }
@@ -32,7 +32,7 @@ namespace DRF.Web.Areas.Doctor.Controllers
         public ActionResult PendingAppointment(AppointmentSearchModel model)
         {
             model = model ?? new AppointmentSearchModel();
-            var appoinments = _appointmentModel.GetAllPendingAppointmentByDoctorId().ToList();
+            var appoinments = _appointmentModel.GetAllPendingAppointmentByDoctorId(model.LastDays).ToList();
             model.AppointmentCollection = appoinments.ToPagedList(model.Page, model.PageSize);
             return View(model);
         }
