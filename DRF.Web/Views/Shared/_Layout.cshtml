@@ -3,75 +3,69 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
+    <title>@ViewBag.Title | DRF</title>
+
+    <!-- Favicons-->
+    <link rel="shortcut icon" href="~/HomePlugins/img/favicon.ico" type="image/x-icon">
+
+    @*@Styles.Render("~/Content/css")*@
     @Scripts.Render("~/bundles/modernizr")
+
+    <!-- Theme CSS -->
+    <link href="~/HomePlugins/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/HomePlugins/css/style.css" rel="stylesheet">
+    <link href="~/HomePlugins/css/menu.css" rel="stylesheet">
+    <link href="~/HomePlugins/css/vendors.css" rel="stylesheet">
+    <link href="~/HomePlugins/css/icon_fonts/css/all_icons_min.css" rel="stylesheet">
+
+    <link href="~/Content/themes/flick/jquery-ui.flick.min.css" rel="stylesheet" />
+
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        @{
-                            if (Request.IsAuthenticated)
-                            {
-                                var identity = (HttpContext.Current.User as DRF.Authentication.CustomPrincipal).Identity as DRF.Authentication.CustomIdentity;
-                                <p class="navbar-text" style="color: white;">@string.Format("Hello, {0}", identity.User.Name)</p>
-                            }
-                        }
-                    </li>
-                    <li>
-                        @{
-                            if (Request.IsAuthenticated)
-                            {
-                                using (Html.BeginForm("Logout", "User", FormMethod.Post, new { @id = "logoutForm", @class = "navbar-form navbar-left" }))
-                                {
-                                    <div class="form-group">
-                                        <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-default">Logout</a>
-                                    </div>
-                                }
-                            }
-                            else
-                            {
-                                    <div class="navbar-form navbar-left">
-                                        <div class="form-group">
-                                            @Html.ActionLink("Registration", "Registration", "User", null, new { @class = "btn btn-default" })
-                                        </div>
-                                        <div class="form-group">
-                                            @Html.ActionLink("Login", "Login", "User", null, new { @class = "btn btn-default" })
-                                        </div>
-                                    </div>
-                            }
-                        }
-                    </li>
-                </ul>
-            </div>
-        </div>
+
+    <div id="preloader" class="Fixed">
+        <div data-loader="circle-side"></div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
+    <!-- /Preload-->
+
+    <div id="page">
+
+        <header class="header_sticky">
+            <a href="#menu" class="btn_mobile">
+                <div class="hamburger hamburger--spin" id="hamburger">
+                    <div class="hamburger-box">
+                        <div class="hamburger-inner"></div>
+                    </div>
+                </div>
+            </a>
+            @Html.Partial("_TopNavBar")
+        </header>
+
+
+        <main>
+
+            @RenderBody()
+
+        </main>
+
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            @Html.Partial("_Footer")
         </footer>
+
     </div>
+
+    <div id="toTop"></div>
+    <!-- Back to top button -->
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+
+    <!-- Theme Script -->
+    <script src="~/HomePlugins/js/common_scripts.min.js"></script>
+    <script src="~/HomePlugins/js/functions.js"></script>
+
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+
     @RenderSection("scripts", required: false)
 </body>
 </html>

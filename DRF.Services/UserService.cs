@@ -13,9 +13,11 @@ namespace DRF.Services
     public class UserService
     {
         private UserUnitOfWork _userUnitOfWork;
+        private PatientService _patientService;
         public UserService()
         {
             _userUnitOfWork = new UserUnitOfWork(new DRFDbContext());
+            _patientService = new PatientService();
         }
 
         public bool Add(User user)
@@ -27,16 +29,26 @@ namespace DRF.Services
                     Name = user.Name,
                     Email = user.Email,
                     Password = CustomCrypto.Hash(user.Password),
-                    IsEmailVerified = false,
+                    IsEmailVerified = true, //  Should be false
                     ActivationCode = Guid.NewGuid(),
                     UserRoleId = user.UserRoleId
                 };
                 _userUnitOfWork.UserRepository.Add(newUser);
 
                 //Send Email to User
-                CustomEmail.SendVerificationLinkEmail(newUser.Email, newUser.ActivationCode.ToString());
+                //CustomEmail.SendVerificationLinkEmail(newUser.Email, newUser.ActivationCode.ToString());
 
                 var isSaved = _userUnitOfWork.Save();
+
+                //--------Save with Patient---------
+                if (newUser.UserRoleId == (int)CustomEnum.UserType.Patient)
+                {
+                    var newPatient = new Patient()
+                    {
+                        UserId = newUser.Id
+                    };
+                    _patientService.Add(newPatient);
+                }
 
                 return isSaved;
             }

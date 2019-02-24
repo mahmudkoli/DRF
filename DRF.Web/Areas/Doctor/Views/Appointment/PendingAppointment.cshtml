@@ -1,0 +1,90 @@
+﻿@model DRF.Web.Areas.Doctor.Models.AppointmentSearchModel
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "Appointment";
+}
+
+<section class="content-header">
+    <h1>
+        Appointment
+        <small>Information</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index","Home")"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="@Url.Action("AppointmentHistory","Appointment")"><i class="fa fa-dashboard"></i> Appointment History</a></li>
+        <li class="active">Pending Appointment</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <i class="fa fa-bullhorn"></i>
+                    <h3 class="box-title">Pending <span class="badge">@Model.AppointmentCollection.TotalItemCount</span></h3>
+                    <div class="box-tools pull-right">
+                        <a href="@Request.UrlReferrer" class="btn btn-box-tool">
+                            <i class="fa fa-arrow-circle-left"></i> Back
+                        </a>
+                        <div class="btn-group">
+                            @using (Html.BeginForm("PendingAppointment", "Appointment", FormMethod.Get, new { @id = "pendingAppointmentForm" }))
+                            {
+                                @Html.DropDownListFor(model => model.LastDays, new List<SelectListItem>()
+                                {
+                                    new SelectListItem() {Value = null, Text = "All"},
+                                    new SelectListItem() {Value = (1).ToString(), Text = "Last Day"},
+                                    new SelectListItem() {Value = (7).ToString(), Text = "Last 7 Days"},
+                                    new SelectListItem() {Value = (30).ToString(), Text = "Last Months"},
+                                    new SelectListItem() {Value = (365).ToString(), Text = "Last Years"},
+                                }, new {@class = "form-control input-sm"})
+                            }
+                        </div>
+                        <div class="btn-group">
+                            <a class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="@Url.Action("AppointmentHistory","Appointment")">Appointment History</a></li>
+                                <li><a href="@Url.Action("Index","Profile")">Profile</a></li>
+                                <li><a href="@Url.Action("Index","Schedule")">Schedule</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                    @foreach (var appointment in Model.AppointmentCollection)
+                    {
+                        @Html.Partial("_AppointmentInfo", appointment)
+                    }
+
+                    @Html.PagedListPager(Model.AppointmentCollection, Page =>
+                        Url.Action("PendingAppointment", "Appointment", new RouteValueDictionary()
+                        {
+                            { "Page", Page }, { "PageSize", Model.PageSize }, { "AppointmentStatus", Model.AppointmentStatus },
+                            { "LastDays", Model.LastDays }
+                        }))
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+</section>
+
+
+@section scripts{
+    <script>
+        $(document).ready(function() {
+            $('#LastDays').on('change', function() {
+                $('#pendingAppointmentForm').submit();
+            });
+        });
+    </script>
+}
+

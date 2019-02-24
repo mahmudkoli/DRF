@@ -19,6 +19,9 @@ namespace DRF.Web.Models
         [Compare("Password", ErrorMessage = "Confirm password and password do not match")]
         public string ConfirmPassword { get; set; }
 
+        [Display(Name = "Are You Doctor?")]
+        public bool AreYouDoctor { get; set; }
+
         public string executeMessage;
         private UserService _userService;
 
@@ -40,7 +43,7 @@ namespace DRF.Web.Models
             return _userService.GetAll();
         }
 
-        public bool IsAuthenticateUser(LoginUserModel model)
+        public User IsAuthenticatedUser(LoginUserModel model)
         {
             try
             {
@@ -51,35 +54,33 @@ namespace DRF.Web.Models
                     if (!user.IsEmailVerified)
                     {
                         executeMessage = "Please verify your email first";
-                        return false;
+                        return null;
                     }
 
                     if (String.Compare(CustomCrypto.Hash(model.Password), user.Password) == 0)
                     {
                         CustomFormsAuthentication.Login(user, model.RememberMe);
                         executeMessage = "";
-                        return true;
+                        return user;
                     }
                     else
                     {
                         executeMessage = "Invalid user email or password";
-                        return false;
+                        return null;
                     }
                 }
                 else
                 {
                     executeMessage = "Invalid user email or password";
-                    return false;
+                    return null;
                 }
-
-
-                return true;
+                
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
                 executeMessage = ex.Message;
-                return false;
+                return null;
             }
         }
 

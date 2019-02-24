@@ -22,5 +22,11 @@ namespace DRF.Services
         {
             return _specialtyUnitOfWork.SpecialtyRepository.GetAll();
         }
+
+        public IEnumerable<string> GetAllSpecialtyName(string term)
+        {
+            return _specialtyUnitOfWork.SpecialtyRepository.Get(x => x.Name.ToLower().Contains(term.ToLower()))
+                .Select(y => y.Name);
+        }
     }
 }

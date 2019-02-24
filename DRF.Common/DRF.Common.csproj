@@ -42,12 +42,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomColor.cs" />
     <Compile Include="CustomConvert.cs" />
     <Compile Include="CustomCrypto.cs" />
     <Compile Include="CustomEmail.cs" />
     <Compile Include="CustomEnum.cs" />
     <Compile Include="CustomFile.cs" />
     <Compile Include="CustomMessage.cs" />
+    <Compile Include="CustomName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Secret.cs" />
   </ItemGroup>

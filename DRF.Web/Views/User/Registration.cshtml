@@ -1,68 +1,100 @@
-﻿@model DRF.Web.Models.UserModel
+﻿@using DRF.Common
+@model DRF.Web.Models.UserModel
 
 @{
     ViewBag.Title = "Registration";
 }
 
-<h2>Registration</h2>
+<div class="bg_color_2">
+    <div class="container margin_60_35">
+        <div id="register">
+            <h1>Register to @CustomName.ProjectName!</h1>
+            <div class="row justify-content-center">
+                <div class="col-md-5">
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        <div class="box_form">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Your name" } })
+                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Your  email address" } })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Your password" } })
+                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", @placeholder = "Confirm password" } })
+                                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                                
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.UserRoleId, htmlAttributes: new { @class = "control-label" })
+                                @Html.DropDownListFor(model => model.UserRoleId, new SelectList(Model.UserRoles, "Id", "Role"), "--Select--", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.UserRoleId, "", new { @class = "text-danger" })
+                            </div>
+                            
+                            @*<div id="pass-info" class="clearfix"></div>
+                            <div class="checkbox-holder text-left">
+                                <div class="checkbox_2">
+                                    <input type="checkbox" id="areYouDoctor" name="AreYouDoctor" value="false">
+                                    <label for="areYouDoctor"><span><strong>Are You Doctor?</strong></span></label>
+                                </div>
+                            </div>*@
+
+                            <div class="checkbox-holder text-left">
+                                <div class="checkbox_2">
+                                    <input type="checkbox" id="agreeTerms">
+                                    <label for="agreeTerms"><span>I Agree to the <strong>Terms &amp; Conditions</strong></span></label>
+                                </div>
+                            </div>
+
+                            <div class="form-group text-center add_top_30">
+                                <input class="btn_1" type="submit" value="Submit">
+                            </div>
+                        </div>
+                        <p class="text-center"><small>@CustomName.ProjectName</small></p>
+                    }
+
+                </div>
             </div>
+            <!-- /row -->
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.UserRoleId, "User Type", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.UserRoleId, new SelectList(Model.UserRoles, "Id", "Role"), "--Select--", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.UserRoleId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Registration" class="btn btn-default" />
-            </div>
-        </div>
+        <!-- /register -->
     </div>
-}
-
+</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function() {
+            $('input[type="checkbox"]').change(function() {
+                if ($(this).is(':checked')) {
+                    $(this).val('true');
+                } else {
+                    $(this).val('false');
+                }
+            });
+        });
+    </script>
 }

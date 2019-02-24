@@ -17,9 +17,9 @@ namespace DRF.Entities
         [Required]
         [Display(Name = "Area")]
         public int AreaId { get; set; }
-        public Area Area { get; set; }
+        public virtual Area Area { get; set; }
         public int? MapId { get; set; }  
-        public Map Map { get; set; }    
+        public virtual Map Map { get; set; }    
         public virtual ICollection<DoctorChamberRelation> DoctorChamberRelations { get; set; }
     }
 }

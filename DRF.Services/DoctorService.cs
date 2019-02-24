@@ -62,6 +62,11 @@ namespace DRF.Services
             return _doctorUnitOfWork.DoctorRepository.GetById(id);
         }
 
+        public string GetDoctorNameById(int id)
+        {
+            return _doctorUnitOfWork.DoctorRepository.GetById(id).User.Name;
+        }
+
         public bool Update(Doctor entity)
         {
             try
@@ -100,6 +105,33 @@ namespace DRF.Services
                 Console.WriteLine(ex.Message);
                 return false;
             }
+        }
+
+        public IEnumerable<Doctor> GetAllByArea(string term)
+        {
+            return _doctorUnitOfWork.DoctorRepository.
+                Get(x => x.DoctorChamberRelations.Select(y => y.Chamber.Name.ToLower()).Contains(term.ToLower()));
+        }
+
+        public IEnumerable<Doctor> GetAllBySpecialty(string term)
+        {
+            return _doctorUnitOfWork.DoctorRepository.
+                Get(x => x.DoctorSpecialtyRelations.Select(y => y.Specialty.Name.ToLower()).Contains(term.ToLower()));
+        }
+
+        public IEnumerable<Doctor> GetAllByName(string term)
+        {
+            return _doctorUnitOfWork.DoctorRepository.Get(x => x.User.Name.ToLower().Contains(term.ToLower()));
+        }
+
+        public IEnumerable<string> GetAllDoctorName(string term)
+        {
+            return _doctorUnitOfWork.DoctorRepository.Get(x => x.User.Name.ToLower().Contains(term.ToLower())).Select(y => y.User.Name);
+        }
+
+        public IEnumerable<Doctor> GetAllDoctors(string area, string specialty, string name)
+        {
+            return _doctorUnitOfWork.DoctorRepository.GetAllDoctors(area, specialty, name);
         }
     }
 }

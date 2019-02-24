@@ -13,6 +13,7 @@ namespace DRF.Web.Models
         [Display(Name = "New Password")]
         public string NewPassword { get; set; }
 
+        [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm Password")]
         [Compare("NewPassword", ErrorMessage = "New password and confirm password does not match")]

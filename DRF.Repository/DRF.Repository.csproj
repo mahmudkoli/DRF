@@ -50,6 +50,8 @@
   <ItemGroup>
     <Compile Include="AppointmentRepository.cs" />
     <Compile Include="AppointmentUnitOfWork.cs" />
+    <Compile Include="AreaRepository.cs" />
+    <Compile Include="AreaUnitOfWork.cs" />
     <Compile Include="Base\IRepository.cs" />
     <Compile Include="Base\Repository.cs" />
     <Compile Include="ChamberRepository.cs" />
@@ -70,6 +72,10 @@
     <Compile Include="Migrations\201902091511031_AddRequiredField.cs" />
     <Compile Include="Migrations\201902091511031_AddRequiredField.Designer.cs">
       <DependentUpon>201902091511031_AddRequiredField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902201756411_Add Patient Info.cs" />
+    <Compile Include="Migrations\201902201756411_Add Patient Info.Designer.cs">
+      <DependentUpon>201902201756411_Add Patient Info.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PatientRepository.cs" />
@@ -101,6 +107,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902091511031_AddRequiredField.resx">
       <DependentUpon>201902091511031_AddRequiredField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902201756411_Add Patient Info.resx">
+      <DependentUpon>201902201756411_Add Patient Info.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

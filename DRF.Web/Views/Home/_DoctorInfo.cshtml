@@ -1,0 +1,24 @@
+﻿@model DRF.Entities.Doctor
+
+@{
+    var imageUrl = string.IsNullOrEmpty(Model.ImageUrl) ? "~/Images/dr-avatar.png" : Model.ImageUrl;
+}
+
+<div class="strip_list wow fadeIn">
+    <a href="#" class="wish_bt"></a>
+    <figure>
+        <a href="#"><img src="@Url.Content(imageUrl)" alt="@Model.User.Name"></a>
+    </figure>
+
+    <h3>@Model.User.Name</h3>
+
+    <small>@string.Join(", ", Model.DoctorSpecialtyRelations.Select(x => x.Specialty.Name))</small>
+
+    <p>@Model.Description</p>
+
+    <ul>
+        <li><a href="@Url.Action("DoctorDetailsInfo", new RouteValueDictionary(){{"id", Model.Id}})">Details</a></li>
+        <li><a href="#">Appointment now</a></li>
+    </ul>
+</div>
+

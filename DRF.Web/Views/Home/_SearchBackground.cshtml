@@ -1,0 +1,28 @@
+﻿@model DRF.Web.Models.DoctorSearchModel
+
+<link href="~/Content/Projects/custom-search.css" rel="stylesheet" />
+
+<div class="hero_home version_1">
+    <div class="content">
+        <h3>Find a Doctor!</h3>
+        <p>
+            Search Doctor
+        </p>
+        @using (Html.BeginForm("Search", "Home", FormMethod.Post))
+        {
+            <div id="custom-search-input">
+                <div class="input-group">
+                    @Html.TextBoxFor(model => model.AreaName, new { @class = "search-query", @id = "areaSearch", @placeholder = "Area..." })
+                    @*<input type="text" class="search-query" id="areaSearch" name="AreaName" placeholder="Area...">*@
+                    @Html.TextBoxFor(model => model.SpecialtyName, new { @class = "search-query", @id = "specialtySearch", @placeholder = "Specialization..." })
+                    @*<input type="text" class="search-query" id="specialtySearch" name="SpecialtyName" placeholder="Specialization...">*@
+                    @Html.TextBoxFor(model => model.DoctorName, new { @class = "search-query", @id = "doctorNameSearch", @placeholder = "Name..." })
+                    @*<input type="text" class="search-query" id="doctorNameSearch" name="DoctorName" placeholder="Name...">*@
+                    <input type="submit" class="btn_search" value="Search">
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+

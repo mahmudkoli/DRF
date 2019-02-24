@@ -13,15 +13,15 @@ namespace DRF.Entities
         [Required]
         [Display(Name = "Patient")]
         public int PatientId { get; set; }
-        public Patient Patient { get; set; }
+        public virtual Patient Patient { get; set; }
         [Required]
         [Display(Name = "Doctor")]
         public int DoctorId { get; set; }
-        public Doctor Doctor { get; set; }
+        public virtual Doctor Doctor { get; set; }
         [Required]
         [Display(Name = "Chamber")]
         public int ChamberId { get; set; }
-        public Chamber Chamber { get; set; }
+        public virtual Chamber Chamber { get; set; }
         [Required]
         public DateTime AppointmentDate { get; set; }
         [Required]

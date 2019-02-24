@@ -22,6 +22,7 @@ namespace DRF.Entities
         public Guid ActivationCode { get; set; }
         public string ResetPasswordCode { get; set; }
         [Required]
+        [Display(Name = "User Type")]
         public int UserRoleId { get; set; }
         public virtual UserRole UserRole { get; set; }
     }

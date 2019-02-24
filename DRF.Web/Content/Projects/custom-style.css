@@ -1,6 +1,68 @@
 ﻿body {
 }
 
+/*--Margin - Padding--*/
+
+.margin-top-5 {
+    margin-top: 5px;
+}
+.margin-bottom-5 {
+    margin-bottom: 5px;
+}
+.margin-left-5 {
+    margin-left: 5px;
+}
+.margin-right-5 {
+    margin-right: 5px;
+}
+.padding-top-5 {
+    padding-top: 5px;
+}
+.padding-bottom-5 {
+    padding-bottom: 5px;
+}
+.padding-left-5 {
+    padding-left: 5px;
+}
+.padding-right-5 {
+    padding-right: 5px;
+}
+
+/*<!--Badge Color-->*/
+
+.badge-error {
+        background-color: #b94a48;
+    }
+.badge-error:hover {
+    background-color: #953b39;
+}
+.badge-warning {
+    background-color: #f89406;
+}
+.badge-warning:hover {
+    background-color: #c67605;
+}
+.badge-success {
+    background-color: #468847;
+}
+.badge-success:hover {
+    background-color: #356635;
+}
+.badge-info {
+    background-color: #3a87ad;
+}
+.badge-info:hover {
+    background-color: #2d6987;
+}
+.badge-inverse {
+    background-color: #333333;
+}
+.badge-inverse:hover {
+    background-color: #1a1a1a;
+}
+
+/*<!--Ajax Loading Spin-->*/
+
 .loading {
     position: fixed;
     display: none;
