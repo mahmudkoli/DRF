@@ -44,6 +44,7 @@
     <Compile Include="AppointmentService.cs" />
     <Compile Include="AreaService.cs" />
     <Compile Include="ChamberService.cs" />
+    <Compile Include="CityService.cs" />
     <Compile Include="DegreeService.cs" />
     <Compile Include="DoctorService.cs" />
     <Compile Include="PatientService.cs" />
