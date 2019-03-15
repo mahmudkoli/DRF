@@ -25,5 +25,17 @@ namespace DRF.Common
                     return "";
             }
         }
+        public static string BadgeStatusColor(int val)
+        {
+            switch (val)
+            {
+                case (int)CustomEnum.Status.Active:
+                    return "badge-success";
+                case (int)CustomEnum.Status.Inactive:
+                    return "badge-error";
+                default:
+                    return "";
+            }
+        }
     }
 }

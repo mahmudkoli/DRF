@@ -156,6 +156,7 @@
     <Compile Include="Areas\Admin\Models\DegreeModel.cs" />
     <Compile Include="Areas\Admin\Models\DoctorModel.cs" />
     <Compile Include="Areas\Admin\Models\PatientModel.cs" />
+    <Compile Include="Areas\Admin\Models\SearchModel.cs" />
     <Compile Include="Areas\Admin\Models\SpecialtyModel.cs" />
     <Compile Include="Areas\Doctor\Controllers\AppointmentController.cs" />
     <Compile Include="Areas\Doctor\Controllers\HomeController.cs" />
@@ -295,6 +296,10 @@
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Areas\Doctor\Views\Appointment\_AppointmentInfo.cshtml" />
     <Content Include="Areas\Doctor\Views\Appointment\AppointmentHistory.cshtml" />
+    <Content Include="Areas\Admin\Views\Area\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\City\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Chamber\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Specialty\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -360,13 +365,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Views\Area\" />
-    <Folder Include="Areas\Admin\Views\Chamber\" />
-    <Folder Include="Areas\Admin\Views\City\" />
     <Folder Include="Areas\Admin\Views\Degree\" />
     <Folder Include="Areas\Admin\Views\Doctor\" />
     <Folder Include="Areas\Admin\Views\Patient\" />
-    <Folder Include="Areas\Admin\Views\Specialty\" />
     <Folder Include="Uploads\Images\Doctor\" />
     <Folder Include="Uploads\Images\Patient\" />
     <Folder Include="Views\JsonData\" />

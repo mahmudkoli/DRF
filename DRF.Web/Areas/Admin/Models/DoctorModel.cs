@@ -14,5 +14,10 @@ namespace DRF.Web.Areas.Admin.Models
         {
             _doctorService = new DoctorService();
         }
+
+        public IEnumerable<Entities.Doctor> GetAll()
+        {
+            return _doctorService.GetAll();
+        }
     }
 }

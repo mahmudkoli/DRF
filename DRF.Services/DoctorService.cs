@@ -133,5 +133,10 @@ namespace DRF.Services
         {
             return _doctorUnitOfWork.DoctorRepository.GetAllDoctors(area, specialty, name);
         }
+
+        public IEnumerable<Doctor> GetAll()
+        {
+            return _doctorUnitOfWork.DoctorRepository.GetAll();
+        }
     }
 }

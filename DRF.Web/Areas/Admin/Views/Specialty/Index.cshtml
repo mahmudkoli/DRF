@@ -1,0 +1,250 @@
+﻿@model DRF.Web.Areas.Admin.Models.SpecialtySearchModel
+@using DRF.Common
+@using PagedList.Mvc
+
+@{
+    /**/
+
+    ViewBag.Title = "Specialty";
+}
+
+<section class="content-header">
+    <h1>
+        Specialty
+        <small>Information</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index","Home")"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Specialty Information</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="box box-default">
+                @using (Html.BeginForm("Index", "Specialty", FormMethod.Get, new { @id = "specialtySearchForm" }))
+                {
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Specialty Search : </h3>
+                        <div class="btn-group">
+                            <div class="btn-group">
+                                @Html.TextBoxFor(model => model.Name, "", new { @class = "form-control input-sm", @placeholder = "Specialty Name" })
+                            </div>
+                            <div class="btn-group">
+                                <button type="submit" class="btn btn-sm btn-info">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="box-tools pull-right">
+                            <a href="@Request.UrlReferrer" class="btn btn-box-tool">
+                                <i class="fa fa-arrow-circle-left"></i> Back
+                            </a>
+                            <div class="btn-group">
+                                @Html.DropDownListFor(model => model.Status, new List<SelectListItem>()
+                                {
+                                    new SelectListItem() {Value = "-1", Text = "All"},
+                                    new SelectListItem() {Value = ((int) CustomEnum.Status.Active).ToString(), Text = "Active"},
+                                    new SelectListItem() {Value = ((int) CustomEnum.Status.Inactive).ToString(), Text = "Inactive"},
+                                }, new {@class = "form-control input-sm"})
+
+                            </div>
+                            @*<a href="@Url.Action("Create","Specialty")" class="btn btn-box-tool">
+                                    <i class="fa fa-plus"></i>
+                                </a>*@
+                            <div class="btn-group">
+                                <a class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="@Url.Action("Index", "Doctor")">Doctor</a></li>
+                                    <li><a href="@Url.Action("Index", "Patient")">Patient</a></li>
+                                    <li><a href="@Url.Action("Index", "Chamber")">Chamber</a></li>
+                                    <li><a href="@Url.Action("Index", "Degree")">Degree</a></li>
+                                    <li><a href="@Url.Action("Index", "Specialty")">Specialty</a></li>
+                                    <li><a href="@Url.Action("Index", "Area")">Area</a></li>
+                                    <li><a href="@Url.Action("Index", "City")">City</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <h4 class="box-title">Total Specialty : @Model.SpecialtyCollection.TotalItemCount</h4>
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>SL</th>
+                                <th>Specialty Name</th>
+                                <th>Disease</th>
+                                <th>Details</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var sl = ((Model.Page - 1) * Model.PageSize) + 1;
+                            }
+                            @foreach (var specialty in Model.SpecialtyCollection)
+                            {
+                                <tr>
+                                    <td>@(sl++)</td>
+                                    <td>@specialty.Name</td>
+                                    <td>@specialty.Disease</td>
+                                    <td>@specialty.Details</td>
+                                    @{
+                                        var customColor = CustomColor.BadgeStatusColor((int)specialty.Status);
+                                    }
+                                    <td><span class="badge @customColor">@((CustomEnum.Status)(specialty.Status))</span></td>
+                                    <td>
+                                        @{
+                                            var active = specialty.Status == (byte)CustomEnum.Status.Active;
+                                            var specialtyPassData = new { specialtyId = @specialty.Id, specialtyName = @specialty.Name, specialtyDisease = @specialty.Disease, specialtyDetails = @specialty.Details };
+                                        }
+
+                                        <a onclick="addSpecialtyInfoForUpdate( @specialtyPassData.specialtyId, '@specialtyPassData.specialtyName', '@specialtyPassData.specialtyDisease', '@specialtyPassData.specialtyDetails')" class="btn btn-xs btn-primary fa fa-pencil"></a>
+
+                                        <a href="@Url.Action("ChangeStatus","Specialty", new { id = specialty.Id })"
+                                           class="btn btn-xs @(active?"btn-danger fa fa-close":"btn-success fa fa-check")">
+                                            @(active ? "Inactive" : "Active")
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    @Html.PagedListPager(Model.SpecialtyCollection, Page =>
+                        Url.Action("Index", "Specialty", new RouteValueDictionary()
+                        {
+                            { "Page", Page }, { "PageSize", Model.PageSize }, { "Status", Model.Status },
+                            { "Name", Model.Name }
+                        }))
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <div class="col-md-4">
+
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Specialty Add or Update </h3>
+                    <div class="box-tools pull-right">
+                        <a href="@Request.UrlReferrer" class="btn btn-box-tool">
+                            <i class="fa fa-arrow-circle-left"></i> Back
+                        </a>
+                        <div class="btn-group">
+                            <a class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="@Url.Action("Index", "Doctor")">Doctor</a></li>
+                                <li><a href="@Url.Action("Index", "Patient")">Patient</a></li>
+                                <li><a href="@Url.Action("Index", "Chamber")">Chamber</a></li>
+                                <li><a href="@Url.Action("Index", "Degree")">Degree</a></li>
+                                <li><a href="@Url.Action("Index", "Specialty")">Specialty</a></li>
+                                <li><a href="@Url.Action("Index", "Area")">Area</a></li>
+                                <li><a href="@Url.Action("Index", "City")">City</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                    @using (Html.BeginForm("Create", "Specialty", FormMethod.Post, new { @id = "newSpecialtyForm" }))
+                    {
+                        @Html.Hidden("NewSpecialtyId", 0)
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.TextBox("NewSpecialtyName", "", new { @class = "form-control input-sm", @placeholder = "Name" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.TextArea("NewSpecialtyDisease", "", new { @class = "form-control input-sm", @placeholder = "Disease" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.TextArea("NewSpecialtyDetails", "", new { @class = "form-control input-sm", @placeholder = "Details" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <button type="button" class="btn btn-primary btn-sm" id="submitSpecialtyForm">Submit</button>
+                                <button type="button" class="btn btn-danger btn-sm" id="resetSpecialtyForm">Reset</button>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+</section>
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            $('#Status').on('change', function () {
+                $('#specialtySearchForm').submit();
+            });
+            $('#submitSpecialtyForm').on('click', function () {
+                submitSpecialtyForm();
+            });
+            $('#resetSpecialtyForm').on('click', function () {
+                resetSpecialtyForm();
+            });
+
+            $('form[id="newSpecialtyForm"]').validate({
+                rules: {
+                    NewSpecialtyName: 'required'
+                },
+                messages: {
+                    NewSpecialtyName: 'This field is required'
+                },
+                submitHandler: function (form) {
+                    form.submit();
+                }
+            });
+        });
+
+        function submitSpecialtyForm() {
+            $('#newSpecialtyForm').submit();
+        }
+
+        function resetSpecialtyForm() {
+            $('#NewSpecialtyId').val(0);
+            $('#NewSpecialtyName').val('');
+            $('#NewSpecialtyDisease').val('');
+            $('#NewSpecialtyDetails').val('');
+            $('#NewSpecialtyName-error').hide();
+        }
+
+        function addSpecialtyInfoForUpdate(specialtyId, specialtyName, specialtyDisease, specialtyDetails) {
+            var specialtyId = specialtyId;
+            var specialtyName = specialtyName;
+            var specialtyDisease = specialtyDisease;
+            var specialtyDetails = specialtyDetails;
+
+            $('#NewSpecialtyId').val(specialtyId);
+            $('#NewSpecialtyName').val(specialtyName);
+            $('#NewSpecialtyDisease').val(specialtyDisease);
+            $('#NewSpecialtyDetails').val(specialtyDetails);
+
+        }
+    </script>
+}
+

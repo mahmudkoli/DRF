@@ -43,5 +43,10 @@ namespace DRF.Services
         {
             return _patientUnitOfWork.PatientRepository.GetByUserId(userId);
         }
+
+        public IEnumerable<Patient> GetAll()
+        {
+            return _patientUnitOfWork.PatientRepository.GetAll();
+        }
     }
 }
