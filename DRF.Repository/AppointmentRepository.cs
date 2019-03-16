@@ -19,17 +19,22 @@ namespace DRF.Repository
 
         public IEnumerable<Appointment> GetAllByDoctorId(int id)
         {
-            return base.Get(x => x.DoctorId == id);
+            return base.Get(x => x.DoctorId == id).OrderByDescending(y => y.CreatedAt);
         }
 
-        public IEnumerable<Appointment> GetAllByDoctorIdWithStatus(int id, int status)
+        public IEnumerable<Appointment> GetAllByDoctorIdWithStatus(int doctorId, int status)
         {
-            return base.Get(x => x.DoctorId == id && x.AppointmentStatus == status);
+            return base.Get(x => x.DoctorId == doctorId && x.AppointmentStatus == status).OrderByDescending(y => y.UpdatedAt);
         }
 
-        public Patient GetLastAppointmentRequestPatientByDoctorId(int doctorId)
+        public IEnumerable<Appointment> GetAllByPatientId(int patientId)
         {
-            return base.Get(x => x.DoctorId == doctorId).OrderByDescending(y => y.CreatedAt).Select(t => t.Patient).FirstOrDefault();
+            return base.Get(x => x.PatientId == patientId).OrderByDescending(y => y.CreatedAt);
+        }
+
+        public IEnumerable<Appointment> GetAllByPatientIdWithStatus(int patientId, int status)
+        {
+            return base.Get(x => x.PatientId == patientId && x.AppointmentStatus == status).OrderByDescending(y => y.UpdatedAt);
         }
     }
 }

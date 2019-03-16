@@ -88,9 +88,19 @@ namespace DRF.Services
             }
         }
 
-        public Patient GetLastAppointmentRequestPatientByDoctorId(int doctorId)
+        public Appointment GetRecentConfirmAppointmentInfoByPatientId(int patientId)
         {
-            return _appointmentUnitOfWork.AppointmentRepository.GetLastAppointmentRequestPatientByDoctorId(doctorId);
+            var entity = _appointmentUnitOfWork.AppointmentRepository.GetAllByPatientIdWithStatus(patientId, 
+                (int)CustomEnum.AppointmentStatus.Approved).FirstOrDefault();
+            return entity;
+        }
+
+        public IEnumerable<Appointment> GetAllByPatientId(int id, int? status, int? lastDays)
+        {
+            var data = _appointmentUnitOfWork.AppointmentRepository.GetAllByPatientId(id);
+            data = status == null ? data : data.Where(x => x.AppointmentStatus == status);
+            data = lastDays == null ? data : data.Where(x => x.CreatedAt != null && x.CreatedAt.Value.AddDays(1) >= DateTime.Now.AddDays(-lastDays.Value));
+            return data;
         }
     }
 }

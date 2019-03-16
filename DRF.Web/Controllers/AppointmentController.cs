@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DRF.Entities;
 using DRF.Web.Models;
+using PagedList;
 
 namespace DRF.Web.Controllers
 {
@@ -45,6 +47,20 @@ namespace DRF.Web.Controllers
             }
 
             return RedirectToAction("GetAppointment", model);
+        }
+
+        public ActionResult RecentAppointment()
+        {
+            var appoinment = _appointmentModel.GetRecentConfirmAppointmentInfo();
+            return View(appoinment);
+        }
+
+        public ActionResult AppointmentHistory(AppointmentSearchModel model)
+        {
+            model = model ?? new AppointmentSearchModel();
+            var appointments = _appointmentModel.GetAllByPatientId(model.AppointmentStatus, model.LastDays).ToList();
+            model.AppointmentCollection = appointments.ToPagedList(model.Page, model.PageSize);
+            return View(model);
         }
     }
 }

@@ -23,4 +23,20 @@ namespace DRF.Web.Models
             PageSize = 10;
         }
     }
+
+    public class AppointmentSearchModel
+    {
+        public int? AppointmentStatus { get; set; }
+        public int? LastDays { get; set; }
+
+        public int Page { get; set; }
+        public int PageSize { get; set; }
+        public IPagedList<Appointment> AppointmentCollection { get; set; }
+
+        public AppointmentSearchModel()
+        {
+            Page = 1;
+            PageSize = 5;
+        }
+    }
 }

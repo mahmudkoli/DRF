@@ -165,6 +165,7 @@
     <Compile Include="Models\AppointmentModel.cs" />
     <Compile Include="Models\AuthenticatedPatientUserModel.cs" />
     <Compile Include="Models\LoginUserModel.cs" />
+    <Compile Include="Models\PatientModel.cs" />
     <Compile Include="Models\ResetPasswordModel.cs" />
     <Compile Include="Models\SearchModel.cs" />
     <Compile Include="Models\UserModel.cs" />
@@ -342,6 +343,12 @@
     <Content Include="Views\Home\DoctorDetailsInfo.cshtml" />
     <Content Include="Views\Appointment\ConfirmAppointment.cshtml" />
     <Content Include="Views\Appointment\GetAppointment.cshtml" />
+    <Content Include="Views\Appointment\RecentAppointment.cshtml" />
+    <Content Include="Views\Appointment\AppointmentHistory.cshtml" />
+    <Content Include="Views\Appointment\_RecentAppointmentInfo.cshtml" />
+    <Content Include="Views\Appointment\_AppointmentInfo.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
+    <Content Include="Views\Profile\EditProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -349,7 +356,6 @@
     <Folder Include="Uploads\Images\Doctor\" />
     <Folder Include="Uploads\Images\Patient\" />
     <Folder Include="Views\JsonData\" />
-    <Folder Include="Views\Profile\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

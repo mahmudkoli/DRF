@@ -1,0 +1,93 @@
+﻿@using DRF.Common
+@model DRF.Entities.Appointment
+
+@{
+    var imageUrl = "~/Images/dr-avatar.png";
+    imageUrl = string.IsNullOrEmpty(Model.Doctor.ImageUrl) ? imageUrl : Model.Doctor.ImageUrl;
+    var routeValues = ViewContext.RouteData.Values;
+    var currentAction = routeValues["Action"].ToString();
+    var currentController = routeValues["Controller"].ToString();
+}
+
+<div class="strip_list wow fadeIn">
+    <figure>
+        <img src="@Url.Content(imageUrl)" class="img-circle" alt="Image" />
+    </figure>
+    <div class="row">
+        <div class="col-md-12">
+            @{
+                var customColor = CustomColor.BadgeColor((int)Model.AppointmentStatus);
+            }
+
+            <div class="">
+                <h4 class="d-inline-block">@Model.Doctor.User.Name </h4>
+                <span class="d-inline-block badge @customColor margin-left-5">@((CustomEnum.AppointmentStatus)Model.AppointmentStatus)</span>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-4">
+                    <p>Appointment Date</p>
+                </div>
+                <div class="col-md-4">
+                    <p>@Model.AppointmentDate.ToString("D")</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <p>Appointment Time</p>
+                </div>
+                <div class="col-md-4">
+                    <p>@Model.AppointmentTime.ToString("t")</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <p>Email</p>
+                </div>
+                <div class="col-md-4">
+                    <p>@Model.Doctor.User.Email</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <p>Phone</p>
+                </div>
+                <div class="col-md-4">
+                    <p>@Model.Doctor.Phone</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <p>Disease</p>
+                </div>
+                <div class="col-md-4">
+                    <p>@Model.Disease</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <p>Booking Date</p>
+                </div>
+                <div class="col-md-4">
+                    <p>@Model.CreatedAt.Value.ToString("D")  @Model.CreatedAt.Value.ToString("t")</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <p>Response Date</p>
+                </div>
+                <div class="col-md-4">
+                    @if (Model.UpdatedAt != null)
+                    {
+                        <p>@Model.UpdatedAt.Value.ToString("D")  @Model.UpdatedAt.Value.ToString("t")</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ul>
+        <li><a href="@Url.Action("DoctorDetailsInfo", "Home", new RouteValueDictionary(){{"id", Model.DoctorId}})">Doctor Details</a></li>
+        <li><a href="#">Appointment now</a></li>
+    </ul>
+</div>

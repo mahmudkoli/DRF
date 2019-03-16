@@ -57,10 +57,13 @@
     <Compile Include="ChamberRepository.cs" />
     <Compile Include="ChamberUnitOfWork.cs" />
     <Compile Include="Context\DRFDbContext.cs" />
+    <Compile Include="BloodGroupRepository.cs" />
+    <Compile Include="DataUnitOfWork.cs" />
     <Compile Include="DegreeRepository.cs" />
     <Compile Include="DegreeUnitOfWork.cs" />
     <Compile Include="DoctorRepository.cs" />
     <Compile Include="DoctorUnitOfWork.cs" />
+    <Compile Include="GenderRepository.cs" />
     <Compile Include="Migrations\201901301634197_InitialMigration.cs" />
     <Compile Include="Migrations\201901301634197_InitialMigration.Designer.cs">
       <DependentUpon>201901301634197_InitialMigration.cs</DependentUpon>

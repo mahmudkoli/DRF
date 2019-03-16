@@ -1,4 +1,5 @@
 ﻿@using DRF.Common
+@using DRF.Entities
 @using DRF.Web.Models
 @{
     Layout = null;
@@ -56,10 +57,10 @@
                     @if (Request.IsAuthenticated && User.IsInRole("Patient"))
                     {
                         <li>
-                            <span><a href="@Url.Action("Index", "Appointment")">Appointment</a></span>
+                            <span><a href="@Url.Action("Index", "Appointment", new { area="" })">Appointment</a></span>
                             <ul>
-                                <li><a href="@Url.Action("Index", "Appointment")">Recent</a></li>
-                                <li><a href="@Url.Action("Index", "Appointment")">History</a></li>
+                                <li><a href="@Url.Action("RecentAppointment", "Appointment", new { area="" })">Recent</a></li>
+                                <li><a href="@Url.Action("AppointmentHistory", "Appointment", new { area="" })">History</a></li>
                             </ul>
                         </li>
                     }

@@ -1,0 +1,93 @@
+﻿@model DRF.Web.Models.PatientModel
+
+@{
+    ViewBag.Title = "Profile";
+}
+
+<style>
+    .pad-10 {
+        padding:10px;
+    }
+</style>
+
+@{
+    var imageUrl = string.IsNullOrEmpty(Model.ImageUrl) ? "~/Images/avatar.png" : Model.ImageUrl;
+}
+
+<div class="container margin_60">
+    <div class="row">
+        <div class="col-xl-12 col-lg-12">
+            <nav id="secondary_nav">
+                <div class="container">
+                    <ul class="clearfix">
+                        <li><a href="#" class="active">Profile info</a></li>
+                        <li><a href="#"></a></li>
+                    </ul>
+                </div>
+            </nav>
+            <div id="section_1">
+                <div class="box_general_3">
+                    <div class="profile">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3">
+                                <figure class="text-center">
+                                    <img src="@Url.Content(imageUrl)" style="max-width:200px;" alt="Profile" class="img-fluid">
+                                    <br /><br /><br />
+                                    <h1>@Model.User.Name</h1>
+                                    <small>@Model.Profession</small>
+                                    <h6>@Model.User.Email</h6>
+                                    <h6>@Model.Phone</h6>
+                                    <br />
+                                    <a href="@Url.Action("EditProfile","Profile")" class="btn_1 full-width">Edit Profile</a>
+                                </figure>
+                            </div>
+                            <div class="col-lg-8 col-md-8">
+                                <div class="row">
+                                    <div class="col-md-4 pad-10"><h6>Father's Name</h6></div>
+                                    <div class="col-md-8 pad-10">@Model.FathersName</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 pad-10"><h6>Mother's Name</h6></div>
+                                    <div class="col-md-8 pad-10">@Model.MothersName</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 pad-10"><h6>Present Address</h6></div>
+                                    <div class="col-md-8 pad-10">@Model.PresentAddress</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 pad-10"><h6>Permanent Address</h6></div>
+                                    <div class="col-md-8 pad-10">@Model.PermanentAddress</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 pad-10"><h6>Gender</h6></div>
+                                    <div class="col-md-8 pad-10">@(Model.Gender != null ? Model.Gender.Name : "")</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 pad-10"><h6>Blood Group</h6></div>
+                                    <div class="col-md-8 pad-10">@(Model.BloodGroup != null ? Model.BloodGroup.Name : "")</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 pad-10"><h6>Date Of Birth</h6></div>
+                                    <div class="col-md-8 pad-10">@Model.DateOfBirth</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 pad-10"><h6>Note</h6></div>
+                                    <div class="col-md-8 pad-10">@Model.Note</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <!-- /profile -->
+                </div>
+                <!-- /section_1 -->
+            </div>
+            <!-- /box_general -->
+        </div>
+        <!-- /col -->
+    </div>
+    <!-- /row -->
+</div>
+<!-- /container -->
