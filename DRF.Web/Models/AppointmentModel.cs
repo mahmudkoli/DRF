@@ -57,5 +57,15 @@ namespace DRF.Web.Models
 
             return _appointmentService.Add(newAppointment);
         }
+
+        public Appointment GetRecentConfirmAppointmentInfo()
+        {
+            return _appointmentService.GetRecentConfirmAppointmentInfoByPatientId(AuthenticatedPatientUserModel.GetPatientUserFromIdentity().Id);
+        }
+
+        public IEnumerable<Appointment> GetAllByPatientId(int? status, int? lastDays)
+        {
+            return _appointmentService.GetAllByPatientId(AuthenticatedPatientUserModel.GetPatientUserFromIdentity().Id, status, lastDays);
+        }
     }
 }

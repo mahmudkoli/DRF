@@ -1,0 +1,110 @@
+﻿@model DRF.Web.Models.AppointmentSearchModel
+@using PagedList.Mvc
+@using DRF.Common
+@{
+    ViewBag.Title = "Appointment History";
+}
+
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+<link href="~/Content/Projects/custom-search.css" rel="stylesheet" />
+
+<style>
+    .badge {
+        border-radius: 15px;
+        padding: 3px 7px;
+        color: #fff;
+    }
+
+    .badge-error {
+        background-color: #b94a48;
+    }
+</style>
+
+<div class="container margin_60">
+    <div class="row">
+        <div class="col-xl-12 col-lg-12">
+            <nav id="secondary_nav">
+                <div class="container">
+                    <ul class="clearfix">
+                        <li><a href="#" class="active"><h4 class="text-white">Appointment Information</h4></a></li>
+                        @*<li><a href="#">
+                <strong>Showing @(((Model.AppointmentCollection.PageNumber - 1) * Model.AppointmentCollection.PageSize) + 1) to
+                    @(((Model.AppointmentCollection.PageNumber - 1) * Model.AppointmentCollection.PageSize) + Model.AppointmentCollection.Count)
+                </strong> of @(Model.AppointmentCollection.TotalItemCount) results
+        </a></li>*@
+                        <li><a href="#"></a></li>
+                        <div class="float-right">
+                            @using (Html.BeginForm("AppointmentHistory", "Appointment", FormMethod.Get, new { @id = "appointmentHistoryForm" }))
+                            {
+                                <div class="d-inline-block">
+                                    @Html.DropDownListFor(model => model.AppointmentStatus, new List<SelectListItem>()
+                                    {
+                                        new SelectListItem() {Value = null, Text = "All"},
+                                        new SelectListItem() {Value = ((int) CustomEnum.AppointmentStatus.Requested).ToString(), Text = "Pending"},
+                                        new SelectListItem() {Value = ((int) CustomEnum.AppointmentStatus.Approved).ToString(), Text = "Approved"},
+                                        new SelectListItem() {Value = ((int) CustomEnum.AppointmentStatus.Rejected).ToString(), Text = "Rejected"},
+                                        new SelectListItem() {Value = ((int) CustomEnum.AppointmentStatus.Completed).ToString(), Text = "Completed"},
+                                    }, new {@class = "form-control input-sm " })
+
+                                </div>
+                                <div class="d-inline-block">
+                                    @Html.DropDownListFor(model => model.LastDays, new List<SelectListItem>()
+                                    {
+                                        new SelectListItem() {Value = null, Text = "All"},
+                                        new SelectListItem() {Value = (1).ToString(), Text = "Last Day"},
+                                        new SelectListItem() {Value = (7).ToString(), Text = "Last 7 Days"},
+                                        new SelectListItem() {Value = (30).ToString(), Text = "Last Months"},
+                                        new SelectListItem() {Value = (365).ToString(), Text = "Last Years"},
+                                    }, new {@class = "form-control input-sm " })
+                                </div>
+                            }
+                        </div>
+                    </ul>
+                </div>
+            </nav>
+            <div id="section_1">
+                <div class="box_general_3">
+
+                    @foreach (var appointment in Model.AppointmentCollection)
+                    {
+                        @Html.Partial("_AppointmentInfo", appointment)
+                    }
+                    Page @(Model.AppointmentCollection.PageCount < Model.AppointmentCollection.PageNumber ? 0 : Model.AppointmentCollection.PageNumber) of
+                    @Model.AppointmentCollection.PageCount
+
+
+                    <nav>
+                        @Html.PagedListPager(Model.AppointmentCollection, Page =>
+                            Url.Action("AppointmentHistory", "Appointment", new RouteValueDictionary()
+                            { { "Page", Page }, { "PageSize", Model.PageSize }, { "AppointmentStatus", Model.AppointmentStatus },
+                                { "LastDays", Model.LastDays } }))
+                    </nav>
+                </div>
+                <!-- /section_1 -->
+            </div>
+            <!-- /box_general -->
+        </div>
+        <!-- /col -->
+    </div>
+    <!-- /row -->
+</div>
+<!-- /container -->
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#AppointmentStatus').on('change', function () {
+                $('#appointmentHistoryForm').submit();
+            });
+            $('#LastDays').on('change', function () {
+                $('#appointmentHistoryForm').submit();
+            });
+
+
+                $('header').removeClass('header_sticky');
+                $('header').addClass('static');
+
+                $('main').addClass('theia-exception');
+        });
+    </script>
+}

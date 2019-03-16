@@ -1,0 +1,126 @@
+﻿@using DRF.Common
+@using DRF.Web.Models
+@model DRF.Entities.Appointment
+
+
+@{
+    var userName = "";
+    var userEmail = "";
+    var userPhone = "";
+    var imageUrl = "~/Images/dr-avatar.png";
+}
+
+@if (Request.IsAuthenticated)
+{
+    var authUser = AuthenticatedPatientUserModel.GetUserFromIdentity();
+    var authPatientUser = AuthenticatedPatientUserModel.GetPatientUserFromIdentity();
+    userName = authUser.Name;
+    userEmail = authUser.Email;
+    userPhone = authPatientUser.Phone;
+    imageUrl = string.IsNullOrEmpty(Model.Doctor.ImageUrl) ? imageUrl : Model.Doctor.ImageUrl;
+}
+
+<div class="container margin_60">
+    <div class="row">
+        <div class="col-xl-8 col-lg-8">
+            <nav id="secondary_nav">
+                <div class="container">
+                    <ul class="clearfix">
+                        <li><a href="#" class="active">Doctor Info</a></li>
+                        <li><a href="#"></a></li>
+                    </ul>
+                </div>
+            </nav>
+            <div id="section_1">
+                <div class="box_general_3">
+                    <div class="profile">
+                        <div class="row">
+                            <div class="col-lg-5 col-md-4">
+                                <figure>
+                                    <img src="@Url.Content(imageUrl)" alt="Doctor" class="img-fluid">
+                                </figure>
+                            </div>
+                            <div class="col-lg-7 col-md-8">
+                                <h1>@Model.Doctor.User.Name</h1>
+                                <small>specialty</small>
+                                <ul class="statistic">
+                                    <li>854 Views</li>
+                                    <li>124 Patients</li>
+                                </ul>
+                                <ul class="contacts">
+                                    <li>
+                                        <h6>Address</h6>
+                                        @Model.Doctor.PresentAddress
+                                    </li>
+                                    <li>
+                                        <h6>Phone</h6> <a href="tel://@Model.Doctor.Phone">@Model.Doctor.Phone</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <!-- /profile -->
+                    <div class="indent_title_in">
+                        <i class="pe-7s-user"></i>
+                        <h3>Professional statement</h3>
+                        <p>About</p>
+                    </div>
+                    <div class="wrapper_indent">
+                        <p>Description</p>
+                        <h6>Specializations</h6>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <ul class="bullets">
+                                    <li>Abdominal Radiology</li>
+                                    <li>Addiction Psychiatry</li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-6">
+                                <ul class="bullets">
+                                    <li>Abdominal Radiology</li>
+                                    <li>Addiction Psychiatry</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- /row-->
+                    </div>
+                    <!-- /wrapper indent -->
+                </div>
+                <!-- /section_1 -->
+            </div>
+            <!-- /box_general -->
+        </div>
+        <!-- /col -->
+        <aside class="col-xl-4 col-lg-4" id="sidebar">
+            <div class="box_general_3 booking">
+                <div class="title">
+                    <h3>Schedule</h3>
+                </div>
+                <div class="summary">
+                    <ul>
+                        <li>Date: <strong class="float-right">@Model.AppointmentDate.ToString("D")</strong></li>
+                        <li>Time: <strong class="float-right">@Model.AppointmentTime.ToString("t")</strong></li>
+                        <li>Dr. Name: <strong class="float-right">@Model.Doctor.User.Name</strong></li>
+                        <li>Chamber: <strong class="float-right">@Model.Chamber.Name</strong></li>
+                        <li>Request Date: <strong class="float-right">@Model.CreatedAt.Value.ToString("d")</strong></li>
+                        <li>Approve Date: <strong class="float-right">@Model.UpdatedAt.Value.ToString("d")</strong></li>
+                    </ul>
+                </div>
+                <ul class="treatments checkout clearfix">
+                    <li class="total">
+                        Fees <strong class="float-right">Tk. @Model.AppointmentFees</strong>
+                    </li>
+                </ul>
+                <hr>
+                <h5 class="text-center"><span class="badge @CustomColor.BadgeColor((int)Model.AppointmentStatus)">@((CustomEnum.AppointmentStatus)Model.AppointmentStatus)</span></h5>
+            </div>
+            <!-- /box_general -->
+        </aside>
+        <!-- /asdide -->
+    </div>
+    <!-- /row -->
+</div>
+<!-- /container -->
