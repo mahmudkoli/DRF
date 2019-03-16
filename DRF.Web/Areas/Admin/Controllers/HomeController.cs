@@ -3,16 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DRF.Web.Areas.Admin.Models;
 
 namespace DRF.Web.Areas.Admin.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class HomeController : Controller
     {
+        private HomeModel _homeModel;
+
+        public HomeController()
+        {
+            _homeModel = new HomeModel();
+        }
+
         // GET: Admin/Home
         public ActionResult Index()
         {
-            return View();
+            var model = _homeModel;
+            return View(model);
         }
     }
 }

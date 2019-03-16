@@ -141,7 +141,24 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AreaController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ChamberController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CityController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DegreeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DoctorController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PatientController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SpecialtyController.cs" />
+    <Compile Include="Areas\Admin\Models\AreaModel.cs" />
+    <Compile Include="Areas\Admin\Models\AuthenticatedAdminUserModel.cs" />
+    <Compile Include="Areas\Admin\Models\ChamberModel.cs" />
+    <Compile Include="Areas\Admin\Models\CityModel.cs" />
+    <Compile Include="Areas\Admin\Models\DegreeModel.cs" />
+    <Compile Include="Areas\Admin\Models\DoctorModel.cs" />
+    <Compile Include="Areas\Admin\Models\HomeModel.cs" />
+    <Compile Include="Areas\Admin\Models\PatientModel.cs" />
+    <Compile Include="Areas\Admin\Models\SearchModel.cs" />
+    <Compile Include="Areas\Admin\Models\SpecialtyModel.cs" />
     <Compile Include="Areas\Doctor\Controllers\AppointmentController.cs" />
     <Compile Include="Areas\Doctor\Controllers\HomeController.cs" />
     <Compile Include="Areas\Doctor\Controllers\ProfileController.cs" />
@@ -281,6 +298,13 @@
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Areas\Doctor\Views\Appointment\_AppointmentInfo.cshtml" />
     <Content Include="Areas\Doctor\Views\Appointment\AppointmentHistory.cshtml" />
+    <Content Include="Areas\Admin\Views\Area\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\City\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Chamber\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Specialty\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Degree\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Doctor\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Patient\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -352,7 +376,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Uploads\Images\Doctor\" />
     <Folder Include="Uploads\Images\Patient\" />
     <Folder Include="Views\JsonData\" />

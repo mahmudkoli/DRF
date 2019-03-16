@@ -1,0 +1,254 @@
+﻿@model DRF.Web.Areas.Admin.Models.ChamberSearchModel
+@using DRF.Common
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "Chamber";
+}
+
+<section class="content-header">
+    <h1>
+        Chamber
+        <small>Information</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index","Home")"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Chamber Information</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="box box-default">
+                @using (Html.BeginForm("Index", "Chamber", FormMethod.Get, new { @id = "chamberSearchForm" }))
+                {
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Chamber Search : </h3>
+                        <div class="btn-group">
+                            <div class="btn-group">
+                                @Html.TextBoxFor(model => model.Name, "", new { @class = "form-control input-sm", @placeholder = "Chamber Name" })
+                            </div>
+                            <div class="btn-group">
+                                <button type="submit" class="btn btn-sm btn-info">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="box-tools pull-right">
+                            <a href="@Request.UrlReferrer" class="btn btn-box-tool">
+                                <i class="fa fa-arrow-circle-left"></i> Back
+                            </a>
+                            <div class="btn-group">
+                                @Html.DropDownListFor(model => model.Status, new List<SelectListItem>()
+                                {
+                                    new SelectListItem() {Value = "-1", Text = "All"},
+                                    new SelectListItem() {Value = ((int) CustomEnum.Status.Active).ToString(), Text = "Active"},
+                                    new SelectListItem() {Value = ((int) CustomEnum.Status.Inactive).ToString(), Text = "Inactive"},
+                                }, new {@class = "form-control input-sm"})
+
+                            </div>
+                            @*<a href="@Url.Action("Create","Chamber")" class="btn btn-box-tool">
+                                    <i class="fa fa-plus"></i>
+                                </a>*@
+                            <div class="btn-group">
+                                <a class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="@Url.Action("Index", "Doctor")">Doctor</a></li>
+                                    <li><a href="@Url.Action("Index", "Patient")">Patient</a></li>
+                                    <li><a href="@Url.Action("Index", "Chamber")">Chamber</a></li>
+                                    <li><a href="@Url.Action("Index", "Degree")">Degree</a></li>
+                                    <li><a href="@Url.Action("Index", "Specialty")">Specialty</a></li>
+                                    <li><a href="@Url.Action("Index", "City")">City</a></li>
+                                    <li><a href="@Url.Action("Index", "Area")">Area</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <h4 class="box-title">Total Chamber : @Model.ChamberCollection.TotalItemCount</h4>
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>SL</th>
+                                <th>Chamber Name</th>
+                                <th>Address</th>
+                                <th>Area</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var sl = ((Model.Page - 1) * Model.PageSize) + 1;
+                            }
+                            @foreach (var chamber in Model.ChamberCollection)
+                            {
+                                <tr>
+                                    <td>@(sl++)</td>
+                                    <td>@chamber.Name</td>
+                                    <td>@chamber.Address</td>
+                                    <td>@chamber.Area.Name</td>
+                                    @{
+                                        var customColor = CustomColor.BadgeStatusColor((int)chamber.Status);
+                                    }
+                                    <td><span class="badge @customColor">@((CustomEnum.Status)(chamber.Status))</span></td>
+                                    <td>
+                                        @{
+                                            var active = chamber.Status == (byte)CustomEnum.Status.Active;
+                                            var chamberPassData = new { chamberId = @chamber.Id, chamberName = @chamber.Name, chamberAddress = @chamber.Address, chamberAreaId = @chamber.AreaId };
+                                        }
+
+                                        <a onclick="addChamberInfoForUpdate( @chamberPassData.chamberId, @chamberPassData.chamberAreaId, '@chamberPassData.chamberName', '@chamberPassData.chamberAddress')" class="btn btn-xs btn-primary fa fa-pencil"></a>
+
+                                        <a href="@Url.Action("ChangeStatus","Chamber", new { id = chamber.Id })"
+                                           class="btn btn-xs @(active?"btn-danger fa fa-close":"btn-success fa fa-check")">
+                                            @(active ? "Inactive" : "Active")
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    @Html.PagedListPager(Model.ChamberCollection, Page =>
+                        Url.Action("Index", "Chamber", new RouteValueDictionary()
+                        {
+                            { "Page", Page }, { "PageSize", Model.PageSize }, { "Status", Model.Status },
+                            { "Name", Model.Name }
+                        }))
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <div class="col-md-4">
+
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Chamber Add or Update </h3>
+                    <div class="box-tools pull-right">
+                        <a href="@Request.UrlReferrer" class="btn btn-box-tool">
+                            <i class="fa fa-arrow-circle-left"></i> Back
+                        </a>
+                        <div class="btn-group">
+                            <a class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="@Url.Action("Index", "Doctor")">Doctor</a></li>
+                                <li><a href="@Url.Action("Index", "Patient")">Patient</a></li>
+                                <li><a href="@Url.Action("Index", "Chamber")">Chamber</a></li>
+                                <li><a href="@Url.Action("Index", "Degree")">Degree</a></li>
+                                <li><a href="@Url.Action("Index", "Specialty")">Specialty</a></li>
+                                <li><a href="@Url.Action("Index", "City")">City</a></li>
+                                <li><a href="@Url.Action("Index", "Area")">Area</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                    @using (Html.BeginForm("Create", "Chamber", FormMethod.Post, new { @id = "newChamberForm" }))
+                    {
+                        @Html.Hidden("NewChamberId", 0)
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.DropDownList("NewChamberAreaId", (SelectList)ViewBag.AreaSelectList, "--Select Area--", new { @class = "form-control input-sm" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.TextBox("NewChamberName", "", new { @class = "form-control input-sm", @placeholder = "Name" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.TextBox("NewChamberAddress", "", new { @class = "form-control input-sm", @placeholder = "Address" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <button type="button" class="btn btn-primary btn-sm" id="submitChamberForm">Submit</button>
+                                <button type="button" class="btn btn-danger btn-sm" id="resetChamberForm">Reset</button>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+</section>
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            $('#Status').on('change', function () {
+                $('#chamberSearchForm').submit();
+            });
+            $('#submitChamberForm').on('click', function () {
+                submitChamberForm();
+            });
+            $('#resetChamberForm').on('click', function () {
+                resetChamberForm();
+            });
+
+            $('form[id="newChamberForm"]').validate({
+                rules: {
+                    NewChamberAreaId: 'required',
+                    NewChamberName: 'required',
+                    NewChamberAddress: 'required'
+                },
+                messages: {
+                    NewChamberAreaId: 'This field is required',
+                    NewChamberName: 'This field is required',
+                    NewChamberAddress: 'This field is required'
+                },
+                submitHandler: function (form) {
+                    form.submit();
+                }
+            });
+        });
+
+        function submitChamberForm() {
+            $('#newChamberForm').submit();
+        }
+
+        function resetChamberForm() {
+            $('#NewChamberId').val(0);
+            $('#NewChamberAreaId').val('');
+            $('#NewChamberName').val('');
+            $('#NewChamberAddress').val('');
+            $('#NewChamberAreaId-error').hide();
+            $('#NewChamberName-error').hide();
+            $('#NewChamberAddress-error').hide();
+        }
+
+        function addChamberInfoForUpdate(chamberId, chamberAreaId, chamberName, chamberAddress) {
+            var chamberId = chamberId;
+            var chamberAreaId = chamberAreaId;
+            var chamberName = chamberName;
+            var chamberAddress = chamberAddress;
+
+            $('#NewChamberId').val(chamberId);
+            $('#NewChamberAreaId').val(chamberAreaId);
+            $('#NewChamberName').val(chamberName);
+            $('#NewChamberAddress').val(chamberAddress);
+
+        }
+    </script>
+}
+

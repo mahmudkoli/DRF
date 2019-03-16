@@ -12,6 +12,7 @@ namespace DRF.Common
         public enum AppointmentStatus { Draft = 1, Requested, Pending, Approved, Rejected, Completed }
         public enum AppointmentType { New = 1, Regular, Checkup }
         public enum UserType { Admin = 1, Doctor, Patient }
+        public enum Status { Inactive = 0, Active = 1 }
 
     }
 }

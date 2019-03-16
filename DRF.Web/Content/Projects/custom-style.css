@@ -1,6 +1,15 @@
 ﻿body {
 }
 
+/*--Bootstrap Override--*/
+.input-xs {
+    height: 22px;
+    padding: 2px 5px;
+    font-size: 12px;
+    line-height: 1.5; /* If Placeholder of the input is moved up, rem/modify this. */
+    border-radius: 3px;
+}
+
 /*--Margin - Padding--*/
 
 .margin-top-5 {
@@ -60,7 +69,9 @@
 .badge-inverse:hover {
     background-color: #1a1a1a;
 }
-
+label.error {
+    color: #D73925;
+}
 /*<!--Ajax Loading Spin-->*/
 
 .loading {

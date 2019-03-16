@@ -1,0 +1,150 @@
+﻿@model DRF.Web.Areas.Admin.Models.PatientSearchModel
+@using DRF.Common
+@using PagedList.Mvc
+
+@{
+    /**/
+
+    ViewBag.Title = "Patient";
+}
+
+<section class="content-header">
+    <h1>
+        Patient
+        <small>Information</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index","Home")"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Patient Information</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-default">
+                @using (Html.BeginForm("Index", "Patient", FormMethod.Get, new { @id = "patientSearchForm" }))
+                {
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Patient Search : </h3>
+                        <div class="btn-group">
+                            <div class="btn-group">
+                                @Html.TextBoxFor(model => model.Name, "", new { @class = "form-control input-sm", @placeholder = "Patient Name" })
+                            </div>
+                            <div class="btn-group">
+                                <button type="submit" class="btn btn-sm btn-info">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="box-tools pull-right">
+                            <a href="@Request.UrlReferrer" class="btn btn-box-tool">
+                                <i class="fa fa-arrow-circle-left"></i> Back
+                            </a>
+                            <div class="btn-group">
+                                @Html.DropDownListFor(model => model.Status, new List<SelectListItem>()
+                                {
+                                    new SelectListItem() {Value = "-1", Text = "All"},
+                                    new SelectListItem() {Value = ((int) CustomEnum.Status.Active).ToString(), Text = "Active"},
+                                    new SelectListItem() {Value = ((int) CustomEnum.Status.Inactive).ToString(), Text = "Inactive"},
+                                }, new {@class = "form-control input-sm"})
+
+                            </div>
+                            <a href="@Url.Action("Create","Patient")" class="btn btn-box-tool">
+                                <i class="fa fa-plus"></i>
+                            </a>
+                            <div class="btn-group">
+                                <a class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="@Url.Action("Index", "Doctor")">Doctor</a></li>
+                                    <li><a href="@Url.Action("Index", "Patient")">Patient</a></li>
+                                    <li><a href="@Url.Action("Index", "Chamber")">Chamber</a></li>
+                                    <li><a href="@Url.Action("Index", "Degree")">Degree</a></li>
+                                    <li><a href="@Url.Action("Index", "Specialty")">Specialty</a></li>
+                                    <li><a href="@Url.Action("Index", "Area")">Area</a></li>
+                                    <li><a href="@Url.Action("Index", "City")">City</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <h4 class="box-title">Total Patient : @Model.PatientCollection.TotalItemCount</h4>
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>SL</th>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Present Address</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var sl = ((Model.Page - 1) * Model.PageSize) + 1;
+                            }
+                            @foreach (var patient in Model.PatientCollection)
+                            {
+                                <tr>
+                                    <td>@(sl++)</td>
+                                    @{
+                                        var imageUrl = string.IsNullOrEmpty(patient.ImageUrl) ? "~/Images/avatar.png" : patient.ImageUrl;
+                                    }
+                                    <td><img src="@Url.Content(@imageUrl)" class="img img-circle" style="max-width: 60px;" alt="@patient.User.Name" title="@patient.User.Name" /></td>
+                                    <td>@patient.User.Name</td>
+                                    <td>@patient.User.Email</td>
+                                    <td>@patient.PresentAddress</td>
+                                    @{
+                                        var customColor = CustomColor.BadgeStatusColor((int)patient.Status);
+                                    }
+                                    <td><span class="badge @customColor">@((CustomEnum.Status)(patient.Status))</span></td>
+                                    <td>
+                                        @{
+                                            var active = patient.Status == (byte)CustomEnum.Status.Active;
+                                        }
+
+                                        <a href="@Url.Action("Edit","Patient", new { id = patient.Id })" class="btn btn-xs btn-primary fa fa-pencil"></a>
+
+                                        <a href="@Url.Action("ChangeStatus","Patient", new { id = patient.Id })"
+                                           class="btn btn-xs @(active?"btn-danger fa fa-close":"btn-success fa fa-check")">
+                                            @(active ? "Inactive" : "Active")
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    @Html.PagedListPager(Model.PatientCollection, Page =>
+                        Url.Action("Index", "Patient", new RouteValueDictionary()
+                        {
+                            { "Page", Page }, { "PageSize", Model.PageSize }, { "Status", Model.Status },
+                            { "Name", Model.Name }
+                        }))
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+</section>
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            $('#Status').on('change', function () {
+                $('#patientSearchForm').submit();
+            });
+        });
+    </script>
+}
+

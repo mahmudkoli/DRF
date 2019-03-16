@@ -1,0 +1,239 @@
+﻿@model DRF.Web.Areas.Admin.Models.DegreeSearchModel
+@using DRF.Common
+@using PagedList.Mvc
+
+@{
+    /**/
+
+    ViewBag.Title = "Degree";
+}
+
+<section class="content-header">
+    <h1>
+        Degree
+        <small>Information</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index","Home")"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Degree Information</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="box box-default">
+                @using (Html.BeginForm("Index", "Degree", FormMethod.Get, new { @id = "degreeSearchForm" }))
+                {
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Degree Search : </h3>
+                        <div class="btn-group">
+                            <div class="btn-group">
+                                @Html.TextBoxFor(model => model.Name, "", new { @class = "form-control input-sm", @placeholder = "Degree Name" })
+                            </div>
+                            <div class="btn-group">
+                                <button type="submit" class="btn btn-sm btn-info">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="box-tools pull-right">
+                            <a href="@Request.UrlReferrer" class="btn btn-box-tool">
+                                <i class="fa fa-arrow-circle-left"></i> Back
+                            </a>
+                            <div class="btn-group">
+                                @Html.DropDownListFor(model => model.Status, new List<SelectListItem>()
+                                {
+                                    new SelectListItem() {Value = "-1", Text = "All"},
+                                    new SelectListItem() {Value = ((int) CustomEnum.Status.Active).ToString(), Text = "Active"},
+                                    new SelectListItem() {Value = ((int) CustomEnum.Status.Inactive).ToString(), Text = "Inactive"},
+                                }, new {@class = "form-control input-sm"})
+
+                            </div>
+                            @*<a href="@Url.Action("Create","Degree")" class="btn btn-box-tool">
+                                    <i class="fa fa-plus"></i>
+                                </a>*@
+                            <div class="btn-group">
+                                <a class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="@Url.Action("Index", "Doctor")">Doctor</a></li>
+                                    <li><a href="@Url.Action("Index", "Patient")">Patient</a></li>
+                                    <li><a href="@Url.Action("Index", "Chamber")">Chamber</a></li>
+                                    <li><a href="@Url.Action("Index", "Specialty")">Specialty</a></li>
+                                    <li><a href="@Url.Action("Index", "Degree")">Degree</a></li>
+                                    <li><a href="@Url.Action("Index", "Area")">Area</a></li>
+                                    <li><a href="@Url.Action("Index", "City")">City</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <h4 class="box-title">Total Degree : @Model.DegreeCollection.TotalItemCount</h4>
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>SL</th>
+                                <th>Degree Name</th>
+                                <th>Details</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var sl = ((Model.Page - 1) * Model.PageSize) + 1;
+                            }
+                            @foreach (var degree in Model.DegreeCollection)
+                            {
+                                <tr>
+                                    <td>@(sl++)</td>
+                                    <td>@degree.Name</td>
+                                    <td>@degree.Details</td>
+                                    @{
+                                        var customColor = CustomColor.BadgeStatusColor((int)degree.Status);
+                                    }
+                                    <td><span class="badge @customColor">@((CustomEnum.Status)(degree.Status))</span></td>
+                                    <td>
+                                        @{
+                                            var active = degree.Status == (byte)CustomEnum.Status.Active;
+                                            var degreePassData = new { degreeId = @degree.Id, degreeName = @degree.Name, degreeDetails = @degree.Details };
+                                        }
+
+                                        <a onclick="addDegreeInfoForUpdate( @degreePassData.degreeId, '@degreePassData.degreeName', '@degreePassData.degreeDetails')" class="btn btn-xs btn-primary fa fa-pencil"></a>
+
+                                        <a href="@Url.Action("ChangeStatus","Degree", new { id = degree.Id })"
+                                           class="btn btn-xs @(active?"btn-danger fa fa-close":"btn-success fa fa-check")">
+                                            @(active ? "Inactive" : "Active")
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    @Html.PagedListPager(Model.DegreeCollection, Page =>
+                        Url.Action("Index", "Degree", new RouteValueDictionary()
+                        {
+                            { "Page", Page }, { "PageSize", Model.PageSize }, { "Status", Model.Status },
+                            { "Name", Model.Name }
+                        }))
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <div class="col-md-4">
+
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Degree Add or Update </h3>
+                    <div class="box-tools pull-right">
+                        <a href="@Request.UrlReferrer" class="btn btn-box-tool">
+                            <i class="fa fa-arrow-circle-left"></i> Back
+                        </a>
+                        <div class="btn-group">
+                            <a class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="@Url.Action("Index", "Doctor")">Doctor</a></li>
+                                <li><a href="@Url.Action("Index", "Patient")">Patient</a></li>
+                                <li><a href="@Url.Action("Index", "Chamber")">Chamber</a></li>
+                                <li><a href="@Url.Action("Index", "Specialty")">Specialty</a></li>
+                                <li><a href="@Url.Action("Index", "Degree")">Degree</a></li>
+                                <li><a href="@Url.Action("Index", "Area")">Area</a></li>
+                                <li><a href="@Url.Action("Index", "City")">City</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                    @using (Html.BeginForm("Create", "Degree", FormMethod.Post, new { @id = "newDegreeForm" }))
+                    {
+                        @Html.Hidden("NewDegreeId", 0)
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.TextBox("NewDegreeName", "", new { @class = "form-control input-sm", @placeholder = "Name" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.TextArea("NewDegreeDetails", "", new { @class = "form-control input-sm", @placeholder = "Details" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <button type="button" class="btn btn-primary btn-sm" id="submitDegreeForm">Submit</button>
+                                <button type="button" class="btn btn-danger btn-sm" id="resetDegreeForm">Reset</button>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+</section>
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            $('#Status').on('change', function () {
+                $('#degreeSearchForm').submit();
+            });
+            $('#submitDegreeForm').on('click', function () {
+                submitDegreeForm();
+            });
+            $('#resetDegreeForm').on('click', function () {
+                resetDegreeForm();
+            });
+
+            $('form[id="newDegreeForm"]').validate({
+                rules: {
+                    NewDegreeName: 'required'
+                },
+                messages: {
+                    NewDegreeName: 'This field is required'
+                },
+                submitHandler: function (form) {
+                    form.submit();
+                }
+            });
+        });
+
+        function submitDegreeForm() {
+            $('#newDegreeForm').submit();
+        }
+
+        function resetDegreeForm() {
+            $('#NewDegreeId').val(0);
+            $('#NewDegreeName').val('');
+            $('#NewDegreeDetails').val('');
+            $('#NewDegreeName-error').hide();
+        }
+
+        function addDegreeInfoForUpdate(degreeId, degreeName, degreeDetails) {
+            var degreeId = degreeId;
+            var degreeName = degreeName;
+            var degreeDetails = degreeDetails;
+
+            $('#NewDegreeId').val(degreeId);
+            $('#NewDegreeName').val(degreeName);
+            $('#NewDegreeDetails').val(degreeDetails);
+
+        }
+    </script>
+}
+
