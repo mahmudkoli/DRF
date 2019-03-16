@@ -20,5 +20,26 @@ namespace DRF.Web.Areas.Admin.Models
         {
             return _degreeService.GetAll();
         }
+        public IEnumerable<Degree> GetAll(string name, byte? status)
+        {
+            return _degreeService.GetAll(name, status);
+        }
+
+        public bool ChangeStatus(int id)
+        {
+            return _degreeService.ChangeStatus(id);
+        }
+
+        public bool AddOrUpdate(int newDegreeId, string newDegreeName, string newDegreeDetails)
+        {
+            var degree = new Degree()
+            {
+                Id = newDegreeId,
+                Name = newDegreeName,
+                Details = newDegreeDetails
+            };
+
+            return _degreeService.AddOrUpdate(degree);
+        }
     }
 }

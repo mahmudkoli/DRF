@@ -38,6 +38,11 @@ namespace DRF.Services
             return data.OrderByDescending(x => (x.UpdatedAt == null ? x.CreatedAt : x.UpdatedAt));
         }
 
+        public int ActiveCount()
+        {
+            return _areaUnitOfWork.AreaRepository.ActiveCount();
+        }
+
         public bool ChangeStatus(int id)
         {
             var area = _areaUnitOfWork.AreaRepository.GetById(id);

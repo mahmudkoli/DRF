@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DRF.Common;
 using DRF.Entities;
 using DRF.Repository;
 using DRF.Repository.Context;
@@ -50,6 +51,11 @@ namespace DRF.Services
                 Console.WriteLine(ex.Message);
                 return false;
             }
+        }
+
+        public int ActiveCount()
+        {
+            return _doctorUnitOfWork.DoctorRepository.ActiveCount();
         }
 
         public Doctor GetByUserId(int userId)
@@ -137,6 +143,23 @@ namespace DRF.Services
         public IEnumerable<Doctor> GetAll()
         {
             return _doctorUnitOfWork.DoctorRepository.GetAll();
+        }
+
+        public IEnumerable<Doctor> GetAll(string name, byte? status)
+        {
+            var data = _doctorUnitOfWork.DoctorRepository.Get(x => true);
+            data = string.IsNullOrEmpty(name) ? data : data.Where(x => x.User.Name.ToLower().Contains(name.ToLower()));
+            data = status == null ? data : data.Where(x => x.Status == status);
+            return data.OrderByDescending(x => (x.UpdatedAt == null ? x.CreatedAt : x.UpdatedAt));
+        }
+
+        public bool ChangeStatus(int id)
+        {
+            var doctor = _doctorUnitOfWork.DoctorRepository.GetById(id);
+            doctor.Status = doctor.Status == (byte)CustomEnum.Status.Active ?
+                (byte)CustomEnum.Status.Inactive : (byte)CustomEnum.Status.Active;
+            doctor.UpdatedAt = DateTime.Now;
+            return _doctorUnitOfWork.Save();
         }
     }
 }

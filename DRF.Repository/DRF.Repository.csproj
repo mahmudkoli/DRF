@@ -91,6 +91,10 @@
     <Compile Include="UserUnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DRF.Common\DRF.Common.csproj">
+      <Project>{42BB5E0E-6052-41CD-8574-70D758F336B7}</Project>
+      <Name>DRF.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DRF.Entities\DRF.Entities.csproj">
       <Project>{0F40F66F-6B9A-4325-91A5-A1C78F0855B4}</Project>
       <Name>DRF.Entities</Name>

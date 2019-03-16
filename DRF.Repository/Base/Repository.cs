@@ -1,4 +1,5 @@
-﻿using DRF.Entities.Base;
+﻿using DRF.Common;
+using DRF.Entities.Base;
 using DRF.Repository.Context;
 using System;
 using System.Collections.Generic;
@@ -44,12 +45,14 @@ namespace DRF.Repository.Base
 
         public virtual IEnumerable<T> GetAll()
         {
-            return _context.Set<T>().Where(c => c.Status == 1);
+            return _context.Set<T>().Where(c => c.Status == (byte)CustomEnum.Status.Active);
         }
+
         public virtual IEnumerable<T> Get(Expression<Func<T, bool>> predicate)
         {
             return _context.Set<T>().Where(predicate);
         }
+
         public virtual IEnumerable<T> GetWithPagging(int pageIndex, int pageSize)
         {
             return _context.Set<T>().Skip((pageIndex - 1) * pageSize).Take(pageSize);
@@ -112,6 +115,21 @@ namespace DRF.Repository.Base
             {
                 DeleteFromDatabaseByItem(entity);
             }
+        }
+
+        public int AllCount()
+        {
+            return _context.Set<T>().Count();
+        }
+
+        public int ActiveCount()
+        {
+            return _context.Set<T>().Where(c => c.Status == (byte)CustomEnum.Status.Active).Count();
+        }
+
+        public int InactiveCount()
+        {
+            return _context.Set<T>().Where(c => c.Status == (byte)CustomEnum.Status.Inactive).Count();
         }
     }
 }

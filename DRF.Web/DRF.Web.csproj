@@ -155,6 +155,7 @@
     <Compile Include="Areas\Admin\Models\CityModel.cs" />
     <Compile Include="Areas\Admin\Models\DegreeModel.cs" />
     <Compile Include="Areas\Admin\Models\DoctorModel.cs" />
+    <Compile Include="Areas\Admin\Models\HomeModel.cs" />
     <Compile Include="Areas\Admin\Models\PatientModel.cs" />
     <Compile Include="Areas\Admin\Models\SearchModel.cs" />
     <Compile Include="Areas\Admin\Models\SpecialtyModel.cs" />
@@ -300,6 +301,9 @@
     <Content Include="Areas\Admin\Views\City\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Chamber\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Specialty\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Degree\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Doctor\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Patient\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -365,9 +369,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Views\Degree\" />
-    <Folder Include="Areas\Admin\Views\Doctor\" />
-    <Folder Include="Areas\Admin\Views\Patient\" />
     <Folder Include="Uploads\Images\Doctor\" />
     <Folder Include="Uploads\Images\Patient\" />
     <Folder Include="Views\JsonData\" />

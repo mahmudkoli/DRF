@@ -26,5 +26,8 @@ namespace DRF.Repository.Base
         void DeleteFromDatabaseByItem(T entity);
         void DeleteRangeFromDatabaseByIds(IEnumerable<int> ids);
         void DeleteRangeFromDatabaseByItems(IEnumerable<T> entities);
+        int AllCount();
+        int ActiveCount();
+        int InactiveCount();
     }
 }

@@ -20,5 +20,15 @@ namespace DRF.Web.Areas.Admin.Models
         {
             return _patientService.GetAll();
         }
+
+        public IEnumerable<Entities.Patient> GetAll(string name, byte? status)
+        {
+            return _patientService.GetAll(name, status);
+        }
+
+        public bool ChangeStatus(int id)
+        {
+            return _patientService.ChangeStatus(id);
+        }
     }
 }

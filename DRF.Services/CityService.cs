@@ -40,6 +40,11 @@ namespace DRF.Services
             return _cityUnitOfWork.Save();
         }
 
+        public int ActiveCount()
+        {
+            return _cityUnitOfWork.CityRepository.ActiveCount();
+        }
+
         public bool AddOrUpdate(City city)
         {
             if (city.Id == 0)
