@@ -305,6 +305,12 @@
     <Content Include="Areas\Admin\Views\Degree\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Doctor\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Patient\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Doctor\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Doctor\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Doctor\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Patient\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Patient\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Patient\Details.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -322,6 +328,7 @@
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\Projects\chart.js" />
     <Content Include="Scripts\Projects\autocomplete.js" />
     <Content Include="Scripts\Projects\doctor-available-date-time.js" />
     <Content Include="Scripts\Projects\image.js" />

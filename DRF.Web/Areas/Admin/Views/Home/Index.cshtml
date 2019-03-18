@@ -4,13 +4,20 @@
     ViewBag.Title = "Index";
 }
 
+@{
+    var pendingAppPer = Math.Round((Model.RequestedAppointmentCount * 100.00) / Model.TotalAppointmentCount, 2);
+    var approvedAppPer = Math.Round((Model.ApprovedAppointmentCount * 100.00) / Model.TotalAppointmentCount, 2);
+    var rejectedAppPer = Math.Round((Model.RejectedAppointmentCount * 100.00) / Model.TotalAppointmentCount, 2);
+    var completedAppPer = Math.Round((Model.CompletedAppointmentCount * 100.00) / Model.TotalAppointmentCount, 2);
+}
+
 <section class="content-header">
     <h1>
         Dashboard
         <small>Control panel</small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="@Url.Action("Index","Home")"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="@Url.Action("Index", "Home")"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Dashboard</li>
     </ol>
 </section>
@@ -27,7 +34,7 @@
                 <div class="icon">
                     <i class="fa fa-user-md"></i>
                 </div>
-                <a href="@Url.Action("Index","Doctor")" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="@Url.Action("Index", "Doctor")" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
 
@@ -41,7 +48,7 @@
                 <div class="icon">
                     <i class="fa fa-user"></i>
                 </div>
-                <a href="@Url.Action("Index","Patient")" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="@Url.Action("Index", "Patient")" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
 
@@ -55,7 +62,7 @@
                 <div class="icon">
                     <i class="fa fa-home"></i>
                 </div>
-                <a href="@Url.Action("Index","City")" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="@Url.Action("Index", "City")" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
 
@@ -69,176 +76,196 @@
                 <div class="icon">
                     <i class="fa fa-medkit"></i>
                 </div>
-                <a href="@Url.Action("Index","Chamber")" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="@Url.Action("Index", "Chamber")" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
     </div>
 
 
-<!-- Main row -->
     <div class="row">
-        <!-- Left col -->
-        <div class="col-md-8">
-            <!-- /.box -->
-            <div class="row">
-                <div class="col-md-6">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Monthly Report</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-wrench"></i>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Separated link</a></li>
+                            </ul>
+                        </div>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <p class="text-center">
+                                <strong>Appointment: 1 Jan, 2019 - 31 Dec, 2019</strong>
+                            </p>
+                            <div class="chart">
+                                <!-- Sales Chart Canvas -->
+                                <canvas id="appointmentChart" style="height: 180px;"></canvas>
+                            </div>
+                            <!-- /.chart-responsive -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-md-4">
+                            <p class="text-center">
+                                <strong>Appointment</strong>
+                            </p>
+                            <div class="progress-group">
+                                <span class="progress-text">Pending Appointment</span>
+                                <span class="progress-number"><b>@Model.RequestedAppointmentCount</b>/@Model.TotalAppointmentCount</span>
+                                <div class="progress sm">
+                                    <div class="progress-bar progress-bar-aqua" style="width: @(pendingAppPer)%"></div>
+                                </div>
+                            </div>
+                            <!-- /.progress-group -->
+                            <div class="progress-group">
+                                <span class="progress-text">Approved Appointment</span>
+                                <span class="progress-number"><b>@Model.ApprovedAppointmentCount</b>/@Model.TotalAppointmentCount</span>
+                                <div class="progress sm">
+                                    <div class="progress-bar progress-bar-green" style="width: @(approvedAppPer)%"></div>
+                                </div>
+                            </div>
+                            <!-- /.progress-group -->
+                            <div class="progress-group">
+                                <span class="progress-text">Rejected Appointment</span>
+                                <span class="progress-number"><b>@Model.RejectedAppointmentCount</b>/@Model.TotalAppointmentCount</span>
+                                <div class="progress sm">
+                                    <div class="progress-bar progress-bar-red" style="width: @(rejectedAppPer)%"></div>
+                                </div>
+                            </div>
+                            <!-- /.progress-group -->
+                            <div class="progress-group">
+                                <span class="progress-text">Completed Appointment</span>
+                                <span class="progress-number"><b>@Model.CompletedAppointmentCount</b>/@Model.TotalAppointmentCount</span>
+                                <div class="progress sm">
+                                    <div class="progress-bar progress-bar-yellow" style="width: @(completedAppPer)%"></div>
+                                </div>
+                            </div>
+                            <!-- /.progress-group -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- ./box-body -->
+                <div class="box-footer">
 
-                    <!-- USERS LIST -->
-                    <div class="box box-danger">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Latest Members</h3>
-                            <div class="box-tools pull-right">
-                                <span class="label label-danger">8 New Members</span>
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove">
-                                    <i class="fa fa-times"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body no-padding">
-                            <ul class="users-list clearfix">
-                                <li>
-                                    <img src="dist/img/user1-128x128.jpg" alt="User Image">
-                                    <a class="users-list-name" href="#">Alexander Pierce</a>
-                                    <span class="users-list-date">Today</span>
-                                </li>
-                                <li>
-                                    <img src="dist/img/user8-128x128.jpg" alt="User Image">
-                                    <a class="users-list-name" href="#">Norman</a>
-                                    <span class="users-list-date">Yesterday</span>
-                                </li>
-                                <li>
-                                    <img src="dist/img/user7-128x128.jpg" alt="User Image">
-                                    <a class="users-list-name" href="#">Jane</a>
-                                    <span class="users-list-date">12 Jan</span>
-                                </li>
-                                <li>
-                                    <img src="dist/img/user6-128x128.jpg" alt="User Image">
-                                    <a class="users-list-name" href="#">John</a>
-                                    <span class="users-list-date">12 Jan</span>
-                                </li>
-                                <li>
-                                    <img src="dist/img/user2-160x160.jpg" alt="User Image">
-                                    <a class="users-list-name" href="#">Alexander</a>
-                                    <span class="users-list-date">13 Jan</span>
-                                </li>
-                                <li>
-                                    <img src="dist/img/user5-128x128.jpg" alt="User Image">
-                                    <a class="users-list-name" href="#">Sarah</a>
-                                    <span class="users-list-date">14 Jan</span>
-                                </li>
-                                <li>
-                                    <img src="dist/img/user4-128x128.jpg" alt="User Image">
-                                    <a class="users-list-name" href="#">Nora</a>
-                                    <span class="users-list-date">15 Jan</span>
-                                </li>
-                                <li>
-                                    <img src="dist/img/user3-128x128.jpg" alt="User Image">
-                                    <a class="users-list-name" href="#">Nadia</a>
-                                    <span class="users-list-date">15 Jan</span>
-                                </li>
-                            </ul>
-                            <!-- /.users-list -->
-                        </div>
-                        <!-- /.box-body -->
-                        <div class="box-footer text-center">
-                            <a href="javascript:void(0)" class="uppercase">View All Users</a>
-                        </div>
-                        <!-- /.box-footer -->
-                    </div>
-                    <!--/.box -->
+                    <!-- /.row -->
                 </div>
-                <!-- /.col -->
-                <div class="col-md-6">
-                    <!-- USERS LIST -->
-                    <div class="box box-danger">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Latest Members</h3>
-                            <div class="box-tools pull-right">
-                                <span class="label label-danger">8 New Members</span>
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove">
-                                    <i class="fa fa-times"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body no-padding">
-                            <ul class="users-list clearfix">
-                                <li>
-                                    <img src="dist/img/user1-128x128.jpg" alt="User Image">
-                                    <a class="users-list-name" href="#">Alexander Pierce</a>
-                                    <span class="users-list-date">Today</span>
-                                </li>
-                                <li>
-                                    <img src="dist/img/user8-128x128.jpg" alt="User Image">
-                                    <a class="users-list-name" href="#">Norman</a>
-                                    <span class="users-list-date">Yesterday</span>
-                                </li>
-                                <li>
-                                    <img src="dist/img/user7-128x128.jpg" alt="User Image">
-                                    <a class="users-list-name" href="#">Jane</a>
-                                    <span class="users-list-date">12 Jan</span>
-                                </li>
-                                <li>
-                                    <img src="dist/img/user6-128x128.jpg" alt="User Image">
-                                    <a class="users-list-name" href="#">John</a>
-                                    <span class="users-list-date">12 Jan</span>
-                                </li>
-                                <li>
-                                    <img src="dist/img/user2-160x160.jpg" alt="User Image">
-                                    <a class="users-list-name" href="#">Alexander</a>
-                                    <span class="users-list-date">13 Jan</span>
-                                </li>
-                                <li>
-                                    <img src="dist/img/user5-128x128.jpg" alt="User Image">
-                                    <a class="users-list-name" href="#">Sarah</a>
-                                    <span class="users-list-date">14 Jan</span>
-                                </li>
-                                <li>
-                                    <img src="dist/img/user4-128x128.jpg" alt="User Image">
-                                    <a class="users-list-name" href="#">Nora</a>
-                                    <span class="users-list-date">15 Jan</span>
-                                </li>
-                                <li>
-                                    <img src="dist/img/user3-128x128.jpg" alt="User Image">
-                                    <a class="users-list-name" href="#">Nadia</a>
-                                    <span class="users-list-date">15 Jan</span>
-                                </li>
-                            </ul>
-                            <!-- /.users-list -->
-                        </div>
-                        <!-- /.box-body -->
-                        <div class="box-footer text-center">
-                            <a href="javascript:void(0)" class="uppercase">View All Users</a>
-                        </div>
-                        <!-- /.box-footer -->
-                    </div>
-                    <!--/.box -->
-                </div>
-                <!-- /.col -->
+                <!-- /.box-footer -->
             </div>
-            <!-- /.row -->
             <!-- /.box -->
         </div>
         <!-- /.col -->
+    </div>
+    <!-- /.row -->
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Latest Doctors</h3>
+                            <div class="box-tools pull-right">
+                                @*<span class="label label-danger">8 New Members</span>*@
+                                @*<button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool" data-widget="remove">
+                                        <i class="fa fa-times"></i>
+                                    </button>*@
+                            </div>
+                        </div>
+
+                        <div class="box-body no-padding">
+                            <ul class="users-list clearfix">
+                                @foreach (var doctor in Model.DoctorCollection)
+                                {
+                                    var drImageUrl = string.IsNullOrEmpty(doctor.ImageUrl) ? "~/Images/dr-avatar.png" : doctor.ImageUrl;
+                                    <li>
+                                        <img src="@Url.Content(drImageUrl)" alt="@doctor.User.Name" title="@doctor.User.Name">
+                                        <a class="users-list-name" href="#">@doctor.User.Name</a>
+                                        <span class="users-list-date">@doctor.User.CreatedAt.Value.ToString("d")</span>
+                                        <span class="users-list-date">@doctor.User.CreatedAt.Value.ToString("t")</span>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+
+                        <div class="box-footer text-center">
+                            <a href="@Url.Action("Index", "Doctor")" class="uppercase">View All Doctors</a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Latest Patients</h3>
+                            <div class="box-tools pull-right">
+                                @*<span class="label label-danger">8 New Members</span>*@
+                                @*<button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool" data-widget="remove">
+                                        <i class="fa fa-times"></i>
+                                    </button>*@
+                            </div>
+                        </div>
+
+                        <div class="box-body no-padding">
+                            <ul class="users-list clearfix">
+                                @foreach (var patient in Model.PatientCollection)
+                                {
+                                    var ptImageUrl = string.IsNullOrEmpty(patient.ImageUrl) ? "~/Images/avatar.png" : patient.ImageUrl;
+                                    <li>
+                                        <img src="@Url.Content(ptImageUrl)" alt="@patient.User.Name" title="@patient.User.Name">
+                                        <a class="users-list-name" href="#">@patient.User.Name</a>
+                                        <span class="users-list-date">@patient.User.CreatedAt.Value.ToString("d")</span>
+                                        <span class="users-list-date">@patient.User.CreatedAt.Value.ToString("t")</span>
+                                    </li>
+                                }
+                            </ul>
+
+                        </div>
+
+                        <div class="box-footer text-center">
+                            <a href="@Url.Action("Index", "Patient")" class="uppercase">View All Patients</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="col-md-4">
             <!-- Info Boxes Style 2 -->
-            <div class="info-box bg-yellow">
+            <div class="info-box bg-aqua">
                 <span class="info-box-icon"><i class="ion ion-ios-pricetag-outline"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Inventory</span>
-                    <span class="info-box-number">5,200</span>
+                    <span class="info-box-text">Pending Appointment</span>
+                    <span class="info-box-number">@Model.RequestedAppointmentCount</span>
                     <div class="progress">
-                        <div class="progress-bar" style="width: 50%"></div>
+                        <div class="progress-bar" style="width: @(pendingAppPer)%"></div>
                     </div>
                     <span class="progress-description">
-                        50% Increase in 30 Days
+                        @(pendingAppPer)% Pending in @Model.TotalAppointmentCount Appointments
                     </span>
                 </div>
                 <!-- /.info-box-content -->
@@ -247,13 +274,13 @@
             <div class="info-box bg-green">
                 <span class="info-box-icon"><i class="ion ion-ios-heart-outline"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Mentions</span>
-                    <span class="info-box-number">92,050</span>
+                    <span class="info-box-text">Approved Appointment</span>
+                    <span class="info-box-number">@Model.ApprovedAppointmentCount</span>
                     <div class="progress">
-                        <div class="progress-bar" style="width: 20%"></div>
+                        <div class="progress-bar" style="width: @(approvedAppPer)%"></div>
                     </div>
                     <span class="progress-description">
-                        20% Increase in 30 Days
+                        @(approvedAppPer)% Approved in @Model.TotalAppointmentCount Appointments
                     </span>
                 </div>
                 <!-- /.info-box-content -->
@@ -262,37 +289,42 @@
             <div class="info-box bg-red">
                 <span class="info-box-icon"><i class="ion ion-ios-cloud-download-outline"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Downloads</span>
-                    <span class="info-box-number">114,381</span>
+                    <span class="info-box-text">Rejected Appointment</span>
+                    <span class="info-box-number">@Model.RejectedAppointmentCount</span>
                     <div class="progress">
-                        <div class="progress-bar" style="width: 70%"></div>
+                        <div class="progress-bar" style="width: @(rejectedAppPer)%"></div>
                     </div>
                     <span class="progress-description">
-                        70% Increase in 30 Days
+                        @(rejectedAppPer)% Rejected in @Model.TotalAppointmentCount Appointments
                     </span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
             <!-- /.info-box -->
-            <div class="info-box bg-aqua">
+            <div class="info-box bg-yellow">
                 <span class="info-box-icon"><i class="ion-ios-chatbubble-outline"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Direct Messages</span>
-                    <span class="info-box-number">163,921</span>
+                    <span class="info-box-text">Completed Appointment</span>
+                    <span class="info-box-number">@Model.CompletedAppointmentCount</span>
                     <div class="progress">
-                        <div class="progress-bar" style="width: 40%"></div>
+                        <div class="progress-bar" style="width: @(completedAppPer)%"></div>
                     </div>
                     <span class="progress-description">
-                        40% Increase in 30 Days
+                        @(completedAppPer)% Completed in @Model.TotalAppointmentCount Appointments
                     </span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
             <!-- /.info-box -->
-
             <!-- /.box -->
         </div>
-        <!-- /.col -->
+
     </div>
-    <!-- /.row -->
+
 </section>
+
+@section scripts{
+    <!-- ChartJS -->
+    <script src="~/Plugins/bower_components/chart.js/Chart.js"></script>
+    <script src="~/Scripts/Projects/chart.js"></script>
+}

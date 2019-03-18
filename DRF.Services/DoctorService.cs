@@ -13,10 +13,12 @@ namespace DRF.Services
     public class DoctorService
     {
         private DoctorUnitOfWork _doctorUnitOfWork;
+        private UserService _userService;
 
         public DoctorService()
         {
             _doctorUnitOfWork = new DoctorUnitOfWork(new DRFDbContext());
+            _userService = new UserService();
         }
 
         public bool Add(Doctor entity)
@@ -43,6 +45,46 @@ namespace DRF.Services
                     DoctorDegreeRelations = entity.DoctorDegreeRelations,
                     DoctorSpecialtyRelations = entity.DoctorSpecialtyRelations
                 };
+                _doctorUnitOfWork.DoctorRepository.Add(newEntity);
+                return _doctorUnitOfWork.Save();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
+
+        public bool AddByAdmin(Doctor entity)
+        {
+            try
+            {
+                var newEntity = new Doctor()
+                {
+                    FathersName = entity.FathersName,
+                    MothersName = entity.MothersName,
+                    GenderId = entity.GenderId,
+                    BloodGroupId = entity.BloodGroupId,
+                    Designation = entity.Designation,
+                    Description = entity.Description,
+                    Phone = entity.Phone,
+                    PresentAddress = entity.PresentAddress,
+                    PermanentAddress = entity.PermanentAddress,
+                    Awards = entity.Awards,
+                    User = entity.User,
+                    DateOfBirth = entity.DateOfBirth,
+                    Experience = entity.Experience,
+                    ImageUrl = entity.ImageUrl,
+                    DoctorChamberRelations = entity.DoctorChamberRelations,
+                    DoctorDegreeRelations = entity.DoctorDegreeRelations,
+                    DoctorSpecialtyRelations = entity.DoctorSpecialtyRelations
+                };
+
+                //----------Auto Save-------------
+                newEntity.User.IsEmailVerified = true;
+                newEntity.User.Password = CustomCrypto.Hash(CustomName.DoctorDefaultPassword);
+                newEntity.User.UserRoleId = (int)CustomEnum.UserType.Doctor;
+
                 _doctorUnitOfWork.DoctorRepository.Add(newEntity);
                 return _doctorUnitOfWork.Save();
             }
@@ -117,6 +159,11 @@ namespace DRF.Services
         {
             return _doctorUnitOfWork.DoctorRepository.
                 Get(x => x.DoctorChamberRelations.Select(y => y.Chamber.Name.ToLower()).Contains(term.ToLower()));
+        }
+
+        public bool IsEmailExist(string email)
+        {
+            return _userService.IsEmailExist(email);
         }
 
         public IEnumerable<Doctor> GetAllBySpecialty(string term)

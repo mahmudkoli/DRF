@@ -109,6 +109,7 @@
                                             var active = doctor.Status == (byte)CustomEnum.Status.Active;
                                         }
 
+                                        <a href="@Url.Action("Details","Doctor", new { id = doctor.Id })" class="btn btn-xs btn-info fa fa-search-plus"></a>
                                         <a href="@Url.Action("Edit","Doctor", new { id = doctor.Id })" class="btn btn-xs btn-primary fa fa-pencil"></a>
 
                                         <a href="@Url.Action("ChangeStatus","Doctor", new { id = doctor.Id })"

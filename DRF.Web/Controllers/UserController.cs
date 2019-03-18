@@ -90,6 +90,10 @@ namespace DRF.Web.Controllers
                     {
                         return RedirectToAction("Index", "Home", new {area = "Doctor"});
                     }
+                    else if (isAuthUser.UserRoleId == (int)CustomEnum.UserType.Admin)
+                    {
+                        return RedirectToAction("Index", "Home", new { area = "Admin" });
+                    }
 
                     if (Url.IsLocalUrl(ReturnUrl))
                     {

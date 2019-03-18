@@ -54,6 +54,35 @@ namespace DRF.Services
             return data;
         }
 
+        public int RejectedAppointmentCount()
+        {
+            return _appointmentUnitOfWork.AppointmentRepository.GetAll().
+                Where(x => x.AppointmentStatus == (byte)CustomEnum.AppointmentStatus.Rejected).Count();
+        }
+
+        public int ActiveCount()
+        {
+            return _appointmentUnitOfWork.AppointmentRepository.GetAll().Count();
+        }
+
+        public int CompletedAppointmentCount()
+        {
+            return _appointmentUnitOfWork.AppointmentRepository.GetAll().
+                Where(x => x.AppointmentStatus == (byte)CustomEnum.AppointmentStatus.Completed).Count();
+        }
+
+        public int ApprovedAppointmentCount()
+        {
+            return _appointmentUnitOfWork.AppointmentRepository.GetAll().
+                Where(x => x.AppointmentStatus == (byte)CustomEnum.AppointmentStatus.Approved).Count();
+        }
+
+        public int RequestedAppointmentCount()
+        {
+            return _appointmentUnitOfWork.AppointmentRepository.GetAll().
+                Where(x => x.AppointmentStatus == (byte)CustomEnum.AppointmentStatus.Requested).Count();
+        }
+
         public bool ApprovedAppointmentById(int id)
         {
             try
