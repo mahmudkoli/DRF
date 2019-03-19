@@ -1,5 +1,5 @@
 ﻿
-$(function () {
+function appointmentChartDataShow (data) {
     // -----------------------
     // - MONTHLY SALES CHART -
     // -----------------------
@@ -7,6 +7,10 @@ $(function () {
 
     // -----------Get Appointment Data Data
 
+    var pendingData = data.filter(x => x.AppointmentStatus === 'Requested')[0];
+    var approvedData = data.filter(x => x.AppointmentStatus === 'Approved')[0];
+    var rejectedData = data.filter(x => x.AppointmentStatus === 'Rejected')[0];
+    var completedData = data.filter(x => x.AppointmentStatus === 'Completed')[0];
 
     // Get context with jQuery - using jQuery's .get() method.
     var appointmentChartCanvas = $('#appointmentChart').get(0).getContext('2d');
@@ -19,43 +23,47 @@ $(function () {
         datasets: [
             {
                 label: 'Pending',
-                fillColor: 'rgb(210, 214, 222)',
-                strokeColor: 'rgb(210, 214, 222)',
-                pointColor: 'rgb(210, 214, 222)',
-                pointStrokeColor: '#c1c7d1',
-                pointHighlightFill: '#fff',
-                pointHighlightStroke: 'rgb(220,220,220)',
-                data: [65, 59, 80, 81, 56, 55, 40, 80, 81, 56, 55, 40]
+                fillColor: 'rgba(0,192,239,0.1)',
+                strokeColor: '#00C0EF',
+                pointColor: '#00C0EF',
+                pointStrokeColor: '#00C0EF',
+                pointHighlightFill: '#00C0EF',
+                pointHighlightStroke: '#00C0EF',
+                data: [pendingData.Jan, pendingData.Feb, pendingData.Mar, pendingData.Apr, pendingData.May, pendingData.Jun,
+                    pendingData.Jul, pendingData.Aug, pendingData.Sep, pendingData.Oct, pendingData.Nov, pendingData.Dec]
             },
             {
                 label: 'Approved',
-                fillColor: 'rgba(60,141,188,0.9)',
-                strokeColor: 'rgba(60,141,188,0.8)',
-                pointColor: '#3b8bba',
-                pointStrokeColor: 'rgba(60,141,188,1)',
-                pointHighlightFill: '#fff',
-                pointHighlightStroke: 'rgba(60,141,188,1)',
-                data: [28, 48, 40, 19, 86, 27, 90, 48, 40, 19, 86, 27]
+                fillColor: 'rgba(0,166,90,0.2)',
+                strokeColor: '#00A65A',
+                pointColor: '#00A65A',
+                pointStrokeColor: '#00A65A',
+                pointHighlightFill: '#00A65A',
+                pointHighlightStroke: '#00A65A',
+                data: [approvedData.Jan, approvedData.Feb, approvedData.Mar, approvedData.Apr, approvedData.May, approvedData.Jun,
+                    approvedData.Jul, approvedData.Aug, approvedData.Sep, approvedData.Oct, approvedData.Nov, approvedData.Dec]
             },
             {
                 label: 'Rejected',
-                fillColor: 'rgba(150,41,188,0.9)',
-                strokeColor: 'rgba(150,41,188,0.8)',
-                pointColor: '#cdadca',
-                pointStrokeColor: 'rgba(50,41,188,1)',
-                pointHighlightFill: '#fff',
-                pointHighlightStroke: 'rgba(20,41,188,1)',
-                data: [28, 48, 40, 19, 86, 27, 90, 28, 48, 40, 19, 20]
+                fillColor: 'rgba(221,75,57,0.2)',
+                strokeColor: '#DD4B39',
+                pointColor: '#DD4B39',
+                pointStrokeColor: '#DD4B39',
+                pointHighlightFill: '#DD4B39',
+                pointHighlightStroke: '#DD4B39',
+                data: [rejectedData.Jan, rejectedData.Feb, rejectedData.Mar, rejectedData.Apr, rejectedData.May, rejectedData.Jun,
+                    rejectedData.Jul, rejectedData.Aug, rejectedData.Sep, rejectedData.Oct, rejectedData.Nov, rejectedData.Dec]
             },
             {
                 label: 'Completed',
-                fillColor: 'rgba(100,61,188,0.9)',
-                strokeColor: 'rgba(100,61,188,0.8)',
-                pointColor: '#34asd1',
-                pointStrokeColor: 'rgba(90,141,188,1)',
-                pointHighlightFill: '#fff',
-                pointHighlightStroke: 'rgba(60,41,88,1)',
-                data: [28, 48, 40, 19, 86, 27, 90, 48, 40, 19, 86, 27]
+                fillColor: 'rgba(243,156,18,0.1)',
+                strokeColor: '#F39C12',
+                pointColor: '#F39C12',
+                pointStrokeColor: '#F39C12',
+                pointHighlightFill: '#F39C12',
+                pointHighlightStroke: '#F39C12',
+                data: [completedData.Jan, completedData.Feb, completedData.Mar, completedData.Apr, completedData.May, completedData.Jun,
+                    completedData.Jul, completedData.Aug, completedData.Sep, completedData.Oct, completedData.Nov, completedData.Dec]
             }
         ]
     };
@@ -96,7 +104,13 @@ $(function () {
         // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
         maintainAspectRatio: true,
         // Boolean - whether to make the chart responsive to window resizing
-        responsive: true
+        responsive: true,
+
+        // Custom-----------
+        scaleOverride: true,
+        scaleSteps: 5,
+        scaleStepWidth: 2,
+        scaleStartValue: 0
     };
 
     // Create the line chart
@@ -105,4 +119,25 @@ $(function () {
     // ---------------------------
     // - END MONTHLY SALES CHART -
     // ---------------------------
-});
+}
+
+
+
+function appointmentChartData(url, method, paramData) {
+    method = method === null ? "GET" : method;
+
+    $.ajax({
+        url: url,
+        type: method,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        data: paramData,
+        success: function (data) {
+            appointmentChartDataShow(data);
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            $.alert(textStatus + "! please try again", '<i class="fa fa-exclamation-circle" aria-hidden="true"> Alert</i>');
+        }
+    });
+
+}

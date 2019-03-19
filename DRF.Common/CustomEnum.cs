@@ -13,6 +13,7 @@ namespace DRF.Common
         public enum AppointmentType { New = 1, Regular, Checkup }
         public enum UserType { Admin = 1, Doctor, Patient }
         public enum Status { Inactive = 0, Active = 1 }
+        public enum Month { Jan = 1, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec }
 
     }
 }
