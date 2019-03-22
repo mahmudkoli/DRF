@@ -1,0 +1,181 @@
+﻿@model IEnumerable<DRF.Entities.Doctor>
+
+<style>
+    #map_canvas {
+        width: 100%;
+        height: 100%;
+        background-color: grey;
+    }
+    .content {
+        min-width: 250px;
+    }
+    .content-body {
+        width: 100%;
+        padding: 5px;
+    }
+    .image {
+        width: 30%;
+        display: inline-block;
+        vertical-align: top;
+    }
+        .image img {
+            width: 60px; 
+            height: 60px; 
+        }
+    .info-body {
+        width: 70%;
+        display: inline-block;
+        vertical-align: top;
+    }
+        .info-body .info-btn {
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: #3F4079;
+            color: #FFFFFF;
+
+            display: inline-block;
+            font-weight: 400;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            border: 1px solid transparent;
+        }
+        .info-body h6 {
+            margin-bottom: 1px;
+        }
+        .info-body p {
+            margin-bottom: 1px;
+        }
+</style>
+
+<div id='map_canvas'></div>
+
+@{
+    var doctorsData = Model.SelectMany(x => x.DoctorChamberRelations.Select(t => new
+    {
+        Id = t.DoctorId,
+        Name = t.Doctor.User.Name,
+        ImageUrl = string.IsNullOrEmpty(t.Doctor.ImageUrl) ? "/Images/dr-avatar.png" : Url.Content(t.Doctor.ImageUrl),
+        ChamberLat = t.Chamber.Map == null ? "" : t.Chamber.Map.Lat,
+        ChamberLong = t.Chamber.Map == null ? "" : t.Chamber.Map.Long,
+        ChamberName = t.Chamber.Name,
+        ChamberAddress = t.Chamber.Address,
+    })).ToList();
+}
+
+<script>
+    var map;
+    var markers = [];
+    var contentStrings = [];
+    var infowindows = [];
+    var activeInfoWindow = null;
+
+    //Dhaka Lat Long............
+    var latlong = [23.777176, 90.399452];
+
+    function initMap() {
+
+        map = new google.maps.Map(document.getElementById('map_canvas'), {
+            zoom: 7,
+            center: { lat: latlong[0], lng: latlong[1] },
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+        
+        var doctorsData =  @Html.Raw(Json.Encode(doctorsData));
+        doctorsData.forEach(function (value, index) {
+            markerAdd(value, index);
+        });
+
+        //Add a Overlapping Marker Spiderfier
+        var markerSpiderfier = new OverlappingMarkerSpiderfier(map, 
+            {
+                markersWontMove: true,
+                markersWontHide: true,
+                basicFormatEvents: true
+            });
+
+        markers.forEach(function (value, index) {
+            markerSpiderfier.addMarker(value);  
+        });
+
+        // Add a marker clusterer to manage the markers.
+        var markerCluster = new MarkerClusterer(map, markers,
+            {
+                maxZoom: 15,
+                imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+            });
+
+    }
+
+    function markerAdd(value, index) {
+
+        var latlong = { lat: parseFloat(value.ChamberLat), lng: parseFloat(value.ChamberLong) }
+        var id = value.Id;
+        var name = value.Name;
+        var imageUrl = value.ImageUrl;
+        var chamberName = value.ChamberName;
+        var chamberAddress = value.ChamberAddress;
+        var detailsUrl = "/Home/DoctorDetailsInfo/";
+
+        contentStrings[index] = '<div id="content" class="content">' +
+                                    '<div id="siteNotice">' +
+                                    '</div>' +
+                                    //'<h1 id="firstHeading" class="firstHeading">' + '' + '</h1>' +
+                                    '<div id="bodyContent">' +
+                                        '<div class="content-body">' +
+                                            '<div class="image">' +
+                                                '<img src="' + imageUrl + '" />' +
+                                            '</div>' +
+                                            '<div class="info-body">' +
+                                                '<h6>' + name + '</h6>' +
+                                                '<p>' + chamberName + '</p>' + 
+                                                '<p>' + chamberAddress + '</p>' + 
+                                                '<a href="' + detailsUrl + id + '" class="info-btn">' +
+                                                'Details</a>' +
+                                            '</div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                '</div>';
+
+            infowindows[index] = new google.maps.InfoWindow({
+                content: contentStrings[index],
+                maxWidth: 400
+            });
+
+            markers[index] = new google.maps.Marker({
+                position: latlong,
+                map: map,
+                title: name,
+                label: name.substring(0, 1).toUpperCase()
+            });
+
+            google.maps.event.addListener(markers[index], 'mouseover', (function (markerValue, index) {
+                return function () {
+                    if (activeInfoWindow != null)
+                        activeInfoWindow.close();
+
+                    infowindows[index].open(map, markers[index]);
+                    activeInfoWindow = infowindows[index];
+                }
+            })(markers[index], index));
+
+            google.maps.event.addListener(markers[index], 'click', (function (markerValue, index) {
+                return function () {
+                    infowindows[index].close();
+                    activeInfoWindow = null;
+                }
+            })(markers[index], index));
+    }
+
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier/1.0.3/oms.min.js"></script>
+
+
+<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+</script>
+
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzmd8Jrrj3PaIlQbEadvyv0qshz3NgmKw&callback=initMap"
+        type="text/javascript"></script>
+

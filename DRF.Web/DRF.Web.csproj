@@ -311,6 +311,7 @@
     <Content Include="Areas\Admin\Views\Patient\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Patient\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Patient\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Chamber\_MapPartial.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -380,6 +381,7 @@
     <Content Include="Views\Appointment\_AppointmentInfo.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Profile\EditProfile.cshtml" />
+    <Content Include="Views\Home\_MapPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

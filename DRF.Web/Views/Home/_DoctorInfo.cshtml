@@ -5,17 +5,18 @@
 }
 
 <div class="strip_list wow fadeIn">
-    <a href="#" class="wish_bt"></a>
-    <figure>
-        <a href="#"><img src="@Url.Content(imageUrl)" alt="@Model.User.Name"></a>
-    </figure>
+    <div style="min-height:80px;">
+        <a href="#" class="wish_bt"></a>
+        <figure>
+            <a href="#"><img src="@Url.Content(imageUrl)" alt="@Model.User.Name"></a>
+        </figure>
 
-    <h3>@Model.User.Name</h3>
+        <h3>@Model.User.Name</h3>
 
-    <small>@string.Join(", ", Model.DoctorSpecialtyRelations.Select(x => x.Specialty.Name))</small>
+        <small>@string.Join(", ", Model.DoctorSpecialtyRelations.Select(x => x.Specialty.Name))</small>
 
-    <p>@Model.Description</p>
-
+        <p>@Model.Description</p>
+    </div>
     <ul>
         <li><a href="@Url.Action("DoctorDetailsInfo", new RouteValueDictionary(){{"id", Model.Id}})">Details</a></li>
         <li><a href="#">Appointment now</a></li>

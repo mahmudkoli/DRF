@@ -70,7 +70,14 @@ namespace DRF.Services
                     Address = chamber.Address,
                     AreaId = chamber.AreaId,
                     Status = (byte)CustomEnum.Status.Active,
-                    CreatedAt = DateTime.Now
+                    CreatedAt = DateTime.Now,
+                    Map = new Map()
+                    {
+                        Lat = chamber.Map.Lat,
+                        Long = chamber.Map.Long,
+                        Status = (byte)CustomEnum.Status.Active,
+                        CreatedAt = DateTime.Now
+                    }
                 };
                 _chamberUnitOfWork.ChamberRepository.Add(newChamber);
             }
@@ -81,6 +88,10 @@ namespace DRF.Services
                 existChamber.Address = chamber.Address;
                 existChamber.AreaId = chamber.AreaId;
                 existChamber.UpdatedAt = DateTime.Now;
+                existChamber.Map = existChamber.Map ?? new Map();
+                existChamber.Map.Lat = chamber.Map.Lat;
+                existChamber.Map.Long = chamber.Map.Long;
+                existChamber.Map.UpdatedAt = DateTime.Now;
                 _chamberUnitOfWork.ChamberRepository.Update(existChamber);
             }
 

@@ -30,16 +30,16 @@ namespace DRF.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(int NewChamberId, int NewChamberAreaId, string NewChamberName, string NewChamberAddress)
+        public ActionResult Create(NewChamberModel model)
         {
-            var isSaved = _chamberModel.AddOrUpdate(NewChamberId, NewChamberAreaId, NewChamberName, NewChamberAddress);
+            var isSaved = _chamberModel.AddOrUpdate(model);
             if (isSaved)
             {
-                TempData[CustomMessage.Success] = "Chamber successfully " + (NewChamberId == 0 ? "added" : "updated");
+                TempData[CustomMessage.Success] = "Chamber successfully " + (model.NewChamberId == 0 ? "added" : "updated");
             }
             else
             {
-                TempData[CustomMessage.Failure] = "Chamber " + (NewChamberId == 0 ? "add" : "update") + " failed";
+                TempData[CustomMessage.Failure] = "Chamber " + (model.NewChamberId == 0 ? "add" : "update") + " failed";
             }
             return RedirectToAction("Index");
         }
