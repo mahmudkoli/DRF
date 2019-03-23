@@ -88,11 +88,13 @@ namespace DRF.Services
                     GenderId = entity.GenderId,
                     BloodGroupId = entity.BloodGroupId,
                     Phone = entity.Phone,
+                    Profession = entity.Profession,
                     PresentAddress = entity.PresentAddress,
                     PermanentAddress = entity.PermanentAddress,
                     User = entity.User,
                     DateOfBirth = entity.DateOfBirth,
-                    ImageUrl = entity.ImageUrl
+                    ImageUrl = entity.ImageUrl,
+                    Note = entity.Note
                 };
 
                 //----------Auto Save-------------
@@ -122,6 +124,8 @@ namespace DRF.Services
                 existingPatient.GenderId = entity.GenderId;
                 existingPatient.BloodGroupId = entity.BloodGroupId;
                 existingPatient.Phone = entity.Phone;
+                existingPatient.Profession = entity.Profession;
+                existingPatient.Note = entity.Note;
                 existingPatient.PresentAddress = entity.PresentAddress;
                 existingPatient.PermanentAddress = entity.PermanentAddress;
                 existingPatient.DateOfBirth = entity.DateOfBirth;

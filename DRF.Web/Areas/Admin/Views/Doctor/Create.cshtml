@@ -138,6 +138,27 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        @Html.LabelFor(c => c.ProfessionalStatement, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-6">
+                            @Html.TextAreaFor(c => c.ProfessionalStatement, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ProfessionalStatement, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.EducationalStatement, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-6">
+                            @Html.TextAreaFor(c => c.EducationalStatement, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.EducationalStatement, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.EducationalCurriculum, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-6">
+                            @Html.TextAreaFor(c => c.EducationalCurriculum, new { @class = "form-control", @placeholder= "Ex. College Name - Degree, College Name - Degree ( separate by (,) comma )" })
+                            @Html.ValidationMessageFor(model => model.EducationalCurriculum, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
                         @Html.LabelFor(c => c.Description, new { @class = "col-sm-2 control-label" })
                         <div class="col-sm-6">
                             @Html.TextAreaFor(c => c.Description, new { @class = "form-control" })

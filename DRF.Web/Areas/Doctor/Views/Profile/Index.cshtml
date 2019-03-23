@@ -4,6 +4,38 @@
     ViewBag.Title = "Profile";
 }
 
+<style>
+    .informationTable {
+        width: 100%;
+        max-width: 100%;
+    }
+
+        .informationTable td {
+            padding: 5px;
+        }
+
+            .informationTable td:first-child {
+                width: 30%;
+            }
+
+            .informationTable td:last-child {
+                width: 70%;
+            }
+
+    /*----Override----*/
+    .text-muted {
+        margin-left: 20px;
+    }
+
+    .profile-user-img {
+        width: 150px;
+    }
+
+    .mar-reduce {
+        margin-bottom: 2px;
+    }
+</style>
+
 <section class="content-header">
     <h1>
         Profile
@@ -22,7 +54,7 @@
             <!-- Profile Image -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title"> Doctor</h3>
+                    <h3 class="box-title"> Profile</h3>
                     <div class="box-tools pull-right">
                         <a href="@Request.UrlReferrer" class="btn btn-box-tool">
                             <i class="fa fa-arrow-circle-left"></i> Back
@@ -31,23 +63,36 @@
                 </div>
                 <div class="box-body box-profile">
                     @{
-                         var imageUrl = String.IsNullOrEmpty(Model.ImageUrl) ? "/Images/dr-avatar.png" : Url.Content(Model.ImageUrl);
+                        var imageUrl = String.IsNullOrEmpty(Model.ImageUrl) ? "/Images/dr-avatar.png" : Url.Content(Model.ImageUrl);
                     }
                     <img class="profile-user-img img-responsive img-circle" src="@imageUrl" alt="User profile picture">
                     <h3 class="profile-username text-center">@Model.User.Name</h3>
-                    <p class="text-muted text-center">@Model.Designation</p>
+                    <p class="text-center mar-reduce">@Model.Designation</p>
+                    <p class="text-center mar-reduce">@Model.User.Email</p>
+                    <p class="text-center mar-reduce">@Model.Phone</p>
                     <ul class="list-group list-group-unbordered">
                         <li class="list-group-item">
-                            <b>Followers</b> <a class="pull-right">1,322</a>
+                            <b>Pending </b> <a class="pull-right">
+                                Total - @Model.RequestedAppointmentCount (@DateTime.Now.Year - @Model.RequestedAppointmentCountByYear)
+                            </a>
                         </li>
                         <li class="list-group-item">
-                            <b>Following</b> <a class="pull-right">543</a>
+                            <b>Approved </b> <a class="pull-right">
+                                Total - @Model.ApprovedAppointmentCount (@DateTime.Now.Year - @Model.ApprovedAppointmentCountByYear)
+                            </a>
                         </li>
                         <li class="list-group-item">
-                            <b>Friends</b> <a class="pull-right">13,287</a>
+                            <b>Rejected </b> <a class="pull-right">
+                                Total - @Model.RejectedAppointmentCount (@DateTime.Now.Year - @Model.RejectedAppointmentCountByYear)
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Completed </b> <a class="pull-right">
+                                Total - @Model.CompletedAppointmentCount (@DateTime.Now.Year - @Model.CompletedAppointmentCountByYear)
+                            </a>
                         </li>
                     </ul>
-                    <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+                    <a href="#" class="btn btn-primary btn-block"><b>View On Map</b></a>
                 </div>
                 <!-- /.box-body -->
             </div>
@@ -64,7 +109,8 @@
                         </a>
                         <div class="btn-group">
                             <a class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-wrench"></i></a>
+                                <i class="fa fa-wrench"></i>
+                            </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="@Url.Action("Edit","Profile")">Edit Information</a></li>
                                 <li><a href="@Url.Action("Index","Appointment")">Appointment</a></li>
@@ -75,26 +121,97 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <strong><i class="fa fa-book margin-r-5"></i> Degree</strong>
+                    <strong><i class="fa fa-tasks margin-r-5"></i> Professional Statement</strong>
                     <p class="text-muted">
-                        @(String.Join(",", Model.DoctorDegreeRelations.Select(x => x.Degree.Name).ToList()))
+                        @Model.ProfessionalStatement
                     </p>
                     <hr>
+
+                    <strong><i class="fa fa-book margin-r-5"></i> Educational Statement</strong>
+                    <p class="text-muted">
+                        @Model.EducationalStatement
+                    </p>
+                    <hr>
+
+                    <strong><i class="fa fa-book margin-r-5"></i> Educational Curriculum</strong>
+                    <p class="text-muted">
+                        @Model.EducationalCurriculum
+                    </p>
+                    <hr>
+
+                    <strong><i class="fa fa-tasks margin-r-5"></i> Degree</strong>
+                    <p class="text-muted">
+                        @(String.Join(", ", Model.DoctorDegreeRelations.Select(x => x.Degree.Name).ToList()))
+                    </p>
+                    <hr>
+
                     <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
                     <p class="text-muted">
-                        @(String.Join(",", Model.DoctorChamberRelations.Select(x => x.Chamber.Name).ToList()))
+                        @(String.Join(", ", Model.DoctorChamberRelations.Select(x => x.Chamber.Name).ToList()))
                     </p>
                     <hr>
+
                     <strong><i class="fa fa-pencil margin-r-5"></i> Specialty</strong>
                     <p class="text-muted">
-                        @(String.Join(",", Model.DoctorSpecialtyRelations.Select(x => x.Specialty.Name).ToList()))
+                        @(String.Join(", ", Model.DoctorSpecialtyRelations.Select(x => x.Specialty.Name).ToList()))
                     </p>
                     <hr>
-                    <strong><i class="fa fa-file-text-o margin-r-5"></i> Awards</strong>
-                    <p>@Model.Awards</p>
+
+                    <strong><i class="fa fa-star-o margin-r-5"></i> Experience</strong>
+                    <p class="text-muted">@Model.Experience years</p>
                     <hr>
+
+                    <strong><i class="fa fa-file-text-o margin-r-5"></i> Awards</strong>
+                    <p class="text-muted">@Model.Awards</p>
+                    <hr>
+
                     <strong><i class="fa fa-file-text-o margin-r-5"></i> Descriptions</strong>
-                    <p>@Model.Description</p>
+                    <p class="text-muted">@Model.Description</p>
+                    <hr>
+
+                    <div class="text-muted">
+                        <h4>Basic Information</h4>
+                        <table class="informationTable">
+                            <tbody>
+                                <tr>
+                                    <td><strong>Father's Name</strong></td>
+                                    <td>@Model.FathersName</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Mother's Name</strong></td>
+                                    <td>@Model.MothersName</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Present Address</strong></td>
+                                    <td>@Model.PresentAddress</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Permanent Address</strong></td>
+                                    <td>@Model.PermanentAddress</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Date of Birth</strong></td>
+                                    <td>@Model.DateOfBirth.ToString("D")</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Gender</strong></td>
+                                    <td>@Model.Gender.Name</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Joining Date</strong></td>
+                                    <td>@Model.CreatedAt.Value.ToString("D")</td>
+                                </tr>
+                                @if (Model.UpdatedAt.HasValue)
+                                {
+                                    <tr>
+                                        <td><strong>Update Date</strong></td>
+                                        <td>@Model.CreatedAt.Value.ToString("D")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
                 <!-- /.box-body -->
             </div>

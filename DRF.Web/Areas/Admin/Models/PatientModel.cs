@@ -16,12 +16,26 @@ namespace DRF.Web.Areas.Admin.Models
         [Display(Name = "Image")]
         public HttpPostedFileBase ImageFileBase { get; set; }
 
+        public int RequestedAppointmentCount { get; set; }
+        public int ApprovedAppointmentCount { get; set; }
+        public int RejectedAppointmentCount { get; set; }
+        public int CompletedAppointmentCount { get; set; }
+        public int TotalAppointmentCount { get; set; }
+        public int RequestedAppointmentCountByYear { get; set; }
+        public int ApprovedAppointmentCountByYear { get; set; }
+        public int RejectedAppointmentCountByYear { get; set; }
+        public int CompletedAppointmentCountByYear { get; set; }
+        public int TotalAppointmentCountByYear { get; set; }
+
+        private IEnumerable<Appointment> _appointmentCollection { get; set; }
+
         private PatientService _patientService;
         private ChamberService _chamberService;
         private SpecialtyService _specialtyService;
         private DegreeService _degreeService;
         private DataService _dataService;
         private UserService _userService;
+        private AppointmentService _appointmentService;
 
         public PatientModel()
         {
@@ -31,7 +45,8 @@ namespace DRF.Web.Areas.Admin.Models
             _specialtyService = new SpecialtyService();
             _dataService = new DataService();
             _userService = new UserService();
-            
+            _appointmentService = new AppointmentService();
+
             GenderCollection = _dataService.GetAllGender(); ;
             BloodGroupCollection = _dataService.GetAllBloodGroup();
             this.User = this.User ?? new User();
@@ -53,11 +68,16 @@ namespace DRF.Web.Areas.Admin.Models
                 this.BloodGroup = existingPatient.BloodGroup;
                 this.DateOfBirth = existingPatient.DateOfBirth;
                 this.Phone = existingPatient.Phone;
+                this.Profession = existingPatient.Profession;
+                this.Note = existingPatient.Note;
                 this.Status = existingPatient.Status;
                 this.UpdatedAt = existingPatient.UpdatedAt;
                 this.GenderId = existingPatient.GenderId;
                 this.Gender = existingPatient.Gender;
                 this.ImageUrl = existingPatient.ImageUrl;
+
+                _appointmentCollection = _appointmentService.GetAllByPatientId(this.Id);
+                ExecuteAppoinmentCount();
             }
 
         }
@@ -110,6 +130,38 @@ namespace DRF.Web.Areas.Admin.Models
         public bool IsEmailExist(string email)
         {
             return _userService.IsEmailExist(email);
+        }
+
+        private void ExecuteAppoinmentCount()
+        {
+            if (_appointmentCollection != null && _appointmentCollection.Count() > 0)
+            {
+
+                RequestedAppointmentCount = _appointmentCollection
+                    .Where(x => x.AppointmentStatus == (byte)CustomEnum.AppointmentStatus.Requested).Count();
+                ApprovedAppointmentCount = _appointmentCollection
+                    .Where(x => x.AppointmentStatus == (byte)CustomEnum.AppointmentStatus.Approved).Count();
+                RejectedAppointmentCount = _appointmentCollection
+                    .Where(x => x.AppointmentStatus == (byte)CustomEnum.AppointmentStatus.Rejected).Count();
+                CompletedAppointmentCount = _appointmentCollection
+                    .Where(x => x.AppointmentStatus == (byte)CustomEnum.AppointmentStatus.Completed).Count();
+                TotalAppointmentCount = _appointmentCollection.Count();
+
+                RequestedAppointmentCountByYear = _appointmentCollection
+                    .Where(x => x.AppointmentStatus == (byte)CustomEnum.AppointmentStatus.Requested &&
+                    x.AppointmentDate.Year == DateTime.Now.Year).Count();
+                ApprovedAppointmentCountByYear = _appointmentCollection
+                    .Where(x => x.AppointmentStatus == (byte)CustomEnum.AppointmentStatus.Approved &&
+                    x.AppointmentDate.Year == DateTime.Now.Year).Count();
+                RejectedAppointmentCountByYear = _appointmentCollection
+                    .Where(x => x.AppointmentStatus == (byte)CustomEnum.AppointmentStatus.Rejected &&
+                    x.AppointmentDate.Year == DateTime.Now.Year).Count();
+                CompletedAppointmentCountByYear = _appointmentCollection
+                    .Where(x => x.AppointmentStatus == (byte)CustomEnum.AppointmentStatus.Completed &&
+                    x.AppointmentDate.Year == DateTime.Now.Year).Count();
+                TotalAppointmentCountByYear = _appointmentCollection
+                    .Where(x => x.AppointmentDate.Year == DateTime.Now.Year).Count();
+            }
         }
     }
 }

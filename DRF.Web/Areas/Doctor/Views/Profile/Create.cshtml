@@ -33,6 +33,13 @@
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="box-body">
                     <div class="form-group">
+                        @Html.LabelFor(c => c.Phone, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(c => c.Phone, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
                         @Html.LabelFor(c => c.FathersName, new { @class = "col-sm-2 control-label" })
                         <div class="col-sm-6">
                             @Html.TextBoxFor(c => c.FathersName, new { @class = "form-control" })
@@ -44,13 +51,6 @@
                         <div class="col-sm-6">
                             @Html.TextBoxFor(c => c.MothersName, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.MothersName, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(c => c.Phone, new { @class = "col-sm-2 control-label" })
-                        <div class="col-sm-6">
-                            @Html.TextBoxFor(c => c.Phone, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -124,6 +124,27 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        @Html.LabelFor(c => c.ProfessionalStatement, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-6">
+                            @Html.TextAreaFor(c => c.ProfessionalStatement, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ProfessionalStatement, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.EducationalStatement, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-6">
+                            @Html.TextAreaFor(c => c.EducationalStatement, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.EducationalStatement, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.EducationalCurriculum, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-6">
+                            @Html.TextAreaFor(c => c.EducationalCurriculum, new { @class = "form-control", @placeholder = "Ex. College Name - Degree, College Name - Degree ( separate by (,) comma )" })
+                            @Html.ValidationMessageFor(model => model.EducationalCurriculum, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
                         @Html.LabelFor(c => c.Description, new { @class = "col-sm-2 control-label" })
                         <div class="col-sm-6">
                             @Html.TextAreaFor(c => c.Description, new { @class = "form-control" })
@@ -140,7 +161,7 @@
                     <div class="form-group">
                         <label for="imageFile" class="col-sm-2 control-label">Image </label>
                         <div class="col-sm-6">
-                            <input type="file" id="imageFile" name="ImageFileBase" >
+                            <input type="file" id="imageFile" name="ImageFileBase">
                             <div class="img-container" id="imgContainer">
                                 <img src="" alt="Image Loaded" id="imagePreview" />
                                 <div class="img-text-block">

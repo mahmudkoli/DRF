@@ -1,0 +1,67 @@
+﻿@using DRF.Web.Areas.Admin.Models
+
+@{
+    ViewBag.Title = "Admin";
+}
+
+@{ 
+    var authUser = AuthenticatedAdminUserModel.GetUserFromIdentity();
+}
+
+<section class="content-header">
+    <h1>
+        Admin
+        <small> Information</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index","Home")"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li><a href="@Url.Action("Index","Profile")"><i class="fa fa-dashboard"></i>Admin</a></li>
+        <li class="active"> Information</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <!-- Profile Image -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title"> Admin</h3>
+                    <div class="box-tools pull-right">
+                        <a href="@Request.UrlReferrer" class="btn btn-box-tool">
+                            <i class="fa fa-arrow-circle-left"></i> Back
+                        </a>
+                        <div class="btn-group">
+                            <a class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="@Url.Action("Index","Doctor")">Doctor</a></li>
+                                <li><a href="@Url.Action("Index","Patient")">Patient</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-body box-profile">
+                    @{
+                        var imageUrl = "/Images/dr-avatar.png";
+                    }
+                    <img class="profile-user-img img-responsive img-circle" src="@imageUrl" alt="User profile picture">
+                    <h3 class="profile-username text-center">@authUser.Name</h3>
+                    <h5 class="text-center">@authUser.Email</h5>
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                            <b>Joining Date </b> <a class="pull-right"> @authUser.CreatedAt.Value.ToString("D")</a>
+                        </li>
+                    </ul>
+                    <a href="#" class="btn btn-primary btn-block"><b>View On Map</b></a>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</section>
+

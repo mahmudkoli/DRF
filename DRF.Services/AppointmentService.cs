@@ -70,6 +70,11 @@ namespace DRF.Services
                 .Where(x => x.CreatedAt.Value.Year == year);
         }
 
+        public IEnumerable<Appointment> GetAllByDoctorId(int id)
+        {
+            return _appointmentUnitOfWork.AppointmentRepository.GetAllByDoctorId(id);
+        }
+
         public IEnumerable<Appointment> GetAll()
         {
             return _appointmentUnitOfWork.AppointmentRepository.GetAll();
@@ -170,6 +175,10 @@ namespace DRF.Services
             data = status == null ? data : data.Where(x => x.AppointmentStatus == status);
             data = lastDays == null ? data : data.Where(x => x.CreatedAt != null && x.CreatedAt.Value.AddDays(1) >= DateTime.Now.AddDays(-lastDays.Value));
             return data;
+        }
+        public IEnumerable<Appointment> GetAllByPatientId(int id)
+        {
+            return _appointmentUnitOfWork.AppointmentRepository.GetAllByPatientId(id);
         }
     }
 }
