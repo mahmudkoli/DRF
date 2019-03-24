@@ -148,6 +148,7 @@
     <Compile Include="Areas\Admin\Controllers\DoctorController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\PatientController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProfileController.cs" />
     <Compile Include="Areas\Admin\Controllers\SpecialtyController.cs" />
     <Compile Include="Areas\Admin\Models\AreaModel.cs" />
     <Compile Include="Areas\Admin\Models\AuthenticatedAdminUserModel.cs" />
@@ -305,6 +306,14 @@
     <Content Include="Areas\Admin\Views\Degree\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Doctor\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Patient\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Doctor\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Doctor\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Doctor\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Patient\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Patient\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Patient\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Chamber\_MapPartial.cshtml" />
+    <Content Include="Areas\Admin\Views\Profile\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -322,6 +331,7 @@
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\Projects\chart.js" />
     <Content Include="Scripts\Projects\autocomplete.js" />
     <Content Include="Scripts\Projects\doctor-available-date-time.js" />
     <Content Include="Scripts\Projects\image.js" />
@@ -373,6 +383,7 @@
     <Content Include="Views\Appointment\_AppointmentInfo.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Profile\EditProfile.cshtml" />
+    <Content Include="Views\Home\_MapPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

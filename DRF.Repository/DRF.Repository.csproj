@@ -82,6 +82,14 @@
     <Compile Include="Migrations\201902201756411_Add Patient Info.Designer.cs">
       <DependentUpon>201902201756411_Add Patient Info.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903231602104_AddNewPropertiesInDoctorEntity.cs" />
+    <Compile Include="Migrations\201903231602104_AddNewPropertiesInDoctorEntity.Designer.cs">
+      <DependentUpon>201903231602104_AddNewPropertiesInDoctorEntity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903231622294_RemovedRequiredDoctorEntity.cs" />
+    <Compile Include="Migrations\201903231622294_RemovedRequiredDoctorEntity.Designer.cs">
+      <DependentUpon>201903231622294_RemovedRequiredDoctorEntity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PatientRepository.cs" />
     <Compile Include="PatientUnitOfWork.cs" />
@@ -119,6 +127,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902201756411_Add Patient Info.resx">
       <DependentUpon>201902201756411_Add Patient Info.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903231602104_AddNewPropertiesInDoctorEntity.resx">
+      <DependentUpon>201903231602104_AddNewPropertiesInDoctorEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903231622294_RemovedRequiredDoctorEntity.resx">
+      <DependentUpon>201903231622294_RemovedRequiredDoctorEntity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

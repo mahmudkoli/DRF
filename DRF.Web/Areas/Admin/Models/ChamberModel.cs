@@ -33,17 +33,32 @@ namespace DRF.Web.Areas.Admin.Models
             return _areaService.GetAll();
         }
 
-        public bool AddOrUpdate(int newChamberId, int newChamberAreaId, string newChamberName, string newChamberAddress)
+        public bool AddOrUpdate(NewChamberModel model)
         {
             var chamber = new Chamber()
             {
-                Id = newChamberId,
-                AreaId = newChamberAreaId,
-                Name = newChamberName,
-                Address = newChamberAddress
+                Id = model.NewChamberId,
+                AreaId = model.NewChamberAreaId,
+                Name = model.NewChamberName,
+                Address = model.NewChamberAddress,
+                Map = new Map()
+                {
+                    Lat = model.NewChamberMapLat,
+                    Long = model.NewChamberMapLong
+                }
             };
 
             return _chamberService.AddOrUpdate(chamber);
         }
+    }
+
+    public class NewChamberModel
+    {
+        public int NewChamberId { get; set; }
+        public int NewChamberAreaId { get; set; }
+        public string NewChamberName { get; set; }
+        public string NewChamberAddress { get; set; }
+        public string NewChamberMapLat { get; set; }
+        public string NewChamberMapLong { get; set; }
     }
 }

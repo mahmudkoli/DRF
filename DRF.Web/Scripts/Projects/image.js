@@ -5,7 +5,7 @@ $(document).ready(function () {
 
         if (this.files && this.files[0]) {
 
-            if (this.files[0].name.match(/\.(jpg|jpeg|png|gif)$/)) {
+            if (this.files[0].name.match(/\.(jpg|jpeg|png|gif|JPG|JPEG|PNG|GIF)$/)) {
 
                 if (!(this.files[0].size > (2 * 1024 * 1024))) {
 

@@ -167,5 +167,10 @@ namespace DRF.Services
 
             return true;
         }
+
+        public bool IsEmailExist(string email)
+        {
+            return _userUnitOfWork.UserRepository.Get(x => x.Email.ToLower() == email.ToLower()).Count() > 0;
+        }
     }
 }

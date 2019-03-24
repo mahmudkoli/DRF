@@ -100,10 +100,13 @@
                                     <td>
                                         @{
                                             var active = chamber.Status == (byte)CustomEnum.Status.Active;
-                                            var chamberPassData = new { chamberId = @chamber.Id, chamberName = @chamber.Name, chamberAddress = @chamber.Address, chamberAreaId = @chamber.AreaId };
+                                            var chamberPassData = new { chamberId = @chamber.Id, chamberName = @chamber.Name, chamberAddress = @chamber.Address,
+                                                chamberAreaId = @chamber.AreaId, chamberMapLat = (chamber.Map==null?"":chamber.Map.Lat), chamberMapLong = (chamber.Map==null?"":chamber.Map.Long) };
                                         }
 
-                                        <a onclick="addChamberInfoForUpdate( @chamberPassData.chamberId, @chamberPassData.chamberAreaId, '@chamberPassData.chamberName', '@chamberPassData.chamberAddress')" class="btn btn-xs btn-primary fa fa-pencil"></a>
+                                        <a onclick="addChamberInfoForUpdate( @chamberPassData.chamberId, @chamberPassData.chamberAreaId, 
+                                           '@chamberPassData.chamberName', '@chamberPassData.chamberAddress', 
+                                           '@chamberPassData.chamberMapLat', '@chamberPassData.chamberMapLong')" class="btn btn-xs btn-primary fa fa-pencil"></a>
 
                                         <a href="@Url.Action("ChangeStatus","Chamber", new { id = chamber.Id })"
                                            class="btn btn-xs @(active?"btn-danger fa fa-close":"btn-success fa fa-check")">
@@ -158,6 +161,8 @@
                     @using (Html.BeginForm("Create", "Chamber", FormMethod.Post, new { @id = "newChamberForm" }))
                     {
                         @Html.Hidden("NewChamberId", 0)
+                        @Html.Hidden("NewChamberMapLat")
+                        @Html.Hidden("NewChamberMapLong")
                         <div class="row">
                             <div class="col-md-12">
                                 @Html.DropDownList("NewChamberAreaId", (SelectList)ViewBag.AreaSelectList, "--Select Area--", new { @class = "form-control input-sm" })
@@ -186,6 +191,12 @@
 
                 </div>
                 <!-- /.box-body -->
+            </div>
+
+            <div class="box box-default">
+                <div class="box-body">
+                    @Html.Partial("_MapPartial")
+                </div>
             </div>
         </div>
         <!-- /.col -->
@@ -232,22 +243,27 @@
             $('#NewChamberAreaId').val('');
             $('#NewChamberName').val('');
             $('#NewChamberAddress').val('');
+            $('#NewChamberMapLat').val('');
+            $('#NewChamberMapLong').val('');
             $('#NewChamberAreaId-error').hide();
             $('#NewChamberName-error').hide();
             $('#NewChamberAddress-error').hide();
         }
 
-        function addChamberInfoForUpdate(chamberId, chamberAreaId, chamberName, chamberAddress) {
+        function addChamberInfoForUpdate(chamberId, chamberAreaId, chamberName, chamberAddress, chamberMapLat, chamberMapLong) {
             var chamberId = chamberId;
             var chamberAreaId = chamberAreaId;
             var chamberName = chamberName;
             var chamberAddress = chamberAddress;
-
+        
             $('#NewChamberId').val(chamberId);
             $('#NewChamberAreaId').val(chamberAreaId);
             $('#NewChamberName').val(chamberName);
             $('#NewChamberAddress').val(chamberAddress);
+            $('#NewChamberMapLat').val(chamberMapLat);
+            $('#NewChamberMapLong').val(chamberMapLong);
 
+            newMap(chamberMapLat, chamberMapLong);
         }
     </script>
 }

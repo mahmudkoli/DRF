@@ -1,5 +1,5 @@
 ﻿@using DRF.Common
-@using DRF.Web.Areas.Doctor.Models
+@using DRF.Web.Areas.Admin.Models
 <!DOCTYPE html>
 
 <html>
@@ -44,11 +44,11 @@
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-purple sidebar-mini">
 
 
     @{
-        var authUser = AuthenticatedDoctorUserModel.GetUserFromIdentity();
+        var authUser = AuthenticatedAdminUserModel.GetUserFromIdentity();
 
         var routeValues = ViewContext.RouteData.Values;
         var currentAction = routeValues["Action"].ToString();
@@ -98,19 +98,19 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-bell-o"></i>
                                 @{
-                                    var appointmentRequestPendingCount = 1;
-                                    if (appointmentRequestPendingCount > 0)
+                                    var count = 1;
+                                    if (count > 0)
                                     {
-                                        <span class="label label-warning">@appointmentRequestPendingCount</span>
+                                        <span class="label label-warning">@count</span>
                                     }
                                 }
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="header">You have @appointmentRequestPendingCount pending appointment request</li>
-                                <li class="footer"><a href="@Url.Action("PendingAppointment","Appointment")">View all</a></li>
+                                <li class="header">You have @count request</li>
+                                <li class="footer"><a href="#">View all</a></li>
                             </ul>
                         </li>
-                        <li class="dropdown tasks-menu">
+                        @*<li class="dropdown tasks-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-flag-o"></i>
                                 <span class="label label-danger">9</span>
@@ -139,7 +139,7 @@
                                     <a href="#">View all tasks</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li>*@
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="@Url.Content(imageUrl)" class="user-image" alt="Image">
@@ -275,7 +275,7 @@
 
         <footer class="main-footer">
             <div class="pull-right hidden-xs">
-                Anything you want
+                @*Anything you want*@
             </div>
             <strong>Copyright &copy; @DateTime.Now.Year <a href="#">Mahmud</a>.</strong> All rights reserved.
         </footer>

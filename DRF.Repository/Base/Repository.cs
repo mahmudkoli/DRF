@@ -45,7 +45,7 @@ namespace DRF.Repository.Base
 
         public virtual IEnumerable<T> GetAll()
         {
-            return _context.Set<T>().Where(c => c.Status == (byte)CustomEnum.Status.Active);
+            return _context.Set<T>().Where(c => c.Status == (byte)CustomEnum.Status.Active).OrderByDescending(x => x.CreatedAt);
         }
 
         public virtual IEnumerable<T> Get(Expression<Func<T, bool>> predicate)

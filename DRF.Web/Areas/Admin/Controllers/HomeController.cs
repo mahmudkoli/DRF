@@ -23,5 +23,11 @@ namespace DRF.Web.Areas.Admin.Controllers
             var model = _homeModel;
             return View(model);
         }
+
+        public ActionResult GetAllAppointmentChartData(int id)
+        {
+            var data = _homeModel.GetAllAppointmentChartData().ToList();
+            return Json( data, JsonRequestBehavior.AllowGet);
+        }
     }
 }

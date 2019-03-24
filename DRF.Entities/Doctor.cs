@@ -12,19 +12,21 @@ namespace DRF.Entities
     {
         [Required]
         public string Phone { get; set; } 
-        public string Designation { get; set; } 
+        public string Designation { get; set; }
+        [Display(Name = "Professional Statement")]
+        public string ProfessionalStatement { get; set; }
+        [Display(Name = "Educational Statement")]
+        public string EducationalStatement { get; set; }
+        [Display(Name = "Educational Curriculum")]
+        public string EducationalCurriculum { get; set; } 
         public string Awards { get; set; } 
         public string Description { get; set; } 
-        [Required]
         [Display(Name = "Father's Name")]
         public string FathersName { get; set; }
-        [Required]
         [Display(Name = "Mother's Name")]
         public string MothersName { get; set; }
-        [Required]
         [Display(Name = "Present Address")]
         public string PresentAddress { get; set; }
-        [Required]
         [Display(Name = "Permanent Address")]
         public string PermanentAddress { get; set; }
         [Required]

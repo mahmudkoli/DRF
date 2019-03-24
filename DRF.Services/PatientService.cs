@@ -55,6 +55,11 @@ namespace DRF.Services
             return _patientUnitOfWork.PatientRepository.GetAll();
         }
 
+        public Patient GetById(int id)
+        {
+            return _patientUnitOfWork.PatientRepository.GetById(id);
+        }
+
         public IEnumerable<Patient> GetAll(string name, byte? status)
         {
             var data = _patientUnitOfWork.PatientRepository.Get(x => true);
@@ -70,6 +75,70 @@ namespace DRF.Services
                 (byte)CustomEnum.Status.Inactive : (byte)CustomEnum.Status.Active;
             doctor.UpdatedAt = DateTime.Now;
             return _patientUnitOfWork.Save();
+        }
+
+        public bool AddByAdmin(Patient entity)
+        {
+            try
+            {
+                var newEntity = new Patient()
+                {
+                    FathersName = entity.FathersName,
+                    MothersName = entity.MothersName,
+                    GenderId = entity.GenderId,
+                    BloodGroupId = entity.BloodGroupId,
+                    Phone = entity.Phone,
+                    Profession = entity.Profession,
+                    PresentAddress = entity.PresentAddress,
+                    PermanentAddress = entity.PermanentAddress,
+                    User = entity.User,
+                    DateOfBirth = entity.DateOfBirth,
+                    ImageUrl = entity.ImageUrl,
+                    Note = entity.Note
+                };
+
+                //----------Auto Save-------------
+                newEntity.User.IsEmailVerified = true;
+                newEntity.User.Password = CustomCrypto.Hash(CustomName.PatientDefaultPassword);
+                newEntity.User.UserRoleId = (int)CustomEnum.UserType.Patient;
+
+                _patientUnitOfWork.PatientRepository.Add(newEntity);
+                return _patientUnitOfWork.Save();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
+
+        public bool Update(Patient entity)
+        {
+            try
+            {
+                var existingPatient = _patientUnitOfWork.PatientRepository.GetById(entity.Id);
+
+                existingPatient.User.Name = entity.User.Name;
+                existingPatient.FathersName = entity.FathersName;
+                existingPatient.MothersName = entity.MothersName;
+                existingPatient.GenderId = entity.GenderId;
+                existingPatient.BloodGroupId = entity.BloodGroupId;
+                existingPatient.Phone = entity.Phone;
+                existingPatient.Profession = entity.Profession;
+                existingPatient.Note = entity.Note;
+                existingPatient.PresentAddress = entity.PresentAddress;
+                existingPatient.PermanentAddress = entity.PermanentAddress;
+                existingPatient.DateOfBirth = entity.DateOfBirth;
+                existingPatient.ImageUrl = String.IsNullOrEmpty(entity.ImageUrl) ? existingPatient.ImageUrl : entity.ImageUrl;
+
+                _patientUnitOfWork.PatientRepository.Update(existingPatient);
+                return _patientUnitOfWork.Save();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
         }
     }
 }

@@ -54,6 +54,80 @@ namespace DRF.Services
             return data;
         }
 
+        public int ActiveCount()
+        {
+            return _appointmentUnitOfWork.AppointmentRepository.GetAll().Count();
+        }
+
+        public int ActiveCountByYear(int year)
+        {
+            return _appointmentUnitOfWork.AppointmentRepository.GetAll().Where(x => x.CreatedAt.Value.Year == year).Count();
+        }
+
+        public IEnumerable<Appointment> GetAllByYear(int year)
+        {
+            return _appointmentUnitOfWork.AppointmentRepository.GetAll()
+                .Where(x => x.CreatedAt.Value.Year == year);
+        }
+
+        public IEnumerable<Appointment> GetAllByDoctorId(int id)
+        {
+            return _appointmentUnitOfWork.AppointmentRepository.GetAllByDoctorId(id);
+        }
+
+        public IEnumerable<Appointment> GetAll()
+        {
+            return _appointmentUnitOfWork.AppointmentRepository.GetAll();
+        }
+
+        public int RequestedAppointmentCount()
+        {
+            return _appointmentUnitOfWork.AppointmentRepository.GetAll().
+                Where(x => x.AppointmentStatus == (byte)CustomEnum.AppointmentStatus.Requested).Count();
+        }
+
+        public int ApprovedAppointmentCount()
+        {
+            return _appointmentUnitOfWork.AppointmentRepository.GetAll().
+                Where(x => x.AppointmentStatus == (byte)CustomEnum.AppointmentStatus.Approved).Count();
+        }
+
+        public int RejectedAppointmentCount()
+        {
+            return _appointmentUnitOfWork.AppointmentRepository.GetAll().
+                Where(x => x.AppointmentStatus == (byte)CustomEnum.AppointmentStatus.Rejected).Count();
+        }
+
+        public int CompletedAppointmentCount()
+        {
+            return _appointmentUnitOfWork.AppointmentRepository.GetAll().
+                Where(x => x.AppointmentStatus == (byte)CustomEnum.AppointmentStatus.Completed).Count();
+        }
+
+        public int RequestedAppointmentCountByYear(int year)
+        {
+            return _appointmentUnitOfWork.AppointmentRepository.GetAll().
+                Where(x => x.AppointmentStatus == (byte)CustomEnum.AppointmentStatus.Requested && x.CreatedAt.Value.Year == year).Count();
+        }
+
+        public int ApprovedAppointmentCountByYear(int year)
+        {
+            return _appointmentUnitOfWork.AppointmentRepository.GetAll().
+                Where(x => x.AppointmentStatus == (byte)CustomEnum.AppointmentStatus.Approved && x.CreatedAt.Value.Year == year).Count();
+        }
+
+        public int RejectedAppointmentCountByYear(int year)
+        {
+            return _appointmentUnitOfWork.AppointmentRepository.GetAll().
+                Where(x => x.AppointmentStatus == (byte)CustomEnum.AppointmentStatus.Rejected && x.CreatedAt.Value.Year == year).Count();
+        }
+
+        public int CompletedAppointmentCountByYear(int year)
+        {
+            return _appointmentUnitOfWork.AppointmentRepository.GetAll().
+                Where(x => x.AppointmentStatus == (byte)CustomEnum.AppointmentStatus.Completed && x.CreatedAt.Value.Year == year).Count();
+        }
+
         public bool ApprovedAppointmentById(int id)
         {
             try
@@ -101,6 +175,10 @@ namespace DRF.Services
             data = status == null ? data : data.Where(x => x.AppointmentStatus == status);
             data = lastDays == null ? data : data.Where(x => x.CreatedAt != null && x.CreatedAt.Value.AddDays(1) >= DateTime.Now.AddDays(-lastDays.Value));
             return data;
+        }
+        public IEnumerable<Appointment> GetAllByPatientId(int id)
+        {
+            return _appointmentUnitOfWork.AppointmentRepository.GetAllByPatientId(id);
         }
     }
 }

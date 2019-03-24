@@ -90,6 +90,12 @@
                             <span><a href="@Url.Action("Index", "Home", new { area="Doctor" })">Doctor Dashboard</a></span>
                         </li>
                     }
+                    else if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <li>
+                            <span><a href="@Url.Action("Index", "Home", new { area="Admin" })">Admin Dashboard</a></span>
+                        </li>
+                    }
                 </ul>
             </nav>
         </div>
