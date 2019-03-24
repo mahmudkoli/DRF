@@ -66,9 +66,20 @@ namespace DRF.Services
             }
         }
 
+        public bool Delete(int id)
+        {
+            _scheduleUnitOfWork.ScheduleRepository.DeleteFromDatabaseById(id);
+            return _scheduleUnitOfWork.Save();
+        }
+
         public IEnumerable<Schedule> GetAllByDoctorId(int doctorId)
         {
             return _scheduleUnitOfWork.ScheduleRepository.GetAllByDoctorId(doctorId);
+        }
+
+        public IEnumerable<Schedule> GetAllByDoctorId(int doctorId, int? chamberId, int? day)
+        {
+            return _scheduleUnitOfWork.ScheduleRepository.GetAllByDoctorId(doctorId, chamberId, day);
         }
 
         public IEnumerable<Schedule> GetDoctorAvailableDay(int doctorId, int chamberId)

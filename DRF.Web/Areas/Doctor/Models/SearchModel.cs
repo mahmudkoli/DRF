@@ -22,4 +22,21 @@ namespace DRF.Web.Areas.Doctor.Models
             PageSize = 5;
         }
     }
+
+    public class ScheduleSearchModel
+    {
+        public int? Chamber { get; set; }
+        public int? Day { get; set; }
+
+        public int Page { get; set; }
+        public int PageSize { get; set; }
+        public IPagedList<Schedule> ScheduleCollection { get; set; }
+        public IEnumerable<Chamber> ChamberCollection { get; set; }
+
+        public ScheduleSearchModel()
+        {
+            Page = 1;
+            PageSize = 5;
+        }
+    }
 }

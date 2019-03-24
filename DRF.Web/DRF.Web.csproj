@@ -164,13 +164,17 @@
     <Compile Include="Areas\Doctor\Controllers\HomeController.cs" />
     <Compile Include="Areas\Doctor\Controllers\ProfileController.cs" />
     <Compile Include="Areas\Doctor\Controllers\ScheduleController.cs" />
+    <Compile Include="Areas\Doctor\Controllers\VacationController.cs" />
     <Compile Include="Areas\Doctor\DoctorAreaRegistration.cs" />
     <Compile Include="Areas\Doctor\Models\AppointmentModel.cs" />
     <Compile Include="Areas\Doctor\Models\AuthenticatedDoctorUserModel.cs" />
+    <Compile Include="Areas\Doctor\Models\CustomAttribute.cs" />
     <Compile Include="Areas\Doctor\Models\DoctorModel.cs" />
     <Compile Include="Areas\Doctor\Models\DoctorNotificationModel.cs" />
+    <Compile Include="Areas\Doctor\Models\HomeModel.cs" />
     <Compile Include="Areas\Doctor\Models\ScheduleModel.cs" />
     <Compile Include="Areas\Doctor\Models\SearchModel.cs" />
+    <Compile Include="Areas\Doctor\Models\VacationModel.cs" />
     <Compile Include="Controllers\AppointmentController.cs" />
     <Compile Include="Controllers\AutoCompleteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -275,6 +279,8 @@
     <Content Include="Areas\Doctor\Views\Schedule\Index.cshtml" />
     <Content Include="Areas\Doctor\Views\Profile\Edit.cshtml" />
     <Content Include="Areas\Doctor\Views\Schedule\Create.cshtml" />
+    <Content Include="Content\jquery-confirm.min.css" />
+    <Content Include="Scripts\jquery-confirm.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -314,6 +320,7 @@
     <Content Include="Areas\Admin\Views\Patient\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Chamber\_MapPartial.cshtml" />
     <Content Include="Areas\Admin\Views\Profile\Index.cshtml" />
+    <Content Include="Areas\Doctor\Views\Vacation\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

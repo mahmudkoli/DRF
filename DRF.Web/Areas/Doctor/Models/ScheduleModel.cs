@@ -28,6 +28,16 @@ namespace DRF.Web.Areas.Doctor.Models
             ChamberCollection = _chamberService.GetAllByDoctorId(AuthenticatedDoctorUserModel.GetDoctorUserFromIdentity().Id);
         }
 
+        public IEnumerable<Chamber> GetAllChamberByDoctorId()
+        {
+            return _chamberService.GetAllByDoctorId(AuthenticatedDoctorUserModel.GetDoctorUserFromIdentity().Id);
+        }
+
+        public IEnumerable<Schedule> GetAllSchedules(int? chamberId, int? day)
+        {
+            return _scheduleService.GetAllByDoctorId(AuthenticatedDoctorUserModel.GetDoctorUserFromIdentity().Id, chamberId, day);
+        }
+
         public IEnumerable<Schedule> GetAllSchedules()
         {
             return _scheduleService.GetAllByDoctorId(AuthenticatedDoctorUserModel.GetDoctorUserFromIdentity().Id);
@@ -42,6 +52,11 @@ namespace DRF.Web.Areas.Doctor.Models
             });
 
             return _scheduleService.AddRange(this.ScheduleCollection);
+        }
+
+        public bool Delete(int id)
+        {
+            return _scheduleService.Delete(id);
         }
     }
 }

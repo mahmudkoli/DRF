@@ -100,6 +100,8 @@
     <Compile Include="SpecialtyUnitOfWork.cs" />
     <Compile Include="UserRepository.cs" />
     <Compile Include="UserUnitOfWork.cs" />
+    <Compile Include="VacationRepository.cs" />
+    <Compile Include="VacationUnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DRF.Common\DRF.Common.csproj">

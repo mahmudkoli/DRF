@@ -53,6 +53,7 @@
     <Compile Include="ScheduleService.cs" />
     <Compile Include="SpecialtyService.cs" />
     <Compile Include="UserService.cs" />
+    <Compile Include="VacationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DRF.Common\DRF.Common.csproj">

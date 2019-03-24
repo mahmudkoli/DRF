@@ -5,9 +5,12 @@ using System.Web;
 using System.Web.Mvc;
 using DRF.Common;
 using DRF.Web.Areas.Doctor.Models;
+using PagedList;
 
 namespace DRF.Web.Areas.Doctor.Controllers
 {
+    [Authorize(Roles = "Doctor")]
+    [RedirectingAction]
     public class ScheduleController : Controller
     {
         private ScheduleModel _scheduleModel;
@@ -18,10 +21,13 @@ namespace DRF.Web.Areas.Doctor.Controllers
         }
 
         // GET: Doctor/Schedule
-        public ActionResult Index()
+        public ActionResult Index(ScheduleSearchModel model)
         {
-            _scheduleModel.ScheduleCollection = _scheduleModel.GetAllSchedules();
-            return View(_scheduleModel);
+            model = model ?? new ScheduleSearchModel();
+            var schedules = _scheduleModel.GetAllSchedules(model.Chamber, model.Day).ToList();
+            model.ScheduleCollection = schedules.ToPagedList(model.Page, model.PageSize);
+            model.ChamberCollection = _scheduleModel.GetAllChamberByDoctorId();
+            return View(model);
         }
 
         public ActionResult Create()
@@ -45,6 +51,12 @@ namespace DRF.Web.Areas.Doctor.Controllers
 
             TempData[CustomMessage.Failure] = "Schedule create failed";
             return View(model);
+        }
+        
+        public ActionResult Delete(int id)
+        {
+            var isDeleted = _scheduleModel.Delete(id);
+            return Json(new { data = isDeleted }, JsonRequestBehavior.AllowGet);
         }
     }
 }

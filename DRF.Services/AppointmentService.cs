@@ -162,6 +162,11 @@ namespace DRF.Services
             }
         }
 
+        public IEnumerable<Appointment> GetAllByDoctorId(int id, int year)
+        {
+            return _appointmentUnitOfWork.AppointmentRepository.GetAllByDoctorId(id).Where(x => x.AppointmentDate.Year == year);
+        }
+
         public Appointment GetRecentConfirmAppointmentInfoByPatientId(int patientId)
         {
             var entity = _appointmentUnitOfWork.AppointmentRepository.GetAllByPatientIdWithStatus(patientId, 

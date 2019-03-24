@@ -23,5 +23,10 @@ namespace DRF.Web.Areas.Doctor.Models
             var authDoctorUser = _doctorService.GetByUserId(authUser.User.Id);
             return authDoctorUser;
         }
+
+        public static bool IsExistDoctor()
+        {
+            return GetDoctorUserFromIdentity() != null;
+        }
     }
 }

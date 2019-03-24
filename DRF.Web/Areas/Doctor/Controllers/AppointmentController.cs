@@ -10,6 +10,7 @@ using PagedList;
 namespace DRF.Web.Areas.Doctor.Controllers
 {
     [Authorize(Roles = "Doctor")]
+    [RedirectingAction]
     public class AppointmentController : Controller
     {
         private AppointmentSearchModel _appointmentSearchModel;

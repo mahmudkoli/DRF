@@ -31,5 +31,13 @@ namespace DRF.Repository
         {
             return base.Get(x => x.DoctorId == doctorId && x.ChamberId == chamberId && x.Day == day);
         }
+
+        public IEnumerable<Schedule> GetAllByDoctorId(int doctorId, int? chamberId, int? day)
+        {
+            var data = base.Get(x => x.DoctorId == doctorId);
+            data = chamberId == null ? data : data.Where(x => x.ChamberId == chamberId);
+            data = day == null ? data : data.Where(x => x.Day == day);
+            return data;
+        }
     }
 }
