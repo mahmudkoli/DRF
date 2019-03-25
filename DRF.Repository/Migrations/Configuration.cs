@@ -44,27 +44,27 @@ namespace DRF.Repository.Migrations
                 );
 
             #region temporary data add
-            context.Degrees.AddOrUpdate(x => x.Id, 
-                new Degree(){ Id = 1, Name = "MBBS", Details = "Bachelor of Medicine, Bachelor of Surgery", Status = 1, CreatedAt = DateTime.Now }
-                );
-            context.Specialties.AddOrUpdate(x => x.Id,
-                new Specialty(){ Id = 1, Name = "Cardiologist", Disease = "Coronary artery, Heart attack, Heart failure, Heart valve, Congenital heart, Heart muscle",
-                    Details = "Cardiologists are doctors who specialize in diagnosing and treating diseases or conditions of the heart and blood vessels", Status = 1, CreatedAt = DateTime.Now }
-                );
-            context.Cities.AddOrUpdate(x => x.Id, 
-                new City(){ Id = 1, Name = "Dhaka North City", Status = 1, CreatedAt = DateTime.Now }
-                );
-            context.Areas.AddOrUpdate(x => x.Id,
-                new Area(){ Id = 1,Name = "Panthapath", CityId = 1, Status = 1, CreatedAt = DateTime.Now }
-                );
-            context.Maps.AddOrUpdate(x => x.Id,
-                new Map(){ Id = 1, Lat = "23.752921", Long = "90.3816716", Status = 1, CreatedAt = DateTime.Now }
-                );
-            context.Chambers.AddOrUpdate(x => x.Id, 
-                new Chamber(){ Id = 1, Name = "Square Hospitals Ltd.",
-                    Address = "18/F, Bir Uttam Qazi Nuruzzaman Sarak West, Panthapath, Dhaka 1205",
-                    AreaId = 1, MapId = 1, Status = 1, CreatedAt = DateTime.Now }
-                );
+            //context.Degrees.AddOrUpdate(x => x.Id, 
+            //    new Degree(){ Id = 1, Name = "MBBS", Details = "Bachelor of Medicine, Bachelor of Surgery", Status = 1, CreatedAt = DateTime.Now }
+            //    );
+            //context.Specialties.AddOrUpdate(x => x.Id,
+            //    new Specialty(){ Id = 1, Name = "Cardiologist", Disease = "Coronary artery, Heart attack, Heart failure, Heart valve, Congenital heart, Heart muscle",
+            //        Details = "Cardiologists are doctors who specialize in diagnosing and treating diseases or conditions of the heart and blood vessels", Status = 1, CreatedAt = DateTime.Now }
+            //    );
+            //context.Cities.AddOrUpdate(x => x.Id, 
+            //    new City(){ Id = 1, Name = "Dhaka North City", Status = 1, CreatedAt = DateTime.Now }
+            //    );
+            //context.Areas.AddOrUpdate(x => x.Id,
+            //    new Area(){ Id = 1,Name = "Panthapath", CityId = 1, Status = 1, CreatedAt = DateTime.Now }
+            //    );
+            //context.Maps.AddOrUpdate(x => x.Id,
+            //    new Map(){ Id = 1, Lat = "23.752921", Long = "90.3816716", Status = 1, CreatedAt = DateTime.Now }
+            //    );
+            //context.Chambers.AddOrUpdate(x => x.Id, 
+            //    new Chamber(){ Id = 1, Name = "Square Hospitals Ltd.",
+            //        Address = "18/F, Bir Uttam Qazi Nuruzzaman Sarak West, Panthapath, Dhaka 1205",
+            //        AreaId = 1, MapId = 1, Status = 1, CreatedAt = DateTime.Now }
+            //    );
             #endregion
 
             context.Users.AddOrUpdate(x => x.Id,
