@@ -36,5 +36,10 @@ namespace DRF.Web.Areas.Doctor.Models
             return _appointmentService.GetAllByDoctorId(
                 AuthenticatedDoctorUserModel.GetDoctorUserFromIdentity().Id, (int)CustomEnum.AppointmentStatus.Requested, lastDays);
         }
+
+        public Appointment GetAppointmentById(int id)
+        {
+            return _appointmentService.GetById(id);
+        }
     }
 }

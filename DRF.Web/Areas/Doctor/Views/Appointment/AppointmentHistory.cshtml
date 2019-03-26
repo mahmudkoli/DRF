@@ -67,41 +67,37 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <table class="table table-sm">
+                    <table class="table table-sm table-responsive">
                         <thead>
                             <tr>
                                 <th>SL</th>
+                                <th>Chamber</th>
                                 <th>Patient Name</th>
                                 <th>Appointment Date</th>
                                 <th>Appointment Time</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Disease</th>
                                 <th>Status</th>
-                                <th>Booking Date</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                        @{
-                            var sl = ((Model.Page-1)*Model.PageSize)+1;
-                        }
-                        @foreach (var appointment in Model.AppointmentCollection)
-                        {
-                            <tr>
-                                <td>@(sl++)</td>
-                                <td>@appointment.Patient.User.Name</td>
-                                <td>@appointment.AppointmentDate.ToString("d")</td>
-                                <td>@appointment.AppointmentTime.ToString("t")</td>
-                                <td>@appointment.Patient.User.Email</td>
-                                <td>@appointment.Patient.Phone</td>
-                                <td>@appointment.Disease</td>
-                                @{
-                                    var customColor = CustomColor.BadgeColor((int) appointment.AppointmentStatus);
-                                }
-                                <td><span class="badge @customColor">@((CustomEnum.AppointmentStatus)(appointment.AppointmentStatus))</span></td>
-                                <td>@appointment.CreatedAt.Value.ToString("d")</td>
-                            </tr>
-                        }
+                            @{
+                                var sl = ((Model.Page - 1) * Model.PageSize) + 1;
+                            }
+                            @foreach (var appointment in Model.AppointmentCollection)
+                            {
+                                <tr>
+                                    <td>@(sl++)</td>
+                                    <td>@appointment.Chamber.Name</td>
+                                    <td>@appointment.Patient.User.Name</td>
+                                    <td>@appointment.AppointmentDate.ToString("d")</td>
+                                    <td>@appointment.AppointmentTime.ToString("t")</td>
+                                    @{
+                                        var customColor = CustomColor.BadgeColor((int)appointment.AppointmentStatus);
+                                    }
+                                    <td><span class="badge @customColor">@((CustomEnum.AppointmentStatus)(appointment.AppointmentStatus))</span></td>
+                                    <td><a class="btn btn-xs btn-info fa fa-search-plus" onclick="appointmentDetails( @appointment.Id )"></a></td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
 
@@ -121,6 +117,32 @@
     </div>
 </section>
 
+
+@*------------Appointment Details-------------------*@
+<div class="modal fade" id="details-modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Appointment Details</h4>
+            </div>
+            <div class="modal-body" id="details-modal-content">
+                <p>One fine body&hellip;</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+
 @section scripts{
     <script>
         $(document).ready(function () {
@@ -131,6 +153,24 @@
                 $('#appointmentHistoryForm').submit();
             });
         });
+
+        function appointmentDetails(id) {
+            var url = '@Url.Action("Details", "Appointment")';
+            var method = "GET";
+
+            $.ajax({
+                url: url,
+                type: method,
+                data: { id: id },
+                success: function (data) {
+                    $("#details-modal-content").html(data);
+                    $("#details-modal").modal("show");
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    $.alert(textStatus + " ! please try again", '<i class="fa fa-exclamation-circle" aria-hidden="true"> Alert</i>');
+                }
+            });
+        }
     </script>
 }
 

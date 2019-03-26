@@ -4,6 +4,13 @@
     ViewBag.Title = "Index";
 }
 
+<style>
+    .users-list > li img {
+        width: 50px;
+        height: 50px;
+    }
+</style>
+
 @{
     var pendingAppPer = Math.Round((Model.RequestedAppointmentCount * 100.00) / Model.TotalAppointmentCount, 2);
     var approvedAppPer = Math.Round((Model.ApprovedAppointmentCount * 100.00) / Model.TotalAppointmentCount, 2);
@@ -94,21 +101,21 @@
                     <h3 class="box-title">Yearly Report</h3>
                     <div class="box-tools pull-right">
                         @*<button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-wrench"></i>
+                                <i class="fa fa-minus"></i>
                             </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
-                            </ul>
-                        </div>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>*@
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-wrench"></i>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>*@
                     </div>
                 </div>
                 <!-- /.box-header -->
@@ -277,7 +284,7 @@
             </div>
             <!-- /.info-box -->
             <div class="info-box bg-green">
-                <span class="info-box-icon"><i class="ion ion-ios-heart-outline"></i></span>
+                <span class="info-box-icon"><i class="ion ion-ios-pricetag-outline"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">Approved Appointment</span>
                     <span class="info-box-number">@Model.ApprovedAppointmentCount</span>
@@ -292,7 +299,7 @@
             </div>
             <!-- /.info-box -->
             <div class="info-box bg-red">
-                <span class="info-box-icon"><i class="ion ion-ios-cloud-download-outline"></i></span>
+                <span class="info-box-icon"><i class="ion ion-ios-pricetag-outline"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">Rejected Appointment</span>
                     <span class="info-box-number">@Model.RejectedAppointmentCount</span>
@@ -307,7 +314,7 @@
             </div>
             <!-- /.info-box -->
             <div class="info-box bg-yellow">
-                <span class="info-box-icon"><i class="ion-ios-chatbubble-outline"></i></span>
+                <span class="info-box-icon"><i class="ion-ios-pricetag-outline"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">Completed Appointment</span>
                     <span class="info-box-number">@Model.CompletedAppointmentCount</span>

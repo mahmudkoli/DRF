@@ -9,6 +9,11 @@
 }
 
 <link href="~/HomePlugins/css/date_picker.css" rel="stylesheet">
+<style>
+    .mar-reduce {
+        margin-bottom: 5px;
+    }
+</style>
 
 <div class="container margin_60">
     <div class="row">
@@ -18,16 +23,21 @@
                     <img src="@Url.Content(imageUrl)" alt="@Model.User.Name" class="img-fluid">
                 </figure>
                 <h1>@Model.User.Name</h1>
-                <small>@string.Join(", ", Model.DoctorSpecialtyRelations.Select(x => x.Specialty.Name))</small>
+                <p class="mar-reduce">@string.Join(", ", Model.DoctorDegreeRelations.Select(x => x.Degree.Name))</p>
+                <p class="mar-reduce">@string.Join(", ", Model.DoctorSpecialtyRelations.Select(x => x.Specialty.Name))</p>
                 <ul class="statistic">
-                    <li>854 Views</li>
+                    @*<li>854 Views</li>*@
                     <li>124 Patients</li>
                 </ul>
                 <ul class="contacts">
                     <li><h6>Address</h6>@Model.PresentAddress</li>
                     <li><h6>Phone</h6><a href="tel://@Model.Phone">@Model.Phone</a></li>
                 </ul>
-                <div class="text-center"><a href="#" class="btn_1 outline"><i class="icon_pin"></i> View on map</a></div>
+                @{
+                    var map = Model.DoctorChamberRelations.First().Chamber.Map;
+                    var urlMap = "https://maps.google.com/maps?z=12&t=m&q=loc:" + map.Lat + "+" + map.Long;
+                 }
+                <div class="text-center"><a href="@urlMap" target="_blank" class="btn_1 outline"><i class="icon_pin"></i> View on map</a></div>
             </div>
         </aside>
         <!-- /asdide -->
@@ -76,7 +86,7 @@
                     </div>
                     <!-- /row -->
 
-                    <div class="main_title_4">
+                    @*<div class="main_title_4">
                         <h3><i class="icon_circle-slelected"></i>Select visit - treatment</h3>
                     </div>
                     <ul class="treatments clearfix">
@@ -92,7 +102,7 @@
                                 <label for="visit8" class="css-label">Back Pain visit <strong>$55</strong></label>
                             </div>
                         </li>
-                    </ul>
+                    </ul>*@
                     <hr>
                     <div class="text-center"><button type="submit" class="btn_1 medium">Appointment Now</button></div>
                 </div>
@@ -101,7 +111,7 @@
             }
 
 
-            <div class="tabs_styled_2">
+            @*<div class="tabs_styled_2">
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="general-tab" data-toggle="tab" href="#general" role="tab" aria-controls="general" aria-expanded="true">General info</a>
@@ -336,7 +346,7 @@
                     <!-- /tab_3 -->
                 </div>
                 <!-- /tab-content -->
-            </div>
+            </div>*@
             <!-- /tabs_styled -->
         </div>
         <!-- /col -->

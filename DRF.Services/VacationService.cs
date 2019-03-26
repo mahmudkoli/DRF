@@ -54,5 +54,47 @@ namespace DRF.Services
             vacation.UpdatedAt = DateTime.Now;
             return _vacationUnitOfWork.Save();
         }
+
+        public bool Delete(int id)
+        {
+            _vacationUnitOfWork.VacationRepository.DeleteFromDatabaseById(id);
+            return _vacationUnitOfWork.Save();
+        }
+
+        public bool Update(Vacation entity)
+        {
+            try
+            {
+                var existEntity = _vacationUnitOfWork.VacationRepository.GetById(entity.Id);
+                existEntity.StartDate = entity.StartDate;
+                existEntity.EndDate = entity.EndDate;
+                existEntity.ChamberId = entity.ChamberId;
+                existEntity.Reason = entity.Reason;
+                existEntity.UpdatedAt = DateTime.Now;
+
+                _vacationUnitOfWork.VacationRepository.Update(existEntity);
+                return _vacationUnitOfWork.Save();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
+
+        public Vacation GetById(int id)
+        {
+            return _vacationUnitOfWork.VacationRepository.GetById(id);
+        }
+
+        public IEnumerable<Vacation> GetAllByDoctorId(int doctorId)
+        {
+            return _vacationUnitOfWork.VacationRepository.GetAllByDoctorId(doctorId);
+        }
+
+        public IEnumerable<Vacation> GetAllByDoctorId(int doctorId, int? chamberId, DateTime? fromDate, DateTime? toDate)
+        {
+            return _vacationUnitOfWork.VacationRepository.GetAllByDoctorId(doctorId, chamberId, fromDate, toDate);
+        }
     }
 }

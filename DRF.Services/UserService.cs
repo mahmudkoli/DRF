@@ -29,14 +29,14 @@ namespace DRF.Services
                     Name = user.Name,
                     Email = user.Email,
                     Password = CustomCrypto.Hash(user.Password),
-                    IsEmailVerified = true, //  Should be false
+                    IsEmailVerified = false,
                     ActivationCode = Guid.NewGuid(),
                     UserRoleId = user.UserRoleId
                 };
                 _userUnitOfWork.UserRepository.Add(newUser);
 
                 //Send Email to User
-                //CustomEmail.SendVerificationLinkEmail(newUser.Email, newUser.ActivationCode.ToString());
+                CustomEmail.SendVerificationLinkEmail(newUser.Email, newUser.ActivationCode.ToString());
 
                 var isSaved = _userUnitOfWork.Save();
 

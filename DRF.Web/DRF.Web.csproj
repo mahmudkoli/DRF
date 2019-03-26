@@ -321,6 +321,9 @@
     <Content Include="Areas\Admin\Views\Chamber\_MapPartial.cshtml" />
     <Content Include="Areas\Admin\Views\Profile\Index.cshtml" />
     <Content Include="Areas\Doctor\Views\Vacation\Index.cshtml" />
+    <Content Include="Areas\Doctor\Views\Vacation\Create.cshtml" />
+    <Content Include="Areas\Doctor\Views\Vacation\Edit.cshtml" />
+    <Content Include="Areas\Doctor\Views\Appointment\_Details.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

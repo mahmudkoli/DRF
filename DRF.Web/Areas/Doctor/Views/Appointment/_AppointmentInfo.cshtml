@@ -62,43 +62,63 @@
                 var customColor = CustomColor.BadgeColor((int)Model.AppointmentStatus);
             }
 
-            <h4>@Model.Patient.User.Name <span class="badge @customColor margin-left-5">@((CustomEnum.AppointmentStatus) Model.AppointmentStatus)</span></h4>
+            <h4>@Model.Patient.User.Name <span class="badge @customColor margin-left-5">@((CustomEnum.AppointmentStatus)Model.AppointmentStatus)</span></h4>
 
             <div class="row">
                 <div class="col-md-4">
-                    <p>Appointment Date</p></div>
+                    <p>Chamber</p>
+                </div>
                 <div class="col-md-8">
-                    <p>@Model.AppointmentDate.ToString("d")</p></div>
+                    <p>@Model.Chamber.Name</p>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    <p>Appointment Time</p></div>
+                    <p>Appointment Date</p>
+                </div>
                 <div class="col-md-8">
-                    <p>@Model.AppointmentTime.ToString("t")</p></div>
+                    <p>@Model.AppointmentDate.ToString("d")</p>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    <p>Email</p></div>
+                    <p>Appointment Time</p>
+                </div>
                 <div class="col-md-8">
-                    <p>@Model.Patient.User.Email</p></div>
+                    <p>@Model.AppointmentTime.ToString("t")</p>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    <p>Phone</p></div>
+                    <p>Email</p>
+                </div>
                 <div class="col-md-8">
-                    <p>@Model.Patient.Phone</p></div>
+                    <p>@Model.Patient.User.Email</p>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    <p>Disease</p></div>
+                    <p>Phone</p>
+                </div>
                 <div class="col-md-8">
-                    <p>@Model.Disease</p></div>
+                    <p>@Model.Patient.Phone</p>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    <p>Booking Date</p></div>
+                    <p>Disease</p>
+                </div>
                 <div class="col-md-8">
-                    <p>@Model.CreatedAt.Value.ToString("d") @Model.CreatedAt.Value.ToString("t")</p></div>
+                    <p>@Model.Disease</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <p>Booking Date</p>
+                </div>
+                <div class="col-md-8">
+                    <p>@Model.CreatedAt.Value.ToString("d") @Model.CreatedAt.Value.ToString("t")</p>
+                </div>
             </div>
         </div>
         <div class="col-md-4 text-right">

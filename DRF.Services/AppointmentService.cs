@@ -46,6 +46,11 @@ namespace DRF.Services
             }
         }
 
+        public Appointment GetById(int id)
+        {
+            return _appointmentUnitOfWork.AppointmentRepository.GetById(id);
+        }
+
         public IEnumerable<Appointment> GetAllByDoctorId(int id, int? status, int? lastDays)
         {
             var data = _appointmentUnitOfWork.AppointmentRepository.GetAllByDoctorId(id);

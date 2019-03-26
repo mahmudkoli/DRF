@@ -15,11 +15,16 @@ namespace DRF.Web.Areas.Doctor.Controllers
     {
         private AppointmentSearchModel _appointmentSearchModel;
         private AppointmentModel _appointmentModel;
+        private bool _isExistDoctor;
 
         public AppointmentController()
         {
-            _appointmentSearchModel = new AppointmentSearchModel();
-            _appointmentModel = new AppointmentModel();
+            _isExistDoctor = AuthenticatedDoctorUserModel.IsExistDoctor();
+            if (_isExistDoctor)
+            {
+                _appointmentSearchModel = new AppointmentSearchModel();
+                _appointmentModel = new AppointmentModel();
+            }
         }
 
         public ActionResult AppointmentHistory(AppointmentSearchModel model)
@@ -48,6 +53,12 @@ namespace DRF.Web.Areas.Doctor.Controllers
         {
             var isUpdated = _appointmentModel.RejectedAppointmentById(id);
             return RedirectToAction("PendingAppointment");
+        }
+
+        public ActionResult Details(int id)
+        {
+            var appointment = _appointmentModel.GetAppointmentById(id);
+            return PartialView("_Details", appointment);
         }
     }
 }

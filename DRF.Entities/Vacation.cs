@@ -11,10 +11,10 @@ namespace DRF.Entities
     public class Vacation : Entity
     {
         [Required]
-        [Display(Name = "Start Date")]
+        [Display(Name = "From Date")]
         public DateTime StartDate { get; set; }
         [Required]
-        [Display(Name = "End Date")]
+        [Display(Name = "To Date")]
         public DateTime EndDate { get; set; }
         public string Reason { get; set; }
         [Required]

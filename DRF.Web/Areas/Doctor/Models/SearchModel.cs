@@ -19,7 +19,7 @@ namespace DRF.Web.Areas.Doctor.Models
         public AppointmentSearchModel()
         {
             Page = 1;
-            PageSize = 5;
+            PageSize = 10;
         }
     }
 
@@ -36,7 +36,25 @@ namespace DRF.Web.Areas.Doctor.Models
         public ScheduleSearchModel()
         {
             Page = 1;
-            PageSize = 5;
+            PageSize = 10;
+        }
+    }
+
+    public class VacationSearchModel
+    {
+        public int? Chamber { get; set; }
+        public DateTime? FromDate { get; set; }
+        public DateTime? ToDate { get; set; }
+
+        public int Page { get; set; }
+        public int PageSize { get; set; }
+        public IPagedList<Vacation> VacationCollection { get; set; }
+        public IEnumerable<Chamber> ChamberCollection { get; set; }
+
+        public VacationSearchModel()
+        {
+            Page = 1;
+            PageSize = 10;
         }
     }
 }

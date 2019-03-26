@@ -14,10 +14,15 @@ namespace DRF.Web.Areas.Doctor.Controllers
     public class ScheduleController : Controller
     {
         private ScheduleModel _scheduleModel;
+        private bool _isExistDoctor;
 
         public ScheduleController()
         {
-            _scheduleModel = new ScheduleModel();
+            _isExistDoctor = AuthenticatedDoctorUserModel.IsExistDoctor();
+            if (_isExistDoctor)
+            {
+                _scheduleModel = new ScheduleModel();
+            }
         }
 
         // GET: Doctor/Schedule
@@ -56,6 +61,14 @@ namespace DRF.Web.Areas.Doctor.Controllers
         public ActionResult Delete(int id)
         {
             var isDeleted = _scheduleModel.Delete(id);
+            if (isDeleted)
+            {
+                TempData[CustomMessage.Success] = "Schedule successfully deleted";
+            }
+            else
+            {
+                TempData[CustomMessage.Failure] = "Schedule delete failed";
+            }
             return Json(new { data = isDeleted }, JsonRequestBehavior.AllowGet);
         }
     }

@@ -1,0 +1,76 @@
+﻿@model DRF.Web.Areas.Doctor.Models.VacationModel
+
+@{
+    ViewBag.Title = "Vacation";
+}
+
+<section class="content-header">
+    <h1>
+        Vacation
+        <small>Update Information</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index","Home")"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li><a href="@Url.Action("Index","Vacation")"><i class="fa fa-dashboard"></i>Vacation</a></li>
+        <li class="active">Update Information</li>
+    </ol>
+</section>
+
+@using (Html.BeginForm("Edit", "Vacation", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <section class="content">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title"> Doctor</h3>
+                <div class="box-tools pull-right">
+                    <a href="@Request.UrlReferrer" class="btn btn-box-tool">
+                        <i class="fa fa-arrow-circle-left"></i> Back
+                    </a>
+                </div>
+            </div>
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(x => x.Id)
+                <div class="box-body">
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.ChamberId, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-6">
+                            @Html.DropDownListFor(c => c.ChamberId, new SelectList(Model.ChamberCollection, "Id", "Name"), "---Select---", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ChamberId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.StartDate, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(c => c.StartDate, "{0:MM/dd/yyyy}", new { @class = "form-control datemask-mm", @placeholder = "mm/dd/yyyy" })
+                            @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.EndDate, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(c => c.EndDate, "{0:MM/dd/yyyy}", new { @class = "form-control datemask-mm", @placeholder = "mm/dd/yyyy" })
+                            @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(c => c.Reason, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-6">
+                            @Html.TextAreaFor(c => c.Reason, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Reason, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button type="button" class="btn btn-default" onclick="window.location.reload(true)">Cancel</button>
+                    <button type="submit" class="btn btn-info pull-right">Save</button>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

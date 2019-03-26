@@ -1,0 +1,67 @@
+﻿@using DRF.Common
+@model DRF.Entities.Appointment
+
+
+@{
+    var imageUrl = "~/Images/avatar.png";
+    imageUrl = string.IsNullOrEmpty(Model.Patient.ImageUrl) ? imageUrl : Model.Patient.ImageUrl;
+    var routeValues = ViewContext.RouteData.Values;
+    var currentAction = routeValues["Action"].ToString();
+    var currentController = routeValues["Controller"].ToString();
+
+    var customColor = CustomColor.BadgeColor((int)Model.AppointmentStatus);
+}
+
+
+    <div class="row">
+        <div class="col-md-4 text-center">
+            <img src="@Url.Content(imageUrl)" class="img-thumbnail" alt="@Model.Patient.User.Name" title="@Model.Patient.User.Name" />
+            <h4>@Model.Patient.User.Name <span class="badge @customColor margin-left-5">
+                @((CustomEnum.AppointmentStatus)Model.AppointmentStatus)</span></h4>
+            <h5>@Model.Patient.User.Email</h5>
+            <h5>@Model.Patient.Phone</h5>
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-4">
+                    <p>Chamber</p>
+                </div>
+                <div class="col-md-8">
+                    <p>@Model.Chamber.Name</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <p>Appointment Date</p>
+                </div>
+                <div class="col-md-8">
+                    <p>@Model.AppointmentDate.ToString("d")</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <p>Appointment Time</p>
+                </div>
+                <div class="col-md-8">
+                    <p>@Model.AppointmentTime.ToString("t")</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <p>Disease</p>
+                </div>
+                <div class="col-md-8">
+                    <p>@Model.Disease</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <p>Booking Date</p>
+                </div>
+                <div class="col-md-8">
+                    <p>@Model.CreatedAt.Value.ToString("d") @Model.CreatedAt.Value.ToString("t")</p>
+                </div>
+            </div>
+        </div>
+    </div>
+

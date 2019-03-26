@@ -4,22 +4,32 @@
     var imageUrl = string.IsNullOrEmpty(Model.ImageUrl) ? "~/Images/dr-avatar.png" : Model.ImageUrl;
 }
 
+<style>
+    .strip_list p {
+        margin-bottom: 2px;
+    }
+</style>
+
 <div class="strip_list wow fadeIn">
     <div style="min-height:80px;">
-        <a href="#" class="wish_bt"></a>
+        @*<a href="#" class="wish_bt"></a>*@
         <figure>
             <a href="#"><img src="@Url.Content(imageUrl)" alt="@Model.User.Name"></a>
         </figure>
 
         <h3>@Model.User.Name</h3>
 
-        <small>@string.Join(", ", Model.DoctorSpecialtyRelations.Select(x => x.Specialty.Name))</small>
+        <p>@string.Join(", ", Model.DoctorDegreeRelations.Select(x => x.Degree.Name))</p>
+
+        <p>@string.Join(", ", Model.DoctorSpecialtyRelations.Select(x => x.Specialty.Name))</p>
+
+        <p>@string.Join(", ", Model.DoctorChamberRelations.Select(x => x.Chamber.Name))</p>
 
         <p>@Model.Description</p>
     </div>
     <ul>
         <li><a href="@Url.Action("DoctorDetailsInfo", new RouteValueDictionary(){{"id", Model.Id}})">Details</a></li>
-        <li><a href="#">Appointment now</a></li>
+        <li><a href="@Url.Action("DoctorDetailsInfo", new RouteValueDictionary(){{"id", Model.Id}})">Appointment now</a></li>
     </ul>
 </div>
 

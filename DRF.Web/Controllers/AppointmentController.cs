@@ -20,10 +20,10 @@ namespace DRF.Web.Controllers
         }
 
         // GET: Appointment
-        public ActionResult Index()
-        {
-            return View();
-        }
+        //public ActionResult Index()
+        //{
+        //    return View();
+        //}
 
         [HttpGet]
         public ActionResult GetAppointment(AppointmentModel model)

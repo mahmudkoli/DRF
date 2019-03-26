@@ -44,25 +44,25 @@ namespace DRF.Repository.Migrations
                 );
 
             #region temporary data add
-            context.Degrees.AddOrUpdate(x => x.Id, 
-                new Degree(){ Id = 1, Name = "MBS", Status = 1, CreatedAt = DateTime.Now }
-                );
-            context.Specialties.AddOrUpdate(x => x.Id,
-                new Specialty(){ Id = 1, Name = "Dental", Status = 1, CreatedAt = DateTime.Now }
-                );
-            context.Cities.AddOrUpdate(x => x.Id, 
-                new City(){ Id = 1, Name = "Dhaka", Status = 1, CreatedAt = DateTime.Now }
-                );
-            context.Areas.AddOrUpdate(x => x.Id,
-                new Area(){ Id = 1,Name = "Dhanmondi 32", CityId = 1, Status = 1, CreatedAt = DateTime.Now }
-                );
-            context.Maps.AddOrUpdate(x => x.Id,
-                new Map(){ Id = 1, Long = "200.30", Lat = "200.30", Status = 1, CreatedAt = DateTime.Now }
-                );
-            context.Chambers.AddOrUpdate(x => x.Id, 
-                new Chamber(){ Id = 1, Name = "Square Hospital Ltd.",
-                    Address = "Dhanmond 32", AreaId = 1, MapId = 1, Status = 1, CreatedAt = DateTime.Now }
-                );
+            //context.Degrees.AddOrUpdate(x => x.Id, 
+            //    new Degree(){ Id = 1, Name = "MBS", Status = 1, CreatedAt = DateTime.Now }
+            //    );
+            //context.Specialties.AddOrUpdate(x => x.Id,
+            //    new Specialty(){ Id = 1, Name = "Dental", Status = 1, CreatedAt = DateTime.Now }
+            //    );
+            //context.Cities.AddOrUpdate(x => x.Id, 
+            //    new City(){ Id = 1, Name = "Dhaka", Status = 1, CreatedAt = DateTime.Now }
+            //    );
+            //context.Areas.AddOrUpdate(x => x.Id,
+            //    new Area(){ Id = 1,Name = "Dhanmondi 32", CityId = 1, Status = 1, CreatedAt = DateTime.Now }
+            //    );
+            //context.Maps.AddOrUpdate(x => x.Id,
+            //    new Map(){ Id = 1, Long = "200.30", Lat = "200.30", Status = 1, CreatedAt = DateTime.Now }
+            //    );
+            //context.Chambers.AddOrUpdate(x => x.Id, 
+            //    new Chamber(){ Id = 1, Name = "Square Hospital Ltd.",
+            //        Address = "Dhanmond 32", AreaId = 1, MapId = 1, Status = 1, CreatedAt = DateTime.Now }
+            //    );
             #endregion
 
             context.Users.AddOrUpdate(x => x.Id,
