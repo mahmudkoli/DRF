@@ -20,14 +20,14 @@
         <aside class="col-xl-3 col-lg-4" id="sidebar">
             <div class="box_profile">
                 <figure>
-                    <img src="@Url.Content(imageUrl)" alt="@Model.User.Name" class="img-fluid">
+                    <img src="@Url.Content(imageUrl)" alt="@Model.User.Name" class="img-fluid" style="width: 100%;">
                 </figure>
                 <h1>@Model.User.Name</h1>
                 <p class="mar-reduce">@string.Join(", ", Model.DoctorDegreeRelations.Select(x => x.Degree.Name))</p>
                 <p class="mar-reduce">@string.Join(", ", Model.DoctorSpecialtyRelations.Select(x => x.Specialty.Name))</p>
                 <ul class="statistic">
                     @*<li>854 Views</li>*@
-                    <li>124 Patients</li>
+                    @*<li>124 Patients</li>*@
                 </ul>
                 <ul class="contacts">
                     <li><h6>Address</h6>@Model.PresentAddress</li>

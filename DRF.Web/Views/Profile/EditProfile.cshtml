@@ -3,92 +3,148 @@
 @{
     ViewBag.Title = "Edit Profile";
 }
-
+<link href="~/Content/Projects/custom-style.css" rel="stylesheet" />
 
 <div id="hero_register">
     <div class="container margin_120_95">
         <div class="row">
-            @*<div class="col-lg-6">
-                <h1>It's time to find you!</h1>
-                <p class="lead">Te pri adhuc simul. No eros errem mea. Diam mandamus has ad. Invenire senserit ad has, has ei quis iudico, ad mei nonumes periculis.</p>
-                <div class="box_feat_2">
-                    <i class="pe-7s-map-2"></i>
-                    <h3>Let patients to Find you!</h3>
-                    <p>Ut nam graece accumsan cotidieque. Has voluptua vivendum accusamus cu. Ut per assueverit temporibus dissentiet.</p>
+                <div class="col-lg-4"></div>
+                <!-- /col -->
+                <div class="col-lg-7 ml-auto">
+                    <div class="box_form">
+                        <h4>Edit Information</h4><br />
+
+                        @using (Html.BeginForm("EditProfile", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.HiddenFor(model => model.Id)
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(model => model.User.Name, new { @class = "form-control", @placeholder = "Name", @title = "Name" })
+                                        @Html.ValidationMessageFor(model => model.User.Name, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(model => model.Phone, new { @class = "form-control", @placeholder = "Phone", @title = "Phone" })
+                                        @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(model => model.Profession, new { @class = "form-control", @placeholder = "Profession", @title = "Profession" })
+                                        @Html.ValidationMessageFor(model => model.Profession, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(model => model.FathersName, new { @class = "form-control", @placeholder = "Father's Name", @title = "Father's Name" })
+                                        @Html.ValidationMessageFor(model => model.FathersName, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(model => model.MothersName, new { @class = "form-control", @placeholder = "Mother's Name", @title = "Mother's Name" })
+                                        @Html.ValidationMessageFor(model => model.MothersName, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(model => model.PresentAddress, new { @class = "form-control", @placeholder = "Present Address", @title = "Present Address" })
+                                        @Html.ValidationMessageFor(model => model.PresentAddress, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(model => model.PermanentAddress, new { @class = "form-control", @placeholder = "Permanent Address", @title = "Permanent Address" })
+                                        @Html.ValidationMessageFor(model => model.PermanentAddress, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(model => model.DateOfBirth, string.Format("{0:MM/dd/yyyy}", Model.DateOfBirth??DateTime.Now), new { @class = "form-control", @placeholder = "Date Of Birth MM/dd/yyyy", @title = "Date Of Birth" })
+                                        @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        @Html.DropDownListFor(c => c.GenderId, new SelectList(Model.GenderCollection, "Id", "Name"), "---Select Gender---", new { @class = "form-control", @title="Gender" })
+                                        @Html.ValidationMessageFor(model => model.GenderId, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        @Html.DropDownListFor(c => c.BloodGroupId, new SelectList(Model.BloodGroupCollection, "Id", "Name"), "---Select Blood Group---", new { @class = "form-control", @title = "Blood Group" })
+                                        @Html.ValidationMessageFor(model => model.BloodGroupId, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        @Html.TextAreaFor(model => model.Note, new { @class = "form-control", @placeholder = "Note", @title = "Note" })
+                                        @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="file" id="imageFile" name="ImageFileBase" title="Profile Image" />
+                                        <div class="img-container" id="imgContainer">
+                                            @{
+                                                var imgSrc = "";
+                                                if (!String.IsNullOrEmpty(Model.ImageUrl))
+                                                {
+                                                    imgSrc = Url.Content(Model.ImageUrl);
+                                                }
+                                            }
+                                            <img src="@imgSrc" alt="Image Loaded" id="imagePreview" />
+                                            <div class="img-text-block">
+                                                <a onclick="imageRemoved()"><i class="fa fa-times"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-center add_top_30"><input type="submit" class="btn_1 full-width" value="Submit"></p>
+                            @*<div class="text-center"><small>Ut nam graece accumsan cotidieque. Has voluptua vivendum accusamus cu. Ut per assueverit temporibus dissentiet.</small></div>*@
+
+                        }
+                    </div>
+                    <!-- /box_form -->
                 </div>
-                <div class="box_feat_2">
-                    <i class="pe-7s-date"></i>
-                    <h3>Easly manage Bookings</h3>
-                    <p>Has voluptua vivendum accusamus cu. Ut per assueverit temporibus dissentiet. Eum no atqui putant democritum, velit nusquam sententiae vis no.</p>
-                </div>
-                <div class="box_feat_2">
-                    <i class="pe-7s-phone"></i>
-                    <h3>Instantly via Mobile</h3>
-                    <p>Eos eu epicuri eleifend suavitate, te primis placerat suavitate his. Nam ut dico intellegat reprehendunt, everti audiam diceret in pri, id has clita consequat suscipiantur.</p>
-                </div>
-            </div>*@
-            <!-- /col -->
-            <div class="col-lg-5 ml-auto">
-                <div class="box_form">
-                    <form>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    @Html.TextBoxFor(model => model.User.Name, new { @class = "form-control", @placeholder = "Name" })
-                                    @Html.ValidationMessageFor(model => model.User.Name, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    @Html.TextBoxFor(model => model.Phone, new { @class = "form-control", @placeholder = "Phone" })
-                                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    @Html.TextBoxFor(model => model.FathersName, new { @class = "form-control", @placeholder = "Father's Name" })
-                                    @Html.ValidationMessageFor(model => model.FathersName, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    @Html.TextBoxFor(model => model.MothersName, new { @class = "form-control", @placeholder = "Mother's Name" })
-                                    @Html.ValidationMessageFor(model => model.MothersName, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    @Html.TextBoxFor(model => model.PresentAddress, new { @class = "form-control", @placeholder = "Present Address" })
-                                    @Html.ValidationMessageFor(model => model.PresentAddress, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    @Html.TextBoxFor(model => model.PermanentAddress, new { @class = "form-control", @placeholder = "Permanent Address" })
-                                    @Html.ValidationMessageFor(model => model.PermanentAddress, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                        <p class="text-center add_top_30"><input type="submit" class="btn_1" value="Submit"></p>
-                        @*<div class="text-center"><small>Ut nam graece accumsan cotidieque. Has voluptua vivendum accusamus cu. Ut per assueverit temporibus dissentiet.</small></div>*@
-                    </form>
-                </div>
-                <!-- /box_form -->
-            </div>
-            <!-- /col -->
+                <!-- /col -->
         </div>
         <!-- /row -->
     </div>
     <!-- /container -->
 </div>
 <!-- /hero_register -->
+
+
+@section Scripts{
+
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/Projects/image.js"></script>
+}

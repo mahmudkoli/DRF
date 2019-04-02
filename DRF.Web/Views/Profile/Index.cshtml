@@ -68,7 +68,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4 pad-10"><h6>Date Of Birth</h6></div>
-                                    <div class="col-md-8 pad-10">@Model.DateOfBirth</div>
+                                    <div class="col-md-8 pad-10">@(Model.DateOfBirth != null ? Model.DateOfBirth.Value.ToString("d") : "")</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4 pad-10"><h6>Note</h6></div>

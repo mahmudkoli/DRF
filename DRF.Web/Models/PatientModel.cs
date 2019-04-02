@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Core.Mapping;
 using System.Linq;
 using System.Web;
+using DRF.Common;
 using DRF.Entities;
 using DRF.Services;
 
@@ -15,6 +16,8 @@ namespace DRF.Web.Models
 
         private PatientService _patientService;
         private DataService _dataService;
+
+        public HttpPostedFileBase ImageFileBase { get; set; }
 
         public PatientModel()
         {
@@ -43,11 +46,28 @@ namespace DRF.Web.Models
                 this.Note = existingPatient.Note;
                 this.GenderId = existingPatient.GenderId;
                 this.BloodGroupId = existingPatient.BloodGroupId;
+                this.BloodGroup = existingPatient.BloodGroup;
+                this.Gender = existingPatient.Gender;
                 this.DateOfBirth = existingPatient.DateOfBirth;
                 this.Status = existingPatient.Status;
                 this.CreatedAt = existingPatient.CreatedAt;
                 this.UpdatedAt = existingPatient.UpdatedAt;
             }
+        }
+
+        public bool Update()
+        {
+            try
+            {
+                this.ImageUrl = CustomFile.SaveImageFile(this.ImageFileBase, this.User.Name, this.Id, "Patient");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+
+            return _patientService.Update(this);
         }
     }
 }

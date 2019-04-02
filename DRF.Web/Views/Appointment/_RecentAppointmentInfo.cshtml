@@ -20,6 +20,12 @@
     imageUrl = string.IsNullOrEmpty(Model.Doctor.ImageUrl) ? imageUrl : Model.Doctor.ImageUrl;
 }
 
+<style>
+    .mar-reduce {
+        margin-bottom: 5px;
+    }
+</style>
+
 <div class="container margin_60">
     <div class="row">
         <div class="col-xl-8 col-lg-8">
@@ -37,15 +43,16 @@
                         <div class="row">
                             <div class="col-lg-5 col-md-4">
                                 <figure>
-                                    <img src="@Url.Content(imageUrl)" alt="Doctor" class="img-fluid">
+                                    <img src="@Url.Content(imageUrl)" alt="Doctor" class="img-fluid" style="width: 180px; height: 200px;">
                                 </figure>
                             </div>
                             <div class="col-lg-7 col-md-8">
                                 <h1>@Model.Doctor.User.Name</h1>
-                                <small>specialty</small>
+                                <p class="mar-reduce">@string.Join(", ", Model.Doctor.DoctorDegreeRelations.Select(x => x.Degree.Name))</p>
+                                <p class="mar-reduce">@string.Join(", ", Model.Doctor.DoctorSpecialtyRelations.Select(x => x.Specialty.Name))</p>
                                 <ul class="statistic">
-                                    <li>854 Views</li>
-                                    <li>124 Patients</li>
+                                    @*<li>854 Views</li>*@
+                                    @*<li>124 Patients</li>*@
                                 </ul>
                                 <ul class="contacts">
                                     <li>
@@ -62,7 +69,7 @@
 
                     <hr>
 
-                    <!-- /profile -->
+                    @*<!-- /profile -->
                     <div class="indent_title_in">
                         <i class="pe-7s-user"></i>
                         <h3>Professional statement</h3>
@@ -87,7 +94,7 @@
                         </div>
                         <!-- /row-->
                     </div>
-                    <!-- /wrapper indent -->
+                    <!-- /wrapper indent -->*@
                 </div>
                 <!-- /section_1 -->
             </div>
@@ -109,11 +116,11 @@
                         <li>Approve Date: <strong class="float-right">@Model.UpdatedAt.Value.ToString("d")</strong></li>
                     </ul>
                 </div>
-                <ul class="treatments checkout clearfix">
+                @*<ul class="treatments checkout clearfix">
                     <li class="total">
                         Fees <strong class="float-right">Tk. @Model.AppointmentFees</strong>
                     </li>
-                </ul>
+                </ul>*@
                 <hr>
                 <h5 class="text-center"><span class="badge @CustomColor.BadgeColor((int)Model.AppointmentStatus)">@((CustomEnum.AppointmentStatus)Model.AppointmentStatus)</span></h5>
             </div>

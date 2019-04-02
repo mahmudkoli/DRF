@@ -31,9 +31,23 @@ namespace DRF.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult EditProfile(PatientModel model)
         {
-            return View();
+            ModelState.Remove("User.Email");
+            ModelState.Remove("User.Password");
+            ModelState.Remove("User.UserRoleId");
+
+            if (ModelState.IsValid)
+            {
+                var isUpdated = model.Update();
+                if (isUpdated)
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+
+            return View(model);
         }
 
 

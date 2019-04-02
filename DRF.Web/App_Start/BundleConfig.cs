@@ -29,6 +29,8 @@ namespace DRF.Web
             //--------------Jquery Confirm------------------
             bundles.Add(new StyleBundle("~/Content/jquery-confirm").Include("~/Content/jquery-confirm.min.css"));
             bundles.Add(new ScriptBundle("~/bundles/jquery-confirm").Include("~/Scripts/jquery-confirm.min.js"));
+            
+
         }
     }
 }

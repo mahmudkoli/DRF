@@ -72,13 +72,13 @@
                         <li>
                             <span><a href="@Url.Action("Index", "Profile")">Hi, @authUser.Name</a></span>
                         </li>
-                        <li>
+                        @*<li>
                             <span>
                                 <a href="#" title="Notifications">
                                     <i class="icon-bell"></i><span>5</span>
                                 </a>
                             </span>
-                        </li>
+                        </li>*@
                     }
                     else if (Request.IsAuthenticated && User.IsInRole("Doctor"))
                     {
