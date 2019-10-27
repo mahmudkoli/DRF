@@ -5,6 +5,7 @@ using System.Web;
 using DRF.Common;
 using DRF.Entities;
 using DRF.Services;
+using NotifSystem.Web.Hubs;
 
 namespace DRF.Web.Models
 {
@@ -24,11 +25,14 @@ namespace DRF.Web.Models
         private DoctorService _doctorService;
         private ChamberService _chamberService;
         private AppointmentService _appointmentService;
+        private NotificationService _notificationService;
+
         public AppointmentModel()
         {
             _doctorService = new DoctorService();
             _chamberService = new ChamberService();
             _appointmentService = new AppointmentService();
+            _notificationService = new NotificationService();
         }
 
         public string GetDoctorName(int id)
@@ -55,7 +59,21 @@ namespace DRF.Web.Models
                 Disease = this.Disease
             };
 
-            return _appointmentService.Add(newAppointment);
+            var isAppointmentSucceded = _appointmentService.Add(newAppointment);
+
+            // Sent notification
+            NotificationHub objNotifHub = new NotificationHub();
+            Notification objNotif = new Notification();
+            objNotif.SentTo = _doctorService.GetById(this.DoctorId).User.Email;
+
+            _notificationService.AddOrUpdate(objNotif);
+            //context.Configuration.ProxyCreationEnabled = false;
+            //context.Notifications.Add(objNotif);
+            //context.SaveChanges();
+
+            objNotifHub.SendNotification(objNotif.SentTo);
+
+            return isAppointmentSucceded;
         }
 
         public Appointment GetRecentConfirmAppointmentInfo()
