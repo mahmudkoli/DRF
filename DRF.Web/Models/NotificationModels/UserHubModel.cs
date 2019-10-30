@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace NotifSystem.Web.Models
+namespace DRF.Web.Models.NotificationModels
 {
-    public class UserHubModels
+    public class UserHubModel
     {
-        public string UserName { get; set; }
+        public int UserId { get; set; }
         public HashSet<string> ConnectionIds { get; set; }
     }
 }

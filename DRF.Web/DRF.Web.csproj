@@ -205,10 +205,11 @@
     </Compile>
     <Compile Include="Hubs\NotificationHub.cs" />
     <Compile Include="Models\AppointmentModel.cs" />
+    <Compile Include="Models\AuthenticatedUserModel.cs" />
     <Compile Include="Models\AuthenticatedPatientUserModel.cs" />
     <Compile Include="Models\LoginUserModel.cs" />
-    <Compile Include="Models\NotifyModels\NotifModels.cs" />
-    <Compile Include="Models\NotifyModels\UserHubModels.cs" />
+    <Compile Include="Models\NotificationModels\NotificationModel.cs" />
+    <Compile Include="Models\NotificationModels\UserHubModel.cs" />
     <Compile Include="Models\PatientModel.cs" />
     <Compile Include="Models\ResetPasswordModel.cs" />
     <Compile Include="Models\SearchModel.cs" />

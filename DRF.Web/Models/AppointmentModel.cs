@@ -5,7 +5,8 @@ using System.Web;
 using DRF.Common;
 using DRF.Entities;
 using DRF.Services;
-using NotifSystem.Web.Hubs;
+using DRF.Web.Hubs;
+using DRF.Web.Models.NotificationModels;
 
 namespace DRF.Web.Models
 {
@@ -61,17 +62,14 @@ namespace DRF.Web.Models
 
             var isAppointmentSucceded = _appointmentService.Add(newAppointment);
 
-            // Sent notification
-            NotificationHub objNotifHub = new NotificationHub();
-            Notification objNotif = new Notification();
-            objNotif.SentTo = _doctorService.GetById(this.DoctorId).User.Email;
-
-            _notificationService.AddOrUpdate(objNotif);
-            //context.Configuration.ProxyCreationEnabled = false;
-            //context.Notifications.Add(objNotif);
-            //context.SaveChanges();
-
-            objNotifHub.SendNotification(objNotif.SentTo);
+            #region Sent notification
+            NotificationModel notification = new NotificationModel();
+            var actorId = AuthenticatedUserModel.GetUserFromIdentity().Id;
+            var notifierId = _doctorService.GetById(this.DoctorId).User.Id;
+            var entityTypeId = 1;
+            var entityId = 1;
+            notification.SendNotification(entityTypeId, entityId, actorId, notifierId);
+            #endregion
 
             return isAppointmentSucceded;
         }

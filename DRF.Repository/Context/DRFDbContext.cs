@@ -34,5 +34,7 @@ namespace DRF.Repository.Context
         public DbSet<DoctorDegreeRelation> DoctorDegreeRelations { get; set; }
         public DbSet<DoctorSpecialtyRelation> DoctorSpecialtyRelations { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<NotificationObject> NotificationObjects { get; set; }
+        public DbSet<NotificationChange> NotificationChanges { get; set; }
     }
 }

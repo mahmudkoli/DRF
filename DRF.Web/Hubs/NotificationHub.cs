@@ -1,40 +1,47 @@
 ﻿using DRF.Services;
 using Microsoft.AspNet.SignalR;
-using NotifSystem.Web.Models;
+using DRF.Web.Models;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using DRF.Web.Models.NotificationModels;
+using DRF.Entities;
 
-namespace NotifSystem.Web.Hubs
+namespace DRF.Web.Hubs
 {
     //[Authorize]
     public class NotificationHub : Hub
     {
-        private static readonly ConcurrentDictionary<string, UserHubModels> Users =
-            new ConcurrentDictionary<string, UserHubModels>(StringComparer.InvariantCultureIgnoreCase);
+        private static readonly ConcurrentDictionary<int, UserHubModel> Users =
+            new ConcurrentDictionary<int, UserHubModel>();
+        private int _loggedUserId;
 
-        private NotificationService _notificationService = new NotificationService();
+        private NotificationService _notificationService;
+
+        public NotificationHub()
+        {
+            _notificationService = new NotificationService(); 
+            _loggedUserId = AuthenticatedUserModel.GetUserFromIdentity().Id;
+        }
 
         //Logged Use Call
         public void GetNotification()
         {
             try
             {
-                string loggedUser = Context.User.Identity.Name;
-
                 //Get TotalNotification
-                string totalNotif = LoadNotifData(loggedUser);
+                var notifyData = _notificationService.GetAllNotifyByNotifierId(_loggedUserId);
 
                 //Send To
-                UserHubModels receiver;
-                if (Users.TryGetValue(loggedUser, out receiver))
+                UserHubModel receiver;
+                if (Users.TryGetValue(_loggedUserId, out receiver))
                 {
                     var cid = receiver.ConnectionIds.FirstOrDefault();
                     var context = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
-                    context.Clients.Client(cid).broadcaastNotif(totalNotif);
+                    context.Clients.Client(cid).broadcastNotify(notifyData);
                 }
             }
             catch (Exception ex)
@@ -44,20 +51,20 @@ namespace NotifSystem.Web.Hubs
         }
 
         //Specific User Call
-        public void SendNotification(string SentTo)
+        public void SendNotification(int userId)
         {
             try
             {
                 //Get TotalNotification
-                string totalNotif = LoadNotifData(SentTo);
+                var notifyData = _notificationService.GetAllNotifyByNotifierId(userId);
 
                 //Send To
-                UserHubModels receiver;
-                if (Users.TryGetValue(SentTo, out receiver))
+                UserHubModel notifier;
+                if (Users.TryGetValue(userId, out notifier))
                 {
-                    var cid = receiver.ConnectionIds.FirstOrDefault();
+                    var cid = notifier.ConnectionIds.FirstOrDefault();
                     var context = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
-                    context.Clients.Client(cid).broadcaastNotif(totalNotif);
+                    context.Clients.Client(cid).broadcastNotify(notifyData);
                 }
             }
             catch (Exception ex)
@@ -66,31 +73,22 @@ namespace NotifSystem.Web.Hubs
             }
         }
 
-        private string LoadNotifData(string userId)
-        {
-            int total = 0;
-            var query = _notificationService.GetAll().Where(x => x.SentTo==userId).ToList();
-            total = query.Count;
-            return total.ToString();
-        }
-
         public override Task OnConnected()
         {
-            string userName = Context.User.Identity.Name;
             string connectionId = Context.ConnectionId;
 
-            var user = Users.GetOrAdd(userName, _ => new UserHubModels
+            var notifier = Users.GetOrAdd(_loggedUserId, _ => new UserHubModel
             {
-                UserName = userName,
+                UserId = _loggedUserId,
                 ConnectionIds = new HashSet<string>()
             });
 
-            lock (user.ConnectionIds)
+            lock (notifier.ConnectionIds)
             {
-                user.ConnectionIds.Add(connectionId);
-                if (user.ConnectionIds.Count == 1)
+                notifier.ConnectionIds.Add(connectionId);
+                if (notifier.ConnectionIds.Count == 1)
                 {
-                    Clients.Others.userConnected(userName);
+                    Clients.Others.userConnected(_loggedUserId);
                 }
             }
 
@@ -99,22 +97,21 @@ namespace NotifSystem.Web.Hubs
 
         public override Task OnDisconnected(bool stopCalled)
         {
-            string userName = Context.User.Identity.Name;
             string connectionId = Context.ConnectionId;
 
-            UserHubModels user;
-            Users.TryGetValue(userName, out user);
+            UserHubModel notifier;
+            Users.TryGetValue(_loggedUserId, out notifier);
 
-            if (user != null)
+            if (notifier != null)
             {
-                lock (user.ConnectionIds)
+                lock (notifier.ConnectionIds)
                 {
-                    user.ConnectionIds.RemoveWhere(cid => cid.Equals(connectionId));
-                    if (!user.ConnectionIds.Any())
+                    notifier.ConnectionIds.RemoveWhere(cid => cid.Equals(connectionId));
+                    if (!notifier.ConnectionIds.Any())
                     {
-                        UserHubModels removedUser;
-                        Users.TryRemove(userName, out removedUser);
-                        Clients.Others.userDisconnected(userName);
+                        UserHubModel removedNotifier;
+                        Users.TryRemove(_loggedUserId, out removedNotifier);
+                        Clients.Others.userDisconnected(_loggedUserId);
                     }
                 }
             }

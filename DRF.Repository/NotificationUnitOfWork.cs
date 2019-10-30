@@ -11,7 +11,7 @@ namespace DRF.Repository
     public class NotificationUnitOfWork : IDisposable
     {
         private DRFDbContext _context;
-        private NotificationRepository _notificationRepository;
+        private readonly NotificationRepository _notificationRepository;
         public NotificationUnitOfWork(DRFDbContext context)
         {
             _context = context;

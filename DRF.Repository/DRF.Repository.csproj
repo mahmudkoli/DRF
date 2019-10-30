@@ -56,9 +56,9 @@
     <Compile Include="Base\Repository.cs" />
     <Compile Include="ChamberRepository.cs" />
     <Compile Include="ChamberUnitOfWork.cs" />
-    <Compile Include="Migrations\201910271536112_NotificationEntityAdded.cs" />
-    <Compile Include="Migrations\201910271536112_NotificationEntityAdded.Designer.cs">
-      <DependentUpon>201910271536112_NotificationEntityAdded.cs</DependentUpon>
+    <Compile Include="Migrations\201910301700075_NotificationEntityAdded.cs" />
+    <Compile Include="Migrations\201910301700075_NotificationEntityAdded.Designer.cs">
+      <DependentUpon>201910301700075_NotificationEntityAdded.cs</DependentUpon>
     </Compile>
     <Compile Include="NotificationUnitOfWork.cs" />
     <Compile Include="NotificationRepository.cs" />
@@ -142,8 +142,8 @@
     <EmbeddedResource Include="Migrations\201903231622294_RemovedRequiredDoctorEntity.resx">
       <DependentUpon>201903231622294_RemovedRequiredDoctorEntity.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910271536112_NotificationEntityAdded.resx">
-      <DependentUpon>201910271536112_NotificationEntityAdded.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201910301700075_NotificationEntityAdded.resx">
+      <DependentUpon>201910301700075_NotificationEntityAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

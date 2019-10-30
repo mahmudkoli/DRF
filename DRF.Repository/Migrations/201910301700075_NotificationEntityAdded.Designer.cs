@@ -13,7 +13,7 @@ namespace DRF.Repository.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201910271536112_NotificationEntityAdded"; }
+            get { return "201910301700075_NotificationEntityAdded"; }
         }
         
         string IMigrationMetadata.Source

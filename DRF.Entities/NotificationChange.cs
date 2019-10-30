@@ -1,32 +1,30 @@
-using DRF.Entities.Base;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace DRF.Entities
 {
-    public class Notification
+    public class NotificationChange
     {
         [Key]
         public int Id { get; set; }
         public int NotificationObjectId { get; set; }
         public virtual NotificationObject NotificationObject { get; set; }
-        public int NotifierId { get; set; }
-        public virtual User Notifier { get; set; }
+        public int ActorId { get; set; }
+        public virtual User Actor { get; set; }
         public bool IsActive { get; set; }
-        public bool IsRead { get; set; }
-        public bool IsReminder { get; set; }
 
-        public Notification()
+        public NotificationChange()
         {
             this.IsActive = true;
-            this.IsRead = false;
-            this.IsReminder = true;
         }
-        public Notification(int NotificationObjectId, int NotifierId) : this()
+        public NotificationChange(int NotificationObjectId, int ActorId) : this()
         {
             this.NotificationObjectId = NotificationObjectId;
-            this.NotifierId = NotifierId;
+            this.ActorId = ActorId;
         }
     }
 }

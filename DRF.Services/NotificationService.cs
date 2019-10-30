@@ -19,54 +19,62 @@ namespace DRF.Services
             _notificationUnitOfWork = new NotificationUnitOfWork(new DRFDbContext());
         }
 
-        public IEnumerable<Notification> GetAll()
+        //public IEnumerable<Notification> GetAll()
+        //{
+        //    return _notificationUnitOfWork.NotificationRepository.GetAll();
+        //}
+        //public IEnumerable<Notification> GetAll(string name, byte? status)
+        //{
+        //    var data = _notificationUnitOfWork.NotificationRepository.Get(x => true);
+        //    //data = string.IsNullOrEmpty(name) ? data : data.Where(x => x.Name.ToLower().Contains(name.ToLower()));
+        //    data = status == null ? data : data.Where(x => x.Status == status);
+        //    return data.OrderByDescending(x => (x.UpdatedAt == null ? x.CreatedAt : x.UpdatedAt));
+        //}
+
+        //public bool ChangeStatus(int id)
+        //{
+        //    var city = _notificationUnitOfWork.NotificationRepository.GetById(id);
+        //    city.Status = city.Status == (byte)CustomEnum.Status.Active ?
+        //        (byte)CustomEnum.Status.Inactive : (byte)CustomEnum.Status.Active;
+        //    city.UpdatedAt = DateTime.Now;
+        //    return _notificationUnitOfWork.Save();
+        //}
+
+        //public int ActiveCount()
+        //{
+        //    return _notificationUnitOfWork.NotificationRepository.ActiveCount();
+        //}
+
+        public Notification Add(int entityTypeId, int entityId, int actorId, int notifierId)
         {
-            return _notificationUnitOfWork.NotificationRepository.GetAll();
-        }
-        public IEnumerable<Notification> GetAll(string name, byte? status)
-        {
-            var data = _notificationUnitOfWork.NotificationRepository.Get(x => true);
-            //data = string.IsNullOrEmpty(name) ? data : data.Where(x => x.Name.ToLower().Contains(name.ToLower()));
-            data = status == null ? data : data.Where(x => x.Status == status);
-            return data.OrderByDescending(x => (x.UpdatedAt == null ? x.CreatedAt : x.UpdatedAt));
+            var notificationObject = new NotificationObject(entityTypeId, entityId);
+            _notificationUnitOfWork.NotificationRepository.AddNotificationObject(notificationObject);
+            _notificationUnitOfWork.Save();
+
+            var notificationChange = new NotificationChange(notificationObject.Id, actorId);
+            _notificationUnitOfWork.NotificationRepository.AddNotificationChange(notificationChange);
+
+            var notification = new Notification(notificationObject.Id, notifierId);
+            _notificationUnitOfWork.NotificationRepository.AddNotification(notification);
+
+            _notificationUnitOfWork.Save();
+
+            return _notificationUnitOfWork.NotificationRepository.GetByNotificationId(notification.Id);
         }
 
-        public bool ChangeStatus(int id)
+        public IEnumerable<Notification> GetAllByNotifierId(int notifierId)
         {
-            var city = _notificationUnitOfWork.NotificationRepository.GetById(id);
-            city.Status = city.Status == (byte)CustomEnum.Status.Active ?
-                (byte)CustomEnum.Status.Inactive : (byte)CustomEnum.Status.Active;
-            city.UpdatedAt = DateTime.Now;
-            return _notificationUnitOfWork.Save();
+            return _notificationUnitOfWork.NotificationRepository.GetAllByNotifierId(notifierId);
         }
 
-        public int ActiveCount()
+        public IEnumerable<Notification> GetAllReminderByNotifierId(int notifierId)
         {
-            return _notificationUnitOfWork.NotificationRepository.ActiveCount();
+            return _notificationUnitOfWork.NotificationRepository.GetAllReminderByNotifierId(notifierId);
         }
 
-        public bool AddOrUpdate(Notification notify)
+        public IEnumerable<Notification> GetAllNotifyByNotifierId(int notifierId)
         {
-            if (notify.Id == 0)
-            {
-                var newNotification = new Notification()
-                {
-                    //Name = city.Name,
-                    SentTo = notify.SentTo,
-                    Status = (byte)CustomEnum.Status.Active,
-                    CreatedAt = DateTime.Now
-                };
-                _notificationUnitOfWork.NotificationRepository.Add(newNotification);
-            }
-            else
-            {
-                var existCity = _notificationUnitOfWork.NotificationRepository.GetById(notify.Id);
-                //existCity.Name = city.Name;
-                existCity.UpdatedAt = DateTime.Now;
-                _notificationUnitOfWork.NotificationRepository.Update(existCity);
-            }
-
-            return _notificationUnitOfWork.Save();
+            return _notificationUnitOfWork.NotificationRepository.GetAllNotifyByNotifierId(notifierId);
         }
     }
 }

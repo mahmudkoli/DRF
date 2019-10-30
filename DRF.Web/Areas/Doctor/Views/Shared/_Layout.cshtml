@@ -108,11 +108,21 @@
                                 <i class="fa fa-bell-o"></i>
                                 @*@if (appointmentRequestPendingCount > 0)
                                 {*@
-                                    <span class="label label-warning" id="notify-bell">@appointmentRequestPendingCount</span>
+                                    <span class="label label-warning" id="notify-count">@*@appointmentRequestPendingCount*@</span>
                                 @*}*@
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="header">You have @appointmentRequestPendingCount pending appointment request</li>
+                                <li class="header">You have @*@appointmentRequestPendingCount*@ pending appointment request</li>
+                                <li>
+                                    <!-- inner menu: contains the actual data -->
+                                    <ul class="menu" id="notify-list">
+                                        @*<li>
+                                            <a href="#">
+                                                <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                            </a>
+                                        </li>*@
+                                    </ul>
+                                </li>
                                 <li class="footer"><a href="@Url.Action("PendingAppointment","Appointment")">View all</a></li>
                             </ul>
                         </li>
@@ -397,21 +407,32 @@
 
     @RenderSection("scripts", required: false)
 
+
     <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
     <script src="~/signalr/hubs"></script>
     <script type="text/javascript">
         $(document).ready(function () {
 
-            function setTotalNotification(totalNotif) {
-                console.log(totalNotif);
-                $("#notify-bell").text(totalNotif);
+            function setNotification(notify) {
+                //console.log(notify);
+                $('#notify-list').empty();
+                $("#notify-count").text('');
+                if (notify.length == 0) {
+                    //$("#notify-count").hide();
+                    return;
+                }
+                $("#notify-count").text(notify.length);
+                $.each(notify, function (index, value) {
+                    var line = '<li><a href="#"><i class="fa fa-users text-aqua"></i>Request from ' + value.Notifier.Name + ' </a></li>';
+                    $('#notify-list').append(line);
+                });
             }
 
             var hub = $.connection.notificationHub;
 
             //Client Call
-            hub.client.broadcaastNotif = function (totalNotif) {
-                setTotalNotification(totalNotif)
+            hub.client.broadcastNotify = function (notify) {
+                setNotification(notify)
             };
 
 
@@ -430,5 +451,6 @@
                 });
         });
     </script>
+
 </body>
 </html>
