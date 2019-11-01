@@ -1,4 +1,5 @@
-﻿using DRF.Services;
+﻿using DRF.Common;
+using DRF.Services;
 using DRF.Web.Hubs;
 using System;
 using System.Collections.Generic;
@@ -25,5 +26,10 @@ namespace DRF.Web.Models.NotificationModels
             var notification = _notificationService.Add(entityTypeId, entityId, actorId, notifierId);
             _notificationHub.SendNotification(notifierId);
         }
+
+        //public IEnumerable<GlobalNotification> GetAllGlobalNotifyByNotifierId(int notifierId)
+        //{
+        //    return _notificationService.GetAllNotificationByNotifierId(notifierId);
+        //}
     }
 }

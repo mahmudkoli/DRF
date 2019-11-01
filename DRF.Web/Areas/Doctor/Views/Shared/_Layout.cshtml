@@ -414,7 +414,7 @@
         $(document).ready(function () {
 
             function setNotification(notify) {
-                //console.log(notify);
+                console.log(notify);
                 $('#notify-list').empty();
                 $("#notify-count").text('');
                 if (notify.length == 0) {
@@ -423,7 +423,8 @@
                 }
                 $("#notify-count").text(notify.length);
                 $.each(notify, function (index, value) {
-                    var line = '<li><a href="#"><i class="fa fa-users text-aqua"></i>Request from ' + value.Notifier.Name + ' </a></li>';
+                    var url = '@Url.Action("GoToDetails","Notification", new { Area="" })?entityTypeId=' + value.EntityTypeId + '&entityId=' + value.EntityId;
+                    var line = '<li><a href="' + url + '"><i class="fa fa-users text-aqua"></i>Appointment request from ' + value.ActorName + ' </a></li>';
                     $('#notify-list').append(line);
                 });
             }
@@ -449,6 +450,23 @@
                 .fail(function () {
                     console.log("Could not Connect!");
                 });
+
+            $.connection.hub.disconnected(function () {
+                if ($.connection.hub.lastError) {
+                    console.log("Disconnected. Reason: " + $.connection.hub.lastError.message);
+                    //alert("Disconnected. Reason: " + $.connection.hub.lastError.message);
+                }
+            });
+
+            $.connection.hub.error(function(error) {
+                console.log('Signalr Error: ' + error);
+                //alert('SignalrAdapter: ' + error);
+            });
+
+            hub.client.exceptionHandler = function (error) {
+                  console.log('Signalr Exception: ' + error);
+                  //alert('SignalrAdapter: ' + error);
+            };
         });
     </script>
 

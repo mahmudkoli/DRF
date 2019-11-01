@@ -50,6 +50,7 @@
     <Compile Include="CustomFile.cs" />
     <Compile Include="CustomMessage.cs" />
     <Compile Include="CustomName.cs" />
+    <Compile Include="GlobalNotification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Secret.cs" />
   </ItemGroup>

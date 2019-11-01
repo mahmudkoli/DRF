@@ -19,7 +19,7 @@ namespace DRF.Services
             _appointmentUnitOfWork = new AppointmentUnitOfWork(new DRFDbContext());
         }
 
-        public bool Add(Appointment appointment)
+        public int Add(Appointment appointment)
         {
             try
             {
@@ -37,12 +37,14 @@ namespace DRF.Services
                 };
 
                 _appointmentUnitOfWork.AppointmentRepository.Add(newAppointment);
-                return _appointmentUnitOfWork.Save();
+                _appointmentUnitOfWork.Save();
+
+                return newAppointment.Id;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                return false;
+                return 0;
             }
         }
 

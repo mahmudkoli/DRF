@@ -60,18 +60,18 @@ namespace DRF.Web.Models
                 Disease = this.Disease
             };
 
-            var isAppointmentSucceded = _appointmentService.Add(newAppointment);
+            var newAppointmentId = _appointmentService.Add(newAppointment);
 
             #region Sent notification
             NotificationModel notification = new NotificationModel();
             var actorId = AuthenticatedUserModel.GetUserFromIdentity().Id;
             var notifierId = _doctorService.GetById(this.DoctorId).User.Id;
-            var entityTypeId = 1;
-            var entityId = 1;
+            var entityTypeId = (int)CustomEnum.EntityType.Appointment;
+            var entityId = newAppointmentId;
             notification.SendNotification(entityTypeId, entityId, actorId, notifierId);
             #endregion
 
-            return isAppointmentSucceded;
+            return newAppointmentId > 0;
         }
 
         public Appointment GetRecentConfirmAppointmentInfo()

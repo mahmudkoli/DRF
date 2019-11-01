@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
+using DRF.Web.Hubs;
+using Microsoft.AspNet.SignalR;
 using Microsoft.Owin;
 using Owin;
 
@@ -11,7 +13,9 @@ namespace DRF.Web
     {
         public void Configuration(IAppBuilder app)
         {
-            app.MapSignalR();
+            GlobalHost.HubPipeline.AddModule(new NotificationHubPipelineModule());
+            var hubConfiguration = new HubConfiguration { EnableDetailedErrors = true };
+            app.MapSignalR(hubConfiguration);
         }
     }
 }

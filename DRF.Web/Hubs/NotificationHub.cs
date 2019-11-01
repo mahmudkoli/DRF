@@ -32,16 +32,16 @@ namespace DRF.Web.Hubs
         {
             try
             {
-                //Get TotalNotification
-                var notifyData = _notificationService.GetAllNotifyByNotifierId(_loggedUserId);
+                //Get Notification
+                var notifyData = _notificationService.GetAllGlobalNotifyByNotifierId(_loggedUserId);
 
                 //Send To
                 UserHubModel receiver;
                 if (Users.TryGetValue(_loggedUserId, out receiver))
                 {
-                    var cid = receiver.ConnectionIds.FirstOrDefault();
+                    var cids = receiver.ConnectionIds.ToList();
                     var context = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
-                    context.Clients.Client(cid).broadcastNotify(notifyData);
+                    context.Clients.Clients(cids).broadcastNotify(notifyData);
                 }
             }
             catch (Exception ex)
@@ -55,16 +55,16 @@ namespace DRF.Web.Hubs
         {
             try
             {
-                //Get TotalNotification
-                var notifyData = _notificationService.GetAllNotifyByNotifierId(userId);
+                //Get Notification
+                var notifyData = _notificationService.GetAllGlobalNotifyByNotifierId(userId);
 
                 //Send To
                 UserHubModel notifier;
                 if (Users.TryGetValue(userId, out notifier))
                 {
-                    var cid = notifier.ConnectionIds.FirstOrDefault();
+                    var cids = notifier.ConnectionIds.ToList();
                     var context = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
-                    context.Clients.Client(cid).broadcastNotify(notifyData);
+                    context.Clients.Clients(cids).broadcastNotify(notifyData);
                 }
             }
             catch (Exception ex)

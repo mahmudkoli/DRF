@@ -14,6 +14,7 @@ namespace DRF.Common
         public enum UserType { Admin = 1, Doctor, Patient }
         public enum Status { Inactive = 0, Active = 1 }
         public enum Month { Jan = 1, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec }
+        public enum EntityType { Appointment = 1 }
 
     }
 }
