@@ -62,6 +62,11 @@ namespace DRF.Services
             return _notificationUnitOfWork.NotificationRepository.GetByNotificationId(notification.Id);
         }
 
+        public void SeeAllNotification(int notifierId)
+        {
+            _notificationUnitOfWork.NotificationRepository.SeeAllNotification(notifierId);
+        }
+
         public IEnumerable<Notification> GetAllByNotifierId(int notifierId)
         {
             return _notificationUnitOfWork.NotificationRepository.GetAllByNotifierId(notifierId);
@@ -80,6 +85,11 @@ namespace DRF.Services
         public IEnumerable<GlobalNotification> GetAllGlobalNotifyByNotifierId(int notifierId)
         {
             return _notificationUnitOfWork.NotificationRepository.GetAllGlobalNotifyByNotifierId(notifierId);
+        }
+
+        public void SeeDetailsNotification(int notificationId)
+        {
+            _notificationUnitOfWork.NotificationRepository.SeeDetailsNotification(notificationId);
         }
     }
 }

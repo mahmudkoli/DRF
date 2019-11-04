@@ -103,16 +103,20 @@
                                     <li class="footer"><a href="#">See All Messages</a></li>
                                 </ul>
                             </li>*@
-                        <li class="dropdown notifications-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-bell-o"></i>
+                        @*<li class="dropdown notifications-menu">*@  
+                        <li class="dropdown messages-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="notify-bell">
+                                @*<i class="fa fa-bell-o"></i>*@
+                                <i class="fa fa-envelope-o"></i>
                                 @*@if (appointmentRequestPendingCount > 0)
                                 {*@
-                                    <span class="label label-warning" id="notify-count">@*@appointmentRequestPendingCount*@</span>
+                                    @*<span class="label label-warning" id="notify-count">@appointmentRequestPendingCount</span>*@
+                                    <span class="label label-success" id="notify-count">@*@appointmentRequestPendingCount*@</span>
                                 @*}*@
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="header">You have @*@appointmentRequestPendingCount*@ pending appointment request</li>
+                                @*<li class="header">You have @appointmentRequestPendingCount pending appointment request</li>*@
+                                <li class="header">Pending appoinment</li>
                                 <li>
                                     <!-- inner menu: contains the actual data -->
                                     <ul class="menu" id="notify-list">
@@ -413,18 +417,51 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
+            $('#notify-bell').on('click', function () {
+                seeAllNotification();
+            });
+
+            function seeAllNotification() {
+                hub.server.seeAllNotification();
+            }
+
             function setNotification(notify) {
-                console.log(notify);
+                //console.log(notify);
                 $('#notify-list').empty();
                 $("#notify-count").text('');
                 if (notify.length == 0) {
                     //$("#notify-count").hide();
                     return;
                 }
-                $("#notify-count").text(notify.length);
+
+                var reminderNotify = notify.filter(x => x.IsReminder === true);
+                if (reminderNotify.length !== 0)
+                    $("#notify-count").text(reminderNotify.length);
+
                 $.each(notify, function (index, value) {
-                    var url = '@Url.Action("GoToDetails","Notification", new { Area="" })?entityTypeId=' + value.EntityTypeId + '&entityId=' + value.EntityId;
-                    var line = '<li><a href="' + url + '"><i class="fa fa-users text-aqua"></i>Appointment request from ' + value.ActorName + ' </a></li>';
+                    var backColor = value.IsRead ? "" : "bg-notify";
+                    var url = '@Url.Action("GoToDetails","Notification", new { Area="" })?notificationId=' + value.NotificationId + '&entityTypeId=' + value.EntityTypeId + '&entityId=' + value.EntityId;
+                    var lines = '<li class="' + backColor + '"><a href="' + url + '"><i class="fa fa-users text-aqua"></i>Appointment request from ' + value.ActorName + '</a></li>';
+
+                    var imageUrl = '@Url.Content("~/Images/avatar.png")';
+
+                    var today = new Date();
+                    var createdOn = new Date(Date.parse(value.CreatedOn));
+
+                    var diffMs = (today - createdOn); // milliseconds between now & createdOn
+                    var diffDays = Math.floor(diffMs / 86400000); // days
+                    var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
+                    var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
+
+                    var timeMsg = diffDays > 0 ? diffDays + ' days' : diffHrs > 0 ? diffHrs + ' hours' : diffMins + ' mins';
+
+                    var line = '<li class="' + backColor + '"><a href="' + url + '"><div class="pull-left">' +
+                        '<img src="' + imageUrl + '" class="img-circle" alt="Image"></div>' +
+                        '<h4>' + value.ActorName + '<small><i class="fa fa-clock-o"></i> ' + timeMsg + ' ago</small></h4>' +
+                        '<p>'+ 'Request for appoinment' + '</p>' +
+                        '</a></li>';
+
+
                     $('#notify-list').append(line);
                 });
             }

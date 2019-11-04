@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -71,7 +73,8 @@ namespace DRF.Repository
                     notifyChange => notifyChange.NotificationObjectId,
                     (newObj, notifyChange) => new { newObj, notifyChange })
                 .Where(a => a.newObj.notify.IsActive && a.newObj.notify.NotifierId == notifierId).Select(x => new GlobalNotification()
-                { 
+                {
+                    NotificationId = x.newObj.notify.Id,
                     ActorId = x.notifyChange.ActorId,
                     ActorName = x.notifyChange.Actor.Name,
                     NotifierId = x.newObj.notify.NotifierId,
@@ -88,6 +91,21 @@ namespace DRF.Repository
                 }).OrderByDescending(o => o.CreatedOn).ToList();
 
             return notifications;
+        }
+
+        public void SeeAllNotification(int notifierId)
+        {
+            var sql = "UPDATE Notifications SET IsReminder = 0 WHERE NotifierId = @NotifierId";
+            SqlParameter param = new SqlParameter("@NotifierId", notifierId);
+            _context.Database.ExecuteSqlCommand(sql, param);
+        }
+
+        public void SeeDetailsNotification(int notificationId)
+        {
+            var notification = _context.Notifications.FirstOrDefault(x => x.Id == notificationId);
+            notification.IsRead = true;
+            _context.Entry(notification).State = EntityState.Modified;
+            _context.SaveChanges();
         }
     }
 }

@@ -50,6 +50,22 @@ namespace DRF.Web.Hubs
             }
         }
 
+        //See User Notification
+        public void SeeAllNotification()
+        {
+            try
+            {
+                // See User Notificaion
+                _notificationService.SeeAllNotification(_loggedUserId);
+
+                SendNotification(_loggedUserId);
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
+        }
+
         //Specific User Call
         public void SendNotification(int userId)
         {

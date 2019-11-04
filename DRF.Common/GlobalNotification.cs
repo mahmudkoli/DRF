@@ -14,6 +14,7 @@ namespace DRF.Common
         //public int NotifierId { get; set; }
         //public virtual User Notifier { get; set; }
         //public bool IsActive { get; set; }
+        public int NotificationId { get; set; }
         public int ActorId { get; set; }
         public string ActorName { get; set; }
         public int NotifierId { get; set; }
